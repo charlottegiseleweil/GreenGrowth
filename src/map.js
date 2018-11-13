@@ -1,7 +1,8 @@
  // Countries to show
 
+ const ZOOM = 3;
+
  const COUNTRIES = [
-    'Costa Rica',
     'Ecuador',
     'United States of America',
     'Brazil',
@@ -17,7 +18,8 @@
  ]
  
  // Create variable to hold map element, give initial settings to map
- var map = L.map('map',{  center: [20.0, 0.0], zoom: 3});
+ var map = L.map('map',{  center: [20.0, 0.0], zoom: ZOOM, zoomControl:false});
+ map.scrollWheelZoom.disable();
 
  var CartoDB_Voyager = new L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -28,12 +30,9 @@
 map.addLayer(CartoDB_Voyager);      // Adding layer to the map
 
 function onClick(e) {
-    /*popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(map);
-    */
-   // CLICK EVENT
+   if (map.getZoom() != ZOOM) {
+       map.setView([20.0, 0.0], ZOOM);
+   } 
 }
 
 function zoomToFeature(e) {
@@ -44,15 +43,11 @@ function highlightFeature(e) {
     var layer = e.target;
 
     layer.setStyle({
-        weight: 5,
+        weight: 0.5,
         color: '#666',
         dashArray: '',
         fillOpacity: 0.7
     });
-
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
-    }
 }
 
 function resetHighlight(e) {
@@ -60,9 +55,6 @@ function resetHighlight(e) {
 }
 
 function onEachFeature(feature, layer) {
-
-    console.log(feature);
-
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
@@ -71,11 +63,10 @@ function onEachFeature(feature, layer) {
 }
 
 var geojson;
-// ... our listeners
 
 var myStyle = {
     "color": "#ff7800",
-    "weight": 5,
+    "weight": 0.5,
     "opacity": 0.65
 };
 
@@ -86,13 +77,14 @@ function filter_countries(data) {
         return true;
     } 
 
-    return false;
-        
+    return false;   
 };
 
  // Add OpenStreetMap tile layer to map element
  $.getJSON('countries.geojson', function(data) {    
-    geojson = L.geoJson(data, {filter: filter_countries, 
+    geojson = L.geoJson(data, {
+        filter: filter_countries, 
         style: myStyle,
-        onEachFeature: onEachFeature}).addTo(map);
+        onEachFeature: onEachFeature,
+        scrollWheelZoom: false}).addTo(map);
 });
