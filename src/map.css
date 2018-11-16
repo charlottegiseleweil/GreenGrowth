@@ -12,3 +12,11 @@ body {
     height: 100%;
 }
 
+#content {
+    padding: 10px 10px 10px 10px;
+    background-color: red;
+}
+
+#info-panel {
+    display: none;
+}

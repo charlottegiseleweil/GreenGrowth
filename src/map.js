@@ -1,8 +1,8 @@
  // Countries to show
 
  const ZOOM = 3;
- var case_studies;
- var markers = {}
+ var case_dictionary={};
+
  const COUNTRIES = [
     'Ecuador',
     'United States of America',
@@ -18,162 +18,167 @@
     'Australia'
  ]
  
-d3.csv("./case_new.csv").then(function(case_studies){
-    console.log(case_studies.length)
-    var case_dictionary={}
+d3.csv("./case_studies.csv").then(function(case_studies){
+
     for(var i=0;i<case_studies.length;i++){
-        if (!(case_studies[i]["Location"] in case_dictionary)){
-            case_dictionary[case_studies[i]["Location"]]=[];
-            case_dictionary[case_studies[i]["Location"]].push(case_studies[i]);
+        if (!(case_studies[i]["location"] in case_dictionary)){
+            case_dictionary[case_studies[i]["location"]]=[];
+            case_dictionary[case_studies[i]["location"]].push(case_studies[i]);
         }
         else{
-            case_dictionary[case_studies[i]["Location"]].push(case_studies[i])
+            case_dictionary[case_studies[i]["location"]].push(case_studies[i])
         }
-        console.log(i+" "+case_studies[i]["Location"]);
     }
-    console.log(case_studies.columns)
-// Create variable to hold map element, give initial settings to map
-    var map = L.map('map',{  center: [20.0, 0.0], zoom: ZOOM, zoomControl:false});
-    map.scrollWheelZoom.disable();
 
-    var CartoDB_Voyager = new L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    console.log(case_dictionary);
+});
+
+var map = L.map('map',{  center: [20.0, 0.0], zoom: ZOOM, zoomControl:false});
+var sidebar = L.control.sidebar('sidebar', {
+    closeButton: false,
+    position: 'left'
+});
+map.addControl(sidebar);
+
+map.scrollWheelZoom.disable();
+
+var CartoDB_Voyager = new L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 19
-    });
+});
 
-    map.addLayer(CartoDB_Voyager);      // Adding layer to the map
+map.addLayer(CartoDB_Voyager);      // Adding layer to the map
 
-    function onClick(e) {
-        console.log("onclick")
-        //console.log(e)
-        if (map.getZoom() != ZOOM) {
-            map.setView([20.0, 0.0], ZOOM);
-            sidebar.hide();  
-            //console.log("len markers:", markers);
-            
-            Object.keys(markers).forEach(function(key) {
-                //console.log(key, markers[key]);
-                map.removeLayer(markers[key]);        
-            });    
-            console.log("remove")
-        }
+function create_table(country_name) {
+
+    arr = case_dictionary[country_name];
+    var tableBody = document.getElementById('cases');
+
+    arr.forEach(function(rowData) {
+        var row = document.createElement('tr');
+        row.className = 'case-click'
+
+        var added = document.createElement('td');
+        added.appendChild(document.createTextNode(rowData['number']));
+        row.appendChild(added);
+
+        added = document.createElement('td');
+        added.appendChild(document.createTextNode(rowData['name']));
+        row.appendChild(added);
+    
+        tableBody.appendChild(row);
+      });
+}
+
+function onClick(e) {
+
+    if (map.getZoom() != ZOOM) {
+        map.setView([20.0, 0.0], ZOOM);
+        sidebar.hide();
+        document.getElementById("cases").innerHTML = "";  
     }
 
-    var onMarkerClick = function(e){
-        clicked_case = this.options.marker_obj;
-        $("p").text("");
-        for (var j=0;j<case_studies.columns.length;j++)
-        {
-            $("p").append("<b>"+case_studies.columns[j]+": </b>"+clicked_case[String(case_studies.columns[j])]+"<br/>")
-            
-        } 
-        sidebar.show();
-    }
+    if ($( "#info-panel" ).is(":visible")) {
+        $( "#info-panel" ).slideUp('slow');
+    }  
+}
 
-    function zoomToFeature(e) {
-        if (map.getZoom() != ZOOM) {
-            return;
-        }
-        console.log("zoom")
-        
-        //console.log("zoom "+e)
-        var sidebar_container = sidebar.getContainer();
-        $("h1").text(e.sourceTarget.feature.properties.name);
-        var key=e.sourceTarget.feature.properties.name;
-        if (key in case_dictionary)
-        {   
-            for (var i = 0;i<case_dictionary[key].length;i++)
-            {   
-                //console.log(i);
-                markers[i] = L.marker([case_dictionary[key][i]["lat"],case_dictionary[key][i]["lng"]],{marker_obj: case_dictionary[key][i]});
-                markers[i].on('click', onMarkerClick);
-                markers[i].addTo(map);
-            
-                $("p").append("<br/>")
-            }
-        }
-        
-        //console.log(case_studies);
-        //console.log(":(");
-        //sidebar.show();    
+function zoomToFeature(e) {
+    if (map.getZoom() == ZOOM) {
+        sidebar.show();    
         map.fitBounds(e.target.getBounds());
-    }
+        console.log(e);
+        document.getElementById('country-name').innerHTML = e.target.feature.properties.name;
+        create_table(e.target.feature.properties.name);
 
-    function highlightFeature(e) {
-        var layer = e.target;
+    } else {
+        map.setView([20.0, 0.0], ZOOM);
+        sidebar.hide();  
+        document.getElementById("cases").innerHTML = "";  
+    }  
+}
 
-        layer.setStyle({
-            weight: 0.5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
-    }
+function highlightFeature(e) {
+    var layer = e.target;
 
-    function resetHighlight(e) {
-        geojson.resetStyle(e.target);
-    }
+    layer.setStyle({
+        weight: 0.5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+}
 
-    function onEachFeature(feature, layer) {
-        layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
-            click: zoomToFeature
-        });
-    }
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+}
 
-    var geojson;
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
 
-    var myStyle = {
-    "color": "#ff7800",
-    "weight": 0.5,
-    "opacity": 0.65
-    };
+var geojson;
 
-    map.on('click', onClick);
+var myStyle = {
+"color": "#ff7800",
+"weight": 0.5,
+"opacity": 0.65
+};
 
-    function filter_countries(data) {
-        if (COUNTRIES.includes(data.properties.admin)){
-            /* console.log(data.properties.name);
-            console.log("multi "+data.geometry.coordinates.length)        
-            for (var multi_polygon=0;multi_polygon<data.geometry.coordinates.length; multi_polygon++){
-                var lat = 0;
-                var lng = 0; 
-                var len = data.geometry.coordinates[multi_polygon][0].length;
-                console.log(len)
-                for ( var i=0; i < len; ++i ) {
-                    lat+=data.geometry.coordinates[multi_polygon][0][i][1];
-                    lng+=data.geometry.coordinates[multi_polygon][0][i][0];
-                }
-                lat/=len;
-                lng/=len;
-                //console.log(lat,lng);
-                var marker = L.marker([lat,lng]).addTo(map).on('click', function () {
-                    sidebar.toggle();
-                });
-            } */
-            return true;
+map.on('click', onClick);
+
+function filter_countries(data) {
+    if (COUNTRIES.includes(data.properties.admin)){
+        return true;
     } 
 
     return false;   
-    };
+};
 
-    // Add OpenStreetMap tile layer to map element
-    $.getJSON('countries.geojson', function(data) {    
-        geojson = L.geoJson(data, {
-            filter: filter_countries, 
-            style: myStyle,
-            onEachFeature: onEachFeature,
-            scrollWheelZoom: false}).addTo(map);
-    });
-
-    var sidebar = L.control.sidebar('sidebar', {
-    position: 'left'
-    });
-
-    map.addControl(sidebar);
-    //sidebar.show();
-
+// Add OpenStreetMap tile layer to map element
+$.getJSON('countries.geojson', function(data) {    
+    geojson = L.geoJson(data, {
+        filter: filter_countries, 
+        style: myStyle,
+        onEachFeature: onEachFeature,
+        scrollWheelZoom: false}).addTo(map);
 });
+
+$("#case-table").on('click','tr',function(e) {  
+    if ( $( "#info-panel" ).is( ":hidden" ) ) {
+        // Bilgileri al
+        showDetails(e.currentTarget.cells[0].innerText);
+        $( "#info-panel" ).slideDown('slow');
+      }  else {
+          // Yenile bilgileri
+        $( "#info-panel" ).slideUp('slow', () => {
+            showDetails(e.currentTarget.cells[0].innerText);
+        });
+        
+        $( "#info-panel" ).slideDown('slow');
+      }
+}); 
+
+function showDetails(caseNumber) {
+    currentCountry = document.getElementById('country-name').innerText;
+    caseCountry = case_dictionary[currentCountry];
+    selected = null;
+
+    for (let index = 0; index < caseCountry.length; index++) {
+        if (caseCountry[index]['number'] == caseNumber){
+            selected = caseCountry[index];
+            break;
+        }
+    }
+
+    document.getElementById('case-name-heading').innerHTML = selected['name'];
+    document.getElementById('chapter-no').innerHTML = selected['ch_no'];
+    document.getElementById('chapter-name').innerHTML = selected['ch_title'];
+    document.getElementById('case-summary').innerHTML = selected['summary'];
+}
  
