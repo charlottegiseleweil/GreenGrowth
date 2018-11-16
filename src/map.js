@@ -167,7 +167,7 @@ $("#case-table").on('click','tr',function(e) {
 function showDetails(caseNumber) {
     currentCountry = document.getElementById('country-name').innerText;
     caseCountry = case_dictionary[currentCountry];
-    selected = null;
+    selected = {};
 
     for (let index = 0; index < caseCountry.length; index++) {
         if (caseCountry[index]['number'] == caseNumber){
