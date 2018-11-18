@@ -2,6 +2,14 @@
 
  const ZOOM = 3;
  var case_dictionary={};
+ var map = L.map('map',{  center: [20.0, 0.0], zoom: ZOOM, zoomControl:false});
+
+ var sidebar = L.control.sidebar('sidebar', {
+    closeButton: false,
+    position: 'left'
+ });
+
+map.addControl(sidebar);
 
  const COUNTRIES = [
     'Ecuador',
@@ -31,24 +39,26 @@ d3.csv("./case_studies.csv").then(function(case_studies){
     }
 
     console.log(case_dictionary);
+
+    var CartoDB_Voyager = new L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
+
+    map.addLayer(CartoDB_Voyager);      // Adding layer to the map
+    
+    map.scrollWheelZoom.disable();
+    map.dragging.disable();
+
+    $.getJSON('countries.geojson', function(data) {    
+        geojson = L.geoJson(data, {
+            filter: filter_countries, 
+            style: myStyle,
+            onEachFeature: onEachFeature,
+            scrollWheelZoom: false}).addTo(map);
+    });
 });
-
-var map = L.map('map',{  center: [20.0, 0.0], zoom: ZOOM, zoomControl:false});
-var sidebar = L.control.sidebar('sidebar', {
-    closeButton: false,
-    position: 'left'
-});
-map.addControl(sidebar);
-
-map.scrollWheelZoom.disable();
-
-var CartoDB_Voyager = new L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
-});
-
-map.addLayer(CartoDB_Voyager);      // Adding layer to the map
 
 function create_table(country_name) {
 
@@ -68,27 +78,14 @@ function create_table(country_name) {
         row.appendChild(added);
     
         tableBody.appendChild(row);
-      });
-}
-
-function onClick(e) {
-
-    if (map.getZoom() != ZOOM) {
-        map.setView([20.0, 0.0], ZOOM);
-        sidebar.hide();
-        document.getElementById("cases").innerHTML = "";  
-    }
-
-    if ($( "#info-panel" ).is(":visible")) {
-        $( "#info-panel" ).slideUp('slow');
-    }  
+    });
 }
 
 function zoomToFeature(e) {
     if (map.getZoom() == ZOOM) {
         sidebar.show();    
         map.fitBounds(e.target.getBounds());
-        console.log(e);
+        console.log(e.target.getBounds());
         document.getElementById('country-name').innerHTML = e.target.feature.properties.name;
         create_table(e.target.feature.properties.name);
 
@@ -130,7 +127,7 @@ var myStyle = {
 "opacity": 0.65
 };
 
-map.on('click', onClick);
+
 
 function filter_countries(data) {
     if (COUNTRIES.includes(data.properties.admin)){
@@ -141,13 +138,7 @@ function filter_countries(data) {
 };
 
 // Add OpenStreetMap tile layer to map element
-$.getJSON('countries.geojson', function(data) {    
-    geojson = L.geoJson(data, {
-        filter: filter_countries, 
-        style: myStyle,
-        onEachFeature: onEachFeature,
-        scrollWheelZoom: false}).addTo(map);
-});
+
 
 $("#case-table").on('click','tr',function(e) {  
     if ( $( "#info-panel" ).is( ":hidden" ) ) {
@@ -162,6 +153,16 @@ $("#case-table").on('click','tr',function(e) {
         
         $( "#info-panel" ).slideDown('slow');
       }
+}); 
+
+$(".close").on('click', () => {
+    sidebar.hide();
+    map.setView([20.0, 0.0], ZOOM);
+    document.getElementById("cases").innerHTML = "";  
+
+    if ($( "#info-panel" ).is(":visible")) {
+        $( "#info-panel" ).slideUp('slow');
+    }  
 }); 
 
 function showDetails(caseNumber) {
