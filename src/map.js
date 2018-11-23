@@ -224,6 +224,7 @@ function showDetails(caseNumber) {
 
 
 function case_6_1_fig1() {
+    
     d3.csv("./line_plot.csv").then(function(lineplot_data){
         
         console.log("printed")
@@ -238,7 +239,7 @@ function case_6_1_fig1() {
         var options={
             animationEnabled: true,
             title:{
-                text: "Speed And Distance Time Graph"
+                text: "CRP Enrollments and Payment"
             },
             toolTip: {
                 shared: true
@@ -317,24 +318,34 @@ function sum_values(data,column){
     }        
     return sum
 }
+function zoom_to_US(){
 
+    map.setView([50.0, -120.0], 4);        
+    return
+}
 function case_6_1_fig2() {
+
     if(choropleth_bool){
         remove_choropleth();
-        choropleth_bool=false;    
+        choropleth_bool=false; 
+        map.setView([20.0, 0.0], ZOOM);        
     }
     else{
+        zoom_to_US();
         choropleth_from_csv("acres_new",'2016',[0, 0, 1, 5, 10],true);
         choropleth_bool=true;
     }
 };
 
 function case_6_1_fig3() {
+    
     if(choropleth_bool){
         remove_choropleth();
         choropleth_bool=false;    
+        map.setView([20.0, 0.0], ZOOM);        
     }
     else{
+        zoom_to_US();        
         choropleth_from_csv("acres_payments",'2016',[0, 0, 20, 40, 80],false);
         choropleth_bool=true;
     }
