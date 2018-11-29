@@ -330,7 +330,7 @@ function sum_values(data,column){
 }
 function zoom_to_US(){
 
-    map.setView([40.0, -105.0], 4);        
+    map.setView([40.0, -105.0],4.5);        
     return
 }
 function case_6_1_fig2() {
