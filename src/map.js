@@ -1,9 +1,9 @@
  // Countries to show
 
- const ZOOM = 3;
+ const ZOOM = 2.5;
  var case_dictionary={};
  var figure_dictionary={};
- var map = L.map('map',{  center: [20.0, 0.0], zoom: ZOOM, zoomControl:false});
+ var map = L.map('map',{  center: [20.0, 0.0], zoom:ZOOM, zoomSnap: 0.5, zoomControl:false});
  new L.Control.Zoom({ position: 'bottomright' }).addTo(map); 
  choropleth_fips={}
  choropleth_bool=false;
@@ -11,6 +11,7 @@
  waterfund_objs={}
  waterfund_markers={}
  waterfund_bool=false;
+ case_6_1_fig1_bool=false;
 
  const COUNTRIES = [
     'Ecuador',
@@ -84,12 +85,14 @@ function read_cases(){
     });
 }
 function create_content_table(){
+    
     Object.keys(case_dictionary).forEach(function(key) {
-        $('#chapter-table').append('<li class="active" id="active-'+key+'"></li>');
-        $('#chapter-table #active-'+key+'').append('<a href="#'+key+'-submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Chapter '+key+'</a>')
+        $('#chapter-table').append('<li id="active-'+key+'"></li>');
+        $('#chapter-table #active-'+key+'').append('<a href="#'+key+'-submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><b>Ch '+key+ " &nbsp; </b>"+ case_dictionary[key][0]["ch_title"]+'</a>')
         $('#chapter-table #active-'+key+'').append('<ul class="collapse list-unstyled" id="'+key+'-submenu">')        
+        $('#chapter-table #active-'+key+' #'+key+'-submenu').append('<li class="submenu">'+case_dictionary[key][0]['summary']+'</li>')                        
         case_dictionary[key].forEach(function(rowData){
-            $('#chapter-table #active-'+key+' #'+key+'-submenu').append('<li><a href="#'+rowData['number'].replace(".","-")+'-submenu" data-toggle="collapse" aria-expanded="false class="dropdown-toggle">'+rowData['number']+' - '+rowData['name']+'</a></li>')            
+            $('#chapter-table #active-'+key+' #'+key+'-submenu').append('<li><a href="#'+rowData['number'].replace(".","-")+'-submenu" data-toggle="collapse" aria-expanded="false class="dropdown-toggle"> <b>'+rowData['number']+'&nbsp; </b>'+rowData['name']+'<span style="float:right;">&#9662;</span> </a></li>')            
             //console.log("figs|"+rowData['number']+'|');
             //console.log("figs",figure_dictionary, rowData['number'] in figure_dictionary);
             if(rowData['number'] in figure_dictionary){
@@ -97,8 +100,9 @@ function create_content_table(){
                 $('#chapter-table #active-'+key+' #'+key+'-submenu').append('<ul class="collapse list-unstyled" id="'+rowData['number'].replace(".","-")+'-submenu">')        
                 
                 figure_dictionary[rowData['number']].forEach(function(figure){
-                    console.log("hey",figure['fig_no'],figure['name'],':','#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu');
-                    $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu').append('<li><a href="#" class="submenu" onclick="case_'+rowData['number'].toString().replace(".","_")+'_fig'+figure['fig_no']+'();">'+figure['name']+'</a></li>')             
+                    $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu').append('<li><a href="#'+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail" data-toggle="collapse" aria-expanded="false class="dropdown-toggle onclick="case_'+rowData['number'].toString().replace(".","_")+'_fig'+figure['fig_no']+'();">'+figure['name']+'<span style="float:right;">&#9662;</span> </a></li>')             
+                    $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu').append('<ul class="collapse list-unstyled" id="'+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail">');                                 
+                    $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu #'+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail').append('<li class="subsubmenu">'+figure['description']+'</li>');                                 
                 });
             }
             else{
@@ -224,8 +228,12 @@ function showDetails(caseNumber) {
 
 
 function case_6_1_fig1() {
-    
-    d3.csv("./line_plot.csv").then(function(lineplot_data){
+    if(case_6_1_fig1_bool){
+        case_6_1_fig1_bool=false;
+    }
+    else
+    {
+        d3.csv("./line_plot.csv").then(function(lineplot_data){
         
         console.log("printed")
         console.log(lineplot_data[0])
@@ -295,7 +303,9 @@ function case_6_1_fig1() {
         });
         $(".ui-widget-overlay").css({"background-color": "#111111"});
         $("#chartContainer").CanvasJSChart(options);
+        case_6_1_fig1_bool=true;
     });
+    }
 };
 
 function style(feature) {
@@ -320,7 +330,7 @@ function sum_values(data,column){
 }
 function zoom_to_US(){
 
-    map.setView([50.0, -120.0], 4);        
+    map.setView([40.0, -105.0], 4);        
     return
 }
 function case_6_1_fig2() {

@@ -50,48 +50,63 @@ a, a:hover, a:focus {
 
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #7386D5;
+    min-width: 350px;
+    max-width: 350px;
+    background: #85a3b3;
     color: #fff;
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
 }
 
 #sidebar.active {
-    margin-left: -250px;
+    margin-left: -350px;
     transform: rotateY(100deg);
 }
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #47748b;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #6390a7;
 }
 
-#sidebar ul p {
+#sidebar ul li ul a {
+    padding-left: 30px;
     color: #fff;
+    font-size: 1.3em !important;    
+    display: block;
+}
+#sidebar ul li ul ul a {
+    padding-left: 60px;
+    color: #fff;
+    font-size: 1.3em !important;    
+    display: block;
+}
+#sidebar ul li a:active{
     padding: 10px;
+    color: #fff;
+    font-size: 1.4em;
+    display: block;
+    background: #6390a7;    
 }
 
 #sidebar ul li a {
     padding: 10px;
-    font-size: 1.3em;
+    font-size: 1.4em;
     display: block;
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    color: #fff;
+    background: #6390a7;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #6390a7;
 }
 
 
@@ -107,29 +122,26 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
-    font-size: 1.1em !important;
-    padding-left: 20px !important;
-    background: #6d7fcc;
-}
-
 .submenu {
-    font-size: 1.0 !important;
-    padding-left: 30px !important;
-    background: #6d7fcc;
+    margin: 5px;
+    font-size: 1.2em !important;
+    padding: 5px !important;
+    background: #f0ebeb;
+    border-style: groove;
+    color: #0a4764;
 }
 
-a.download {
-    background: #fff;
-    color: #7386D5;
+.subsubmenu {
+    margin-left: 60px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.2em !important;
+    padding: 5px !important;
+    background: #f0ebeb;
+    border-style: groove;
+    color: #0a4764;
 }
-
-a.article, a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
-}
-
-
 
 /* ---------------------------------------------------
     CONTENT STYLE

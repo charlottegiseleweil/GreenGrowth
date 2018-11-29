@@ -1,5 +1,5 @@
-ch_no,case_number,fig_no,name
-6,6.1,1,CRP Enrollment and payments from 1986 to today 
-6,6.1,2,CRP Enrollment per county 2016
-6,6.1,3,CRP Soil rental rate per county 2017
-3,3.1,1,Water Funds Location on Map
+ch_no,case_number,fig_no,name,description
+6,6.1,1,CRP Enrollment and payments from 1986 to today, Area of land enrolled in CRP and CRP payments from 1986 to 2016
+6,6.1,2,CRP Enrollment per county 2016,Distribution of land enrolled in CRP across the United States in 2016
+6,6.1,3,CRP Soil rental rate per county 2017, Average soil rental rates (USD/ha) for CRP land across the United States in the 2016 fiscal year
+3,3.1,1,Water Funds Location on Map, Phases can be filtered using checkboxes on top right of the screen. Click on the markers to see more information.
