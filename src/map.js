@@ -73,8 +73,8 @@ function read_cases(){
 
         map.addLayer(CartoDB_Voyager);      // Adding layer to the map
         
-        map.scrollWheelZoom.disable();
-        map.dragging.disable();
+        //map.scrollWheelZoom.disable();
+        //map.dragging.disable();
 
         $.getJSON('countries.geojson', function(data) {    
             geojson = L.geoJson(data, {
