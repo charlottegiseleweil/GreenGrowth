@@ -12,6 +12,8 @@
  waterfund_markers={}
  waterfund_bool=false;
  case_6_1_fig1_bool=false;
+ case_6_1_fig3_bool=false;
+ case_6_1_fig2_bool=false;
 
  const COUNTRIES = [
     'Ecuador',
@@ -100,6 +102,7 @@ function create_content_table(){
                 $('#chapter-table #active-'+key+' #'+key+'-submenu').append('<ul class="collapse list-unstyled" id="'+rowData['number'].replace(".","-")+'-submenu">')        
                 
                 figure_dictionary[rowData['number']].forEach(function(figure){
+                    console.log('figure','#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu '+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail');
                     $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu').append('<li><a href="#'+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail" data-toggle="collapse" aria-expanded="false class="dropdown-toggle onclick="case_'+rowData['number'].toString().replace(".","_")+'_fig'+figure['fig_no']+'();">'+figure['name']+'<span style="float:right;">&#9662;</span> </a></li>')             
                     $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu').append('<ul class="collapse list-unstyled" id="'+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail">');                                 
                     $('#chapter-table #active-'+key+' #'+key+'-submenu #'+rowData['number'].replace(".","-")+'-submenu #'+rowData['number'].replace(".","-")+'-'+figure['fig_no']+'-detail').append('<li class="subsubmenu">'+figure['description']+'</li>');                                 
@@ -334,30 +337,38 @@ function zoom_to_US(){
     return
 }
 function case_6_1_fig2() {
-
-    if(choropleth_bool){
+    if(case_6_1_fig3_bool){
         remove_choropleth();
-        choropleth_bool=false; 
+        case_6_1_fig3_bool=false;
+        $('#chapter-table #active-6 #6-submenu #6-1-submenu #6-1-3-detail').collapse('toggle');             
+    }
+    if(case_6_1_fig2_bool){
+        remove_choropleth();
+        case_6_1_fig2_bool=false; 
         map.setView([20.0, 0.0], ZOOM);        
     }
     else{
         zoom_to_US();
         choropleth_from_csv("acres_new",'2016',[0, 0, 1, 5, 10],true);
-        choropleth_bool=true;
+        case_6_1_fig2_bool=true;
     }
 };
 
 function case_6_1_fig3() {
-    
-    if(choropleth_bool){
+    if(case_6_1_fig2_bool){
         remove_choropleth();
-        choropleth_bool=false;    
+        $('#chapter-table #active-6 #6-submenu #6-1-submenu #6-1-2-detail').collapse('toggle');             
+        case_6_1_fig2_bool=false;
+    }
+    if(case_6_1_fig3_bool){
+        remove_choropleth();
+        case_6_1_fig3_bool=false;    
         map.setView([20.0, 0.0], ZOOM);        
     }
     else{
         zoom_to_US();        
         choropleth_from_csv("acres_payments",'2016',[0, 0, 20, 40, 80],false);
-        choropleth_bool=true;
+        case_6_1_fig3_bool=true;
     }
 };
 
