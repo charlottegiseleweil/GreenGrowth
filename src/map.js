@@ -5,15 +5,17 @@
  var figure_dictionary={};
  var map = L.map('map',{  center: [20.0, 0.0], zoom:ZOOM, zoomSnap: 0.5, zoomControl:false});
  new L.Control.Zoom({ position: 'bottomright' }).addTo(map); 
- choropleth_fips={}
- choropleth_bool=false;
- choropleth_map_objs = {}
- waterfund_objs={}
- waterfund_markers={}
- waterfund_bool=false;
- case_6_1_fig1_bool=false;
- case_6_1_fig3_bool=false;
- case_6_1_fig2_bool=false;
+ var choropleth_fips={}
+ var choropleth_bool=false;
+ var choropleth_map_objs = {}
+ var waterfund_objs={}
+ var waterfund_markers={}
+ var waterfund_bool=false;
+ var case_6_1_fig1_bool=false;
+ var case_6_1_fig3_bool=false;
+ var case_6_1_fig2_bool=false;
+ var case_6_3_fig1_bool=false;
+ var case_5_2_fig1_bool=false
 
  const COUNTRIES = [
     'Ecuador',
@@ -72,17 +74,20 @@ function read_cases(){
         });
 
         map.addLayer(CartoDB_Voyager);      // Adding layer to the map
+        //var layer = L.leafletGeotiff(url='./layers.tif', options={displayMin: 0, displayMax: 30, name: 'Wind speed'}).addTo(map);
+
         
         //map.scrollWheelZoom.disable();
         //map.dragging.disable();
 
-        $.getJSON('countries.geojson', function(data) {    
+        $.getJSON('countries.geojson', function(data) {  
+            
             geojson = L.geoJson(data, {
                 filter: filter_countries, 
                 style: myStyle,
-                onEachFeature: onEachFeature,
                 scrollWheelZoom: false}).addTo(map);
         });
+
         create_content_table();
     });
 }
@@ -133,44 +138,6 @@ function create_table(country_name) {
         row.appendChild(added);
     
         tableBody.appendChild(row);
-    });
-}
-
-function zoomToFeature(e) {
-    if (map.getZoom() == ZOOM) {
-        //sidebar.show();    
-        map.fitBounds(e.target.getBounds());
-        console.log(e.target.getBounds());
-        document.getElementById('country-name').innerHTML = e.target.feature.properties.name;
-        create_table(e.target.feature.properties.name);
-
-    } else {
-        map.setView([20.0, 0.0], ZOOM);
-        //sidebar.hide();  
-        document.getElementById("cases").innerHTML = "";  
-    }  
-}
-
-function highlightFeature(e) {
-    var layer = e.target;
-
-    layer.setStyle({
-        weight: 0.5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
-}
-
-function resetHighlight(e) {
-    geojson.resetStyle(e.target);
-}
-
-function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: zoomToFeature
     });
 }
 
@@ -331,11 +298,13 @@ function sum_values(data,column){
     }        
     return sum
 }
-function zoom_to_US(){
 
-    map.setView([40.0, -105.0],4.5);        
+function zoom_to_country(xy_coor, zoom){
+    map.setView(xy_coor, zoom);        
     return
 }
+
+
 function case_6_1_fig2() {
     if(case_6_1_fig3_bool){
         remove_choropleth();
@@ -348,7 +317,7 @@ function case_6_1_fig2() {
         map.setView([20.0, 0.0], ZOOM);        
     }
     else{
-        zoom_to_US();
+        zoom_to_country([40.0, -105.0],4.5);
         choropleth_from_csv("acres_new",'2016',[0, 0, 1, 5, 10],true);
         case_6_1_fig2_bool=true;
     }
@@ -366,9 +335,67 @@ function case_6_1_fig3() {
         map.setView([20.0, 0.0], ZOOM);        
     }
     else{
-        zoom_to_US();        
+        zoom_to_country([40.0, -105.0],4.5);        
         choropleth_from_csv("acres_payments",'2016',[0, 0, 20, 40, 80],false);
         case_6_1_fig3_bool=true;
+    }
+};
+
+function case_6_3_fig1() {
+    if(case_6_3_fig1_bool){
+        $('#chapter-table #active-6 #6-submenu #6-3-submenu #6-3-1-detail').collapse('toggle');
+        case_6_3_fig1_bool=false;
+    }
+    else {
+        var imageUrl = './sonuc.png';
+
+        geojson.eachLayer(function(layer) {
+            if (layer.feature.properties.name == 'South Africa') {
+                layer.setStyle({fillOpacity: 0}); 
+                console.log(layer);
+                console.log('YEEEEE');
+            }    
+        });
+
+        imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
+        L.imageOverlay(imageUrl, imageBounds).addTo(map);
+        zoom_to_country([-28, 24], 6)   
+        case_6_3_fig1_bool=true;
+    }
+};
+
+function case_5_2_fig1() {
+    if(case_5_2_fig1_bool){
+        $('#chapter-table #active-5 #5-submenu #5-2-submenu #5-2-1-detail').collapse('toggle');
+        case_5_2_fig1_bool=false;
+    }
+    else {
+
+        var added_geojson;
+
+        shp("files/brazil/ucs_arpa_br_mma_snuc_2017_w").then(function(geojson){
+            added_geojson = L.geoJson(geojson, {style: {
+                "color": "#00994c",
+                "opacity": 0.65
+                }
+            }).addTo(map); 
+        }).then(
+            $.getJSON('files/brazil/amapoly_ivb.json', function(data) {  
+                added_geojson = L.geoJson(data, {style: {
+                    "opacity": 0.2
+                    }
+                }).addTo(map);
+            })
+        ).then(
+            $.getJSON('files/brazil/amazonriver_865.json', function(data) {  
+                added_geojson = L.geoJson(data, {style: {
+                    "weight": 5
+                    }
+                }).addTo(map);
+            })
+        ).then(
+            zoom_to_country([-7, -54], 5)
+        );
     }
 };
 
@@ -459,7 +486,7 @@ function choropleth_from_csv(data_file,year,grades,percent){
     }
 
         console.log("printed")
-        shp("files/counties").then(function(geojson){
+        shp("files/county/counties").then(function(geojson){
             choropleth_map_objs['geo'] = L.geoJson(geojson, {style: style})
             choropleth_map_objs['geo'].addTo(map); 
             console.log("after",Object.keys(choropleth_map_objs).length)                
@@ -509,4 +536,3 @@ function getColor(d,grades) {
            d > grades[1] ?  '#FFEDA0' :
                             '#FFFFFF' ;
 }
-
