@@ -15,7 +15,8 @@
  var case_6_1_fig3_bool=false;
  var case_6_1_fig2_bool=false;
  var case_6_3_fig1_bool=false;
- var case_5_2_fig1_bool=false
+ var case_5_2_fig1_bool=false;
+ var case_4_2_fig1_bool=false;
 
  const COUNTRIES = [
     'Ecuador',
@@ -85,7 +86,7 @@ function read_cases(){
             geojson = L.geoJson(data, {
                 filter: filter_countries, 
                 style: myStyle,
-                scrollWheelZoom: false}).addTo(map);
+                scrollWheelZoom: true}).addTo(map);
         });
 
         create_content_table();
@@ -361,6 +362,39 @@ function case_6_3_fig1() {
         L.imageOverlay(imageUrl, imageBounds).addTo(map);
         zoom_to_country([-28, 24], 6)   
         case_6_3_fig1_bool=true;
+    }
+};
+
+function case_4_2_fig1() {
+    
+    if(case_4_2_fig1_bool){
+        $('#chapter-table #active-5 #5-submenu #5-2-submenu #5-2-1-detail').collapse('toggle');
+        case_4_2_fig1_bool=false;
+    }
+    else {
+
+        var added_geojson;
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+
+
+        $.getJSON('files/denek.json', function(data) {  
+            added_geojson = L.geoJson(data, {
+                pointToLayer: function (feature, latlng) {
+                    label = String(feature.properties.NUMPOINTS) 
+                    return new L.circleMarker(latlng, geojsonMarkerOptions).bindTooltip(label, {permanent: true, opacity: 0.7}).openTooltip();
+                }
+            }).addTo(map);
+            //console.log(added_geojson);
+        }).then(
+            zoom_to_country([48.0, -105.0],4) 
+        );
     }
 };
 
