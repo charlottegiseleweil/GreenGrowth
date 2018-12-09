@@ -17,6 +17,7 @@
  var case_6_3_fig1_bool=false;
  var case_5_2_fig1_bool=false;
  var case_4_2_fig1_bool=false;
+ var case_4_4_fig1_bool=false;
 
  const COUNTRIES = [
     'Ecuador',
@@ -343,12 +344,17 @@ function case_6_1_fig3() {
 };
 
 function case_6_3_fig1() {
+    var lg;
+
     if(case_6_3_fig1_bool){
         $('#chapter-table #active-6 #6-submenu #6-3-submenu #6-3-1-detail').collapse('toggle');
+        remove_choropleth();
         case_6_3_fig1_bool=false;
+        console.log('buradayim');
     }
     else {
         var imageUrl = './sonuc.png';
+        case_6_3_fig1_bool=true;
 
         geojson.eachLayer(function(layer) {
             if (layer.feature.properties.name == 'South Africa') {
@@ -357,6 +363,24 @@ function case_6_3_fig1() {
                 console.log('YEEEEE');
             }    
         });
+
+        var legend = L.control({position: 'bottomleft'});
+        
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend bg-color');
+            categories = ['0 or no data','0 - 5%','5 - 10%','> 10%','Clearing areas'];
+            colors = ['#ffffff', '#EBB57D', '#CF6042', '#980001', '#386507']
+            lgnd = ["<strong>Legend</strong>"];
+
+            for (var i = 0; i < categories.length; i++) {
+                div.innerHTML +=  lgnd.push('<i class="circle border" style="background:' + colors[i] + '"></i> ' + (categories[i]));
+            }
+
+            div.innerHTML = lgnd.join('<br>');
+            return div;
+            };
+
+        legend.addTo(map);
 
         imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
         L.imageOverlay(imageUrl, imageBounds).addTo(map);
@@ -384,7 +408,7 @@ function case_4_2_fig1() {
         };
 
 
-        $.getJSON('files/denek.json', function(data) {  
+        $.getJSON('files/mitigation_bank.json', function(data) {  
             added_geojson = L.geoJson(data, {
                 pointToLayer: function (feature, latlng) {
                     label = String(feature.properties.NUMPOINTS) 
@@ -395,6 +419,40 @@ function case_4_2_fig1() {
         }).then(
             zoom_to_country([48.0, -105.0],4) 
         );
+    }
+};
+
+//
+
+function case_4_4_fig1() {
+    
+    if(case_4_4_fig1_bool){
+        $('#chapter-table #active-5 #5-submenu #5-2-submenu #5-2-1-detail').collapse('toggle');
+        case_4_4_fig1_bool=false;
+    }
+    else {
+
+        var added_geojson;
+
+        shp("files/forest/forest.offset.projects.updated2017").then(function(geojson){
+            added_geojson = L.geoJson(geojson, {
+                pointToLayer: function (feature, latlng) {
+                    console.log(feature);
+                    return new L.marker(latlng, {
+                        icon: L.divIcon({
+                          html: '<i class="fa fa-tree" aria-hidden="true" style="color:green"></i>',
+                          className: 'myDivIcon'
+                        })
+                      }).bindPopup('<i>'+String(feature.properties.NAME)+'</i><br>'+String(feature.properties.Area2)+' <strong>hectares.</strong>').on('mouseover', function (e) {
+                        this.openPopup();
+                    }).on('mouseout', function (e) {
+                        this.closePopup();
+                    });
+                }
+            }).addTo(map);
+        }).then(() => {
+            zoom_to_country([40.0, -96],5)
+        });
     }
 };
 
@@ -427,15 +485,31 @@ function case_5_2_fig1() {
                     }
                 }).addTo(map);
             })
-        ).then(
-            zoom_to_country([-7, -54], 5)
-        );
+        ).then(() => {
+            zoom_to_country([-7, -54], 5);
+            var legend = L.control({position: 'bottomleft'});
+        
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend bg-color');
+                categories = ['Amazon Basin','ARPA System','Amazon River main stream'];
+                colors = ["rgb(215, 225, 244)", "rgb(110, 168, 117)", "rgb(84, 131, 244)"]
+                lgnd = ["<strong>Legend</strong>"];
+
+                for (var i = 0; i < categories.length; i++) {
+                    div.innerHTML +=  lgnd.push('<i class="circle border" style="background:' + colors[i] + '"></i> ' + (categories[i]));
+                }
+
+                div.innerHTML = lgnd.join('<br>');
+                return div;
+             };
+
+            legend.addTo(map)
+        });
     }
 };
 
 
 function case_3_1_fig1() {
-    console.log("3.1 cilcked", waterfund_bool)
     if(waterfund_bool){
         waterfund_markers=[]
         remove_objs();
@@ -542,6 +616,10 @@ function remove_choropleth(){
         console.log('key')
         map.removeLayer(choropleth_map_objs[key]);        
     });   
+}
+
+function add_legend(){
+    
 }
 
 function legend(grades){
