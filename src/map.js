@@ -3,7 +3,7 @@
  const ZOOM = 2.5;
  var case_dictionary={};
  var figure_dictionary={};
- var map = L.map('map',{  center: [20.0, 0.0], zoom:ZOOM, zoomSnap: 0.5, zoomControl:false});
+ var map = L.map('map',{  center: [20.0, 0.0], zoom:ZOOM, zoomSnap: 0.2, zoomControl:false});
  new L.Control.Zoom({ position: 'topright' }).addTo(map);
  var choropleth_fips={}
  var choropleth_map_objs = {}
@@ -165,7 +165,7 @@ function empty_content_table(){
 
 function create_main_content_table(){
 
-    document.getElementById("sidebar-title").innerHTML = "<b>BOOK CHAPTERS</b>";
+    document.getElementById("sidebar-title").innerHTML = "<b>International Environmental Projects</b>";
     empty_content_table();
     table_is_main_content = true;
     Object.keys(case_dictionary).forEach(function(key) {
@@ -691,8 +691,19 @@ function case_8_1_fig1() {
 
     }
 };
-
+function get_marker_color(phase){
+    return phase == 'phase_' ?  'Maroon' :
+           phase == 'phase_0' ?  'LightCoral' :
+           phase == 'phase_1' ?  'SteelBlue' :
+           phase == 'phase_2' ? 'Aqua' :
+           phase == 'phase_3' ?'Chartreuse' :
+           phase == 'phase_4' ?'#00FA9A' :
+           phase == 'phase_5' ?'Green' :
+                                'Aquamarine';
+           
+}
 function case_9_1_fig1() {
+    map.setView([20.0, 0.0], 2.7);    
     case_no = 9.1;
     fig_no = 1;
     clean_layers();
@@ -710,27 +721,42 @@ function case_9_1_fig1() {
             waterfund_markers['phase_5'] = [];
             for(var i=0;i< data.length;i++){
                 //console.log("Water fund",i," :",data[i]);
-                var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']]);
+                console.log(get_marker_color('phase_'+data[i]['Phase_Code']));
+                
+                var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
+                    icon: L.divIcon({
+                      html: '<i class="fa fa-tint fa-lg" aria-hidden="true" style="color:'+get_marker_color('phase_'+data[i]['Phase_Code'])+'"></i>',
+                      className: 'myDivIcon'
+                    })}
+                );
                 //waterfund_objs[i];//.addTo(map);
                 if (data[i]['Phase']==('Operation'||'Maturity')){
                     marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
                     +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>"+"<b>State:</b>"+data[i]['State']
-                    +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']);
+                    +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']).on('mouseover', function (e) {
+                        this.openPopup();
+                    }).on('mouseout', function (e) {
+                        this.closePopup();
+                    });
                 }
                 else{
                     marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>","<b>State:</b>"+data[i]['State']);
+                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>","<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
+                        this.openPopup();
+                    }).on('mouseout', function (e) {
+                        this.closePopup();
+                    });;
                 }
                 waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
                 //waterfund_objs[i]=marker
             }
-            waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']);
-            waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']);
-            waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']);
-            waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']);
-            waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']);
-            waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']);
-            waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']);
+            waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']).addTo(map);
+            waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']).addTo(map);
+            waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']).addTo(map);
+            waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']).addTo(map);
+            waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
+            waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
+            waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
             var overlayMaps = {
                 "Being Explored":               waterfund_objs['phase_'] ,
                 "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
@@ -740,7 +766,8 @@ function case_9_1_fig1() {
                 "Phase 4: Operation":           waterfund_objs['phase_4'],
                 "Phase 5: Maturity":            waterfund_objs['phase_5']
             };
-            waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false}).addTo(map);
+            waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'topleft'}).addTo(map);
+            $('.leaflet-control-layers-selector:checked')
         });
         waterfund_bool=true;
     }
@@ -876,7 +903,7 @@ function clean_layers(){
     map.removeControl(case_8_1_fig1_legend);
   }
   //case_9_1_fig1
-  else if(is_active_fig[[9.1,1]]){
+  else if(is_active_fig[[9.1,1]]){    
     waterfund_markers=[]
     //remove objs
     Object.keys(waterfund_objs).forEach(function(key) {
@@ -889,7 +916,7 @@ function clean_layers(){
     });
     Object.keys(waterfund_markers).forEach(function(key) {
         map.removeLayer(waterfund_markers[key]);
-    });
+    });    
   }
 }
 
