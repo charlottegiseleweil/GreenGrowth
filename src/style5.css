@@ -48,6 +48,13 @@ a, a:hover, a:focus {
     perspective: 1500px;
 }
 
+#statig_fig_container{
+  width: 350px;
+  height: 200 px;
+  position: relative;
+  margin-left: 400px;
+  border: 3px solid #73AD21;
+}
 
 #sidebar {
     min-width: 350px;
@@ -76,13 +83,13 @@ a, a:hover, a:focus {
 #sidebar ul li ul a {
     padding-left: 30px;
     color: #fff;
-    font-size: 1.3em !important;    
+    font-size: 1.3em !important;
     display: block;
 }
 #sidebar ul li ul ul a {
     padding-left: 60px;
     color: #fff;
-    font-size: 1.3em !important;    
+    font-size: 1.3em !important;
     display: block;
 }
 #sidebar ul li a:active{
@@ -90,7 +97,7 @@ a, a:hover, a:focus {
     color: #fff;
     font-size: 1.4em;
     display: block;
-    background: #6390a7;    
+    background: #6390a7;
 }
 
 #sidebar ul li a {
@@ -161,8 +168,8 @@ a[data-toggle="collapse"] {
     outline: none !important;
     border: none;
     position: absolute;
-    float: left ;  
-    z-index: 2; 
+    float: left ;
+    z-index: 2;
 }
 
 #sidebarCollapse span {
