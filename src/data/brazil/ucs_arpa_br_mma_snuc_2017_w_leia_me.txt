@@ -1,0 +1,68 @@
+IDENTIFICAÇÃO GERAL
+-------------------
+
+TÍTULo: Unidades de conservação snuc ARPA  
+DATA DE CRIAÇÃO : 2017		 			
+RESUMO: 
+FONTE: MMA
+LINK PARA DOWNLOAD DO DADO ORIGINAL:  
+
+
+IDENTIFICAÇÃO DO DADO
+---------------------
+
+TIPO DE REPRESENTAÇÃO ESPACIAL: Vetorial
+TIPO DE REPRESENTAÇÃO VETORIAL: Polígono
+FORMATO: .shp
+ESCALA EQUIVALENTE / RESOLUÇÃO: 
+IDIOMA DO DADO: PORTUGUÊS 
+ABRANGÊNCIA GEOGRÁFICA : Brasil
+
+
+INFORMAÇÃO DE RESTRIÇÃO
+-----------------------
+
+RESTRIÇÃO DE USO: sem restrição 
+OBSERVAÇÕES: 
+
+SISTEMA DE REFERÊNCIA
+---------------------
+
+SISTEMA DE PROJEÇÃO / GEOGRÁFICO:GCS SIRGAS 2000 
+DATUM: SIRGAS 2000
+
+
+INFORMAÇÃO DE CONTEÚDO
+----------------------
+
+ALTERAÇÕES NO DADO ORIGINAL:
+
+
+Informação das colunas da tabela de atributos:
+
+Nome: nome das ucs
+
+Categoria: categoria de áreas protegidas 
+
+Esfera: esfera responsável
+
+data_entr: Data de entrada no ARPA
+
+OBSERVAÇÕES
+-----------
+Foram exportadas as áreas protegidas apoiadas pelo ARPA do shapefile de áreas protegidas, foi criado uma coluna
+na tabela de atributos com a data de entrada das ucs no arpa, dados disponíoveis em uma planilha do MMA. 
+	
+
+
+METAMETADADOS
+-------------
+
+RESPONSÁVEL PELO METADADO:
+
+	- Responsável pelo preenchimento: Programa de Ciências/WWF-Brasil
+	- Contato: programadeciencias@wwf.org.br
+
+
+METADADO ORIGINAL EM: 
+-------------------

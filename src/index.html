@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Pathways to Green Growth</title>
+
+        <!-- Leaflet CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+        <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+        <!-- static CSS -->
+        <link rel="stylesheet" href="static/map.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
+    <body>
+
+        <div class="opening-page">
+            <div class="center-div">
+                <h1 class="google-font">Pathways to Green Growth</h2>
+                <h3 class="google-font">Mainstreaming natural capital into policy and finance: international case studies</h3>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                <button type="button" class="btn btn-success entry-button" onclick="openingClick()" style="display:none;">Start Experiencing</button>
+            </div>
+        </div>
+
+        <div class="mapbox" style="display: none">
+
+            <div id="map"></div>
+
+            <div id="left-menu">
+            </div>
+
+            <div id="right-menu" onscroll="onScroll()">
+                <div id="right-menu-body" class="modal-body">
+                </div>
+            </div>
+        </div>
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.js"   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="   crossorigin="anonymous"></script>
+
+        <!-- JQuery UI-->
+        <!-- JQuery Canvas for Charts-->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+        <!-- Leaflet.js -->
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+        <script type="text/javascript" src="lib/Leaflet.Icon.Glyph.js"></script>
+
+        <!-- D3 -->
+        <script src="https://d3js.org/d3.v5.js"></script>
+
+        <!-- static JS -->
+        <script src="lib/leaflet-providers.js"></script>
+        <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
+
+        <!-- map.js -->
+        <script src="js/map.js"></script>
+        <!-- left-menu.js -->
+        <script src="js/left-menu.js"></script>
+        <!-- right-menu.js -->
+        <script src="js/right-menu.js"></script>
+        <!-- figures.js -->
+        <script src="js/figures.js"></script>
+
+    </body>
+</html>
