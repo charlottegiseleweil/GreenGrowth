@@ -62,7 +62,6 @@ html, body {
     font-family: 'Righteous', cursive;
 }
 
-
 #left-menu-sub{
   position:absolute;
   z-index: 100;
@@ -72,6 +71,10 @@ html, body {
   font-family: 'Righteous', cursive;
   width: 4vh;
   padding-bottom: 1vh;
+}
+
+p {
+    text-align: justify;
 }
 
 .dot {

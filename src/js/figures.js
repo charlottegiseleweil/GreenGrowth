@@ -51,7 +51,7 @@ const start_reading = async function() {
 
     case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
     MyVar._prop1 += (100/load_file_num);
-    case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2012','2013','2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
+    case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
 
     //preload case_6_1-3
     case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
@@ -114,8 +114,7 @@ function right_menu_figures(chapter, subchapter){
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
   }
   else if (subchapter == '9-1'){
-    $('#'+subchapter+'-summary').after('<div id="container-9"></div>');
-    $('#container-9').after('<div id="water_marker_control"  style="margin: 0 auto; width: 200px;"></div>');        
+    $('#right-subchapter-9-1').after('<div id="water_marker_control" style="float:right; margin: 0 0 0.5vh 1vw;"></div>');        
     $('#water_marker_control').css('display','none');
     //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
     }
@@ -451,7 +450,7 @@ function handle_view(subchapter){
     lat = case_location_view[subchapter].split(',')[0];
     long = parseFloat(case_location_view[subchapter].split(',')[1]);
     zoom = case_location_view[subchapter].split(',')[2]
-    map.setView([lat, long],zoom);
+    map.flyTo([lat, long],zoom);
     console.log("Map set view"+long+" "+case_location_view[subchapter]);
 }
 }

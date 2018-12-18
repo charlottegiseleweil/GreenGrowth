@@ -15,7 +15,7 @@ function buildRightMenu(){
   d3.csv("./data/case_studies.csv").then(function(case_studies){
     $('#right-menu-body').append("<div id=title></div>")
     $('#title').append("<h2> Pathways to Green Growth</h2>")
-    $('#title').append("<h3> Mainstreaming natural capital into policy and finance: international case studies </h3>")
+    $('#title').append("<h3> Mainstreaming Natural Capital into Policy and Finance: International Case Studies </h3>")
     blocks.push('title')
 
     for(var i=0;i<case_studies.length;i++){
