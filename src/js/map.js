@@ -34,7 +34,7 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
     subdomains: 'abcd',
     maxZoom: 19,
-    minZoom: 3
+    minZoom: 2
 });
 
 function openingClick() {

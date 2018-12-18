@@ -2,7 +2,7 @@ let all_chapters = [];
 let all_subchapters =[];
 let chapter_dict = {};
 let timer;
-let only_dynamic = true;
+let only_dynamic = false;
 let case_location_view = {};
 let scroll_anim = false;
 const scroll_margin = 8;

@@ -10,10 +10,11 @@ var case_6_1_fig3_data;
 var case_6_1_fig2_data;
 var case_7_2_fig1_layer;
 var case_7_4_fig1_layer;
+var case_9_1_fig1_data;
 var choropleth_map_county;
 var progress_bar = 0;
 
-let load_file_num = 6;
+let load_file_num = 7;
 
 var geojsonMarkerOptions = {
     radius: 8,
@@ -50,12 +51,12 @@ const start_reading = async function() {
 
     case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
     MyVar._prop1 += (100/load_file_num);
-    case_6_1_choropleth_from_csv(case_6_1_fig2_data, '2016',[0, 0, 1, 5, 10],true,2);
+    case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2012','2013','2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
 
     //preload case_6_1-3
     case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
     MyVar._prop1 += (100/load_file_num);
-    case_6_1_choropleth_from_csv(case_6_1_fig3_data, '2016',[0, 0, 20, 40, 80],false,3);
+    case_6_1_choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,3);
 
     //preload case 7_2-1
     case_7_2_fig1_layer = L.geoJson(data, {
@@ -86,6 +87,9 @@ const start_reading = async function() {
 
     MyVar._prop1 += (100/load_file_num);
 
+    case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");    
+    MyVar._prop1 += (100/load_file_num);
+
     setTimeout(function(){$('.progress').trigger('loaded')}, 600);
 }
 
@@ -109,6 +113,12 @@ function right_menu_figures(chapter, subchapter){
     $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="case_6_1_fig2();">Enrollment per county</button>');
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
   }
+  else if (subchapter == '9-1'){
+    $('#'+subchapter+'-summary').after('<div id="container-9"></div>');
+    $('#container-9').after('<div id="water_marker_control"  style="margin: 0 auto; width: 200px;"></div>');        
+    $('#water_marker_control').css('display','none');
+    //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
+    }
 }
 
 
@@ -120,8 +130,7 @@ function display_figure(subchapter){
     switch(subchapter){
       case '6-1':
         if (case_6_1_button_active==1) case_6_1_fig2(scrolled=true)
-        else case_6_1_fig3(scrolled=true)
-
+        else case_6_1_fig3(scrolled=true);
         break
       case '6-3':
         case_6_3_fig1();
@@ -136,7 +145,9 @@ function display_figure(subchapter){
         case_8_1_fig1();
         break
       case '9-1':
-        case_9_1_fig1();
+        console.log("9-1");
+        $('#water_marker_control').show();
+        case_9_1_fig1(scrolled=true)
         break
     }
   }
@@ -196,50 +207,74 @@ function case_6_1_fig1() {
 
 function case_6_1_fig2(scrolled=false) {
     case_6_1_button_active = '1'
-    if(active_subchapter!='6-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
+    if(active_subchapter!='6-1') 
+        $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');    
     else {
-    if(!scrolled) clean_layers();
-    $("#button-1").css('background-color','#39ac73');
-    choropleth_map_objs['geo-2'].addTo(map)
-    choropleth_map_objs['legend-2'].addTo(map);
+        if(!scrolled) clean_layers();
+        $("#button-1").css('background-color','#39ac73');
+        choropleth_map_objs['2014geo-2'].addTo(map)
+        choropleth_map_objs['legend-2'].addTo(map);
+        $('#button-div').after('<div id="slider" style="margin: 16px"></div>')
+        map.addControl(choropleth_map_objs['slider']);//add slider to map
+        
+        var htmlObject = choropleth_map_objs['slider'].getContainer();
+
+        var newpos = document.getElementById('slider');
+    
+        function setParent(el, newParent)
+        {
+        newParent.appendChild(el);
+        }
+        setParent(htmlObject, newpos); 
+        choropleth_map_objs['slider'].startSlider();//starting slider     
     }
 };
 
 function case_6_1_fig3(scrolled=false) {
     case_6_1_button_active = '2'
-    if(active_subchapter!='6-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
+    if(active_subchapter!='6-1') 
+        $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
-    if(!scrolled) clean_layers();
-    $("#button-2").css('background-color','#39ac73');
-    choropleth_map_objs['geo-3'].addTo(map)
-    choropleth_map_objs['legend-3'].addTo(map);
+        if(!scrolled) clean_layers();
+        $("#button-2").css('background-color','#39ac73');
+        choropleth_map_objs['2016geo-3'].addTo(map)
+        choropleth_map_objs['legend-3'].addTo(map);
     }
 };
 
-function case_6_1_choropleth_from_csv(data, year,grades,percent,fig){
-
+function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
     choropleth_fips['grades']=grades;
-
-    var sum = sum_values(data,year);
-
-    for(var i=0;i< data.length;i++){
-        if (percent){
-            choropleth_fips[ data[i]['FIPS']]= (parseInt( data[i][year].replace('.',''))/sum)*10000;
+    layers=[]
+    for (year_idx=0;year_idx<year_list.length;year_idx++){
+        
+        year = year_list[year_idx];
+            
+        for(var i=0;i< data.length;i++){
+            if (percent){
+                var sum = sum_values(data,year);                
+                choropleth_fips[ data[i]['FIPS']]= (parseInt( data[i][year].replace('.',''))/sum)*10000;
+            }
+            else{
+                choropleth_fips[data[i]['FIPS']]= parseInt( data[i][year])/2.4711;
+            }
         }
-        else{
-            choropleth_fips[data[i]['FIPS']]= parseInt( data[i][year])/2.4711;
-        }
+
+        choropleth_map_objs[year+'geo-'+fig] = L.geoJson(choropleth_map_county, {style: style, time: year})
+        layers.push(choropleth_map_objs[year+'geo-'+fig]);
+        //choropleth_map_objs['geo'].addTo(map);
+
+        choropleth_map_objs['legend-'+fig] = L.control({position: 'bottomleft'});
+
+        choropleth_map_objs['legend-'+fig].onAdd = function (map) {
+            return legend(grades)
+        };
+
     }
-
-    choropleth_map_objs['geo-'+fig] = L.geoJson(choropleth_map_county, {style: style})
-    //choropleth_map_objs['geo'].addTo(map);
-
-    choropleth_map_objs['legend-'+fig] = L.control({position: 'bottomleft'});
-
-    choropleth_map_objs['legend-'+fig].onAdd = function (map) {
-        return legend(grades)
-    };
-
+    if (year_list.length>1){
+        var layerGroup = L.layerGroup(layers);
+        //initiate slider, follow = 1 means, show one feature at a time
+        choropleth_map_objs['slider'] = L.control.sliderControl({position: "topleft",layer:layerGroup, follow: 1});
+    }
     //choropleth_map_objs['legend'].addTo(map);
 }
 
@@ -319,51 +354,92 @@ function case_8_1_fig1() {
 
 };
 
-function case_9_1_fig1() {
-    d3.csv("./data/Water_Funds.csv").then(function(data){
-        waterfund_markers['phase_'] = [];
-        waterfund_markers['phase_0'] = [];
-        waterfund_markers['phase_1'] = [];
-        waterfund_markers['phase_2'] = [];
-        waterfund_markers['phase_3'] = [];
-        waterfund_markers['phase_4'] = [];
-        waterfund_markers['phase_5'] = [];
-        for(var i=0;i< data.length;i++){
-            //console.log("Water fund",i," :",data[i]);
-            var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']]);
-            //waterfund_objs[i];//.addTo(map);
-            if (data[i]['Phase']==('Operation'||'Maturity')){
-                marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>"+"<b>State:</b>"+data[i]['State']
-                +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']);
+function case_9_1_fig1(scrolled=false) {
+    data=case_9_1_fig1_data;
+    case_6_1_button_active = '1'
+    if(active_subchapter!='9-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-9-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
+    else {
+        if(!scrolled) clean_layers();
+    }
+    
+    map.setView([0, 55], 2.5);    
+    case_no = 9.1;
+    fig_no = 1;
+    wasActive=false;
+    //console.log("9.1 clicked", waterfund_bool)
+    if(!wasActive){
+            waterfund_markers['phase_'] = [];
+            waterfund_markers['phase_0'] = [];
+            waterfund_markers['phase_1'] = [];
+            waterfund_markers['phase_2'] = [];
+            waterfund_markers['phase_3'] = [];
+            waterfund_markers['phase_4'] = [];
+            waterfund_markers['phase_5'] = [];
+            for(var i=0;i< data.length;i++){
+                //console.log("Water fund",i," :",data[i]);
+                console.log(get_marker_color('phase_'+data[i]['Phase_Code']));
+                
+                var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
+                    icon: L.divIcon({
+                      html: '<i class="fa fa-tint fa-lg" aria-hidden="true" style="color:'+get_marker_color('phase_'+data[i]['Phase_Code'])+'"></i>',
+                      className: 'myDivIcon'
+                    })}
+                );
+                //waterfund_objs[i];//.addTo(map);
+                if (data[i]['Phase']==('Operation'||'Maturity')){
+                    marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
+                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>"+"<b>State:</b>"+data[i]['State']
+                    +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']).on('mouseover', function (e) {
+                        this.openPopup();
+                    }).on('mouseout', function (e) {
+                        this.closePopup();
+                    });
+                }
+                else{
+                    marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
+                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>","<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
+                        this.openPopup();
+                    }).on('mouseout', function (e) {
+                        this.closePopup();
+                    });;
+                }
+                waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
+                //waterfund_objs[i]=marker
             }
-            else{
-                marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>","<b>State:</b>"+data[i]['State']);
+            waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']).addTo(map);
+            waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']).addTo(map);
+            waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']).addTo(map);
+            waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']).addTo(map);
+            waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
+            waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
+            waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
+            var overlayMaps = {
+                "Being Explored":               waterfund_objs['phase_'] ,
+                "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
+                "Phase 1: Feasibility ":        waterfund_objs['phase_1'],
+                "Phase 2: Design":              waterfund_objs['phase_2'],
+                "Phase 3: Creation":            waterfund_objs['phase_3'],
+                "Phase 4: Operation":           waterfund_objs['phase_4'],
+                "Phase 5: Maturity":            waterfund_objs['phase_5']
+            };
+            waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'topleft'}).addTo(map);
+            $('.leaflet-control-layers-selector:checked')
+            
+            var htmlObject = waterfund_objs['con_layers'].getContainer();
+            // Get the desired parent node.
+            var newpos = document.getElementById('water_marker_control');
+           
+            // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
+            function setParent(el, newParent)
+            {
+               newParent.appendChild(el);
             }
-            waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
-            //waterfund_objs[i]=marker
-        }
-        waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']);
-        waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']);
-        waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']);
-        waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']);
-        waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']);
-        waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']);
-        waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']);
-        var overlayMaps = {
-            "Being Explored":               waterfund_objs['phase_'] ,
-            "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
-            "Phase 1: Feasibility ":        waterfund_objs['phase_1'],
-            "Phase 2: Design":              waterfund_objs['phase_2'],
-            "Phase 3: Creation":            waterfund_objs['phase_3'],
-            "Phase 4: Operation":           waterfund_objs['phase_4'],
-            "Phase 5: Maturity":            waterfund_objs['phase_5']
-        };
-        waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false}).addTo(map);
-    });
-    waterfund_bool=true;
+            setParent(htmlObject, newpos);
+        
+        waterfund_bool=true;
+    }
 }
+
 
 
 function handle_view(subchapter){
@@ -373,10 +449,11 @@ function handle_view(subchapter){
   else{
   //User clicked on active subchapter: reset
     lat = case_location_view[subchapter].split(',')[0];
-    long = case_location_view[subchapter].split(',')[1];
+    long = parseFloat(case_location_view[subchapter].split(',')[1]);
     zoom = case_location_view[subchapter].split(',')[2]
     map.setView([lat, long],zoom);
-  }
+    console.log("Map set view"+long+" "+case_location_view[subchapter]);
+}
 }
 
 function clean_layers(){
@@ -389,14 +466,13 @@ function clean_layers(){
     $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
     map.removeControl(choropleth_map_objs['legend-2']);
     map.removeControl(choropleth_map_objs['legend-3']);
-    map.removeControl(choropleth_map_objs['geo-2']);
-    map.removeControl(choropleth_map_objs['geo-3']);
-    /*
+    map.removeControl(choropleth_map_objs['slider']);
+    
     Object.keys(choropleth_map_objs).forEach(function(key) {
       console.log(key)
         map.removeLayer(choropleth_map_objs[key]);
     });
-    */
+   
   }
 
   //case_6_3_fig1
@@ -433,12 +509,13 @@ function clean_layers(){
     waterfund_markers=[]
     waterfund_objs['con_layers'].remove(map);
     waterfund_objs['phase_'].clearLayers();
+    waterfund_objs['phase_0'].clearLayers();
     waterfund_objs['phase_1'].clearLayers();
     waterfund_objs['phase_2'].clearLayers();
     waterfund_objs['phase_3'].clearLayers();
     waterfund_objs['phase_4'].clearLayers();
     waterfund_objs['phase_5'].clearLayers();
-
+    $("#water_marker_control").css('display','none');
   }
 
 }
@@ -459,6 +536,18 @@ function legend(grades){
         }
     }
     return div;
+}
+
+function get_marker_color(phase){
+    return phase == 'phase_' ?  'Maroon' :
+           phase == 'phase_0' ?  'LightCoral' :
+           phase == 'phase_1' ?  'SteelBlue' :
+           phase == 'phase_2' ? 'Aqua' :
+           phase == 'phase_3' ?'Chartreuse' :
+           phase == 'phase_4' ?'#00FA9A' :
+           phase == 'phase_5' ?'Green' :
+                                'Aquamarine';
+           
 }
 
 function getColor(d,grades) {
