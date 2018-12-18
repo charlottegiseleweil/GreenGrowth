@@ -75,19 +75,10 @@ var myStyle = {
 function onEachFeature(feature, layer) {
 
     layer.on({
-        mouseover: highlightFeature,
         mouseout: resetHighlight,
     });
 }
 
-function highlightFeature(e) {
-  e.target.setStyle({
-      weight: 0.5,
-      color: '#666',
-      dashArray: '',
-      fillOpacity: 0.7
-  });
-}
 
 function resetHighlight(e) {
     if(e.target.feature.properties.name == 'South Africa'&&active_subchapter=='6-3'){
