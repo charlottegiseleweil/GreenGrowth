@@ -1,4 +1,27 @@
  // Countries to show
+ const COUNTRIES = [
+    'Ecuador',
+    'United States of America',
+    'Brazil',
+    'United Kingdom',
+    'France',
+    'Kenya',
+    'South Africa',
+    'Myanmar',
+    'China',
+    'Mongolia',
+    'Indonesia',
+    'Australia'
+ ]
+
+ function filter_countries(data) {
+     if (COUNTRIES.includes(data.properties.admin)){
+         return true;
+     }
+
+     return false;
+ };
+
 
  var map = L.map('map', {
     center: [20.0, 0.0],
@@ -21,6 +44,14 @@ function openingClick() {
         $(".mapbox").css({'display': 'block'});
         map.invalidateSize();
 
+        $.getJSON('./data/countries.geojson', function(data) {
+            geojson = L.geoJson(data, {
+                filter: filter_countries,
+                style: myStyle,
+                onEachFeature: onEachFeature,
+                scrollWheelZoom: false}).addTo(map);
+        });
+
         //$( "#chapter2" ).load( "./chapter-templates/chapter2.html");
         //$( "#chapter6" ).load( "./chapter-templates/chapter6.html");
 
@@ -33,4 +64,36 @@ function openingClick() {
         }, 1000);
         */
     });
+}
+
+var myStyle = {
+"color": "#ff7800",
+"weight": 0.5,
+"opacity": 0.65
+};
+
+function onEachFeature(feature, layer) {
+
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+    });
+}
+
+function highlightFeature(e) {
+  e.target.setStyle({
+      weight: 0.5,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+  });
+}
+
+function resetHighlight(e) {
+    if(e.target.feature.properties.name == 'South Africa'&&active_subchapter=='6-3'){
+      e.target.setStyle({fillOpacity: 0});
+    }
+    else{
+      geojson.resetStyle(e.target);
+    }
 }
