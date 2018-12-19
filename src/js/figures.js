@@ -90,9 +90,6 @@ const start_reading = async function() {
     case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");    
     MyVar._prop1 += (100/load_file_num);
 
-    buildLeftMenu();
-    buildRightMenu();
-
     setTimeout(function(){$('.progress').trigger('loaded')}, 600);
 }
 
@@ -454,7 +451,6 @@ function handle_view(subchapter){
     long = parseFloat(case_location_view[subchapter].split(',')[1]);
     zoom = case_location_view[subchapter].split(',')[2]
     map.flyTo([lat, long],zoom);
-    console.log("Map set view"+long+" "+case_location_view[subchapter]);
 }
 }
 

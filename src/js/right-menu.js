@@ -41,7 +41,7 @@ function buildRightMenu(){
         //Subchapter summary
         
         if (figure_list.includes(subchapter)){
-          $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>" +'<img class="subchapter-img" src="../static/figure_and_images/'+ subchapter + '.jpg" alt="subchapter-image">'+case_studies[i]['summary']+'</p>');
+          $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapter + '.jpg" alt="subchapter-image">'+case_studies[i]['summary']+'</p>');
         } else {
           $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>"+case_studies[i]['summary']+"</p>")
         }

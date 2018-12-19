@@ -55,6 +55,9 @@ function openingClick() {
         //$( "#chapter2" ).load( "./chapter-templates/chapter2.html");
         //$( "#chapter6" ).load( "./chapter-templates/chapter6.html");
 
+        buildLeftMenu();
+        buildRightMenu();
+
         var intro = introJs();
         
         intro.setOptions({
@@ -71,11 +74,6 @@ function openingClick() {
                 element: '#right-menu',
                 intro: 'You can use your mouse or up and down array keys to navigate between chapters. You can use buttons, time sliders and checkboxes to see dynamic figures in specific chapters.',
                 position: 'left'
-            },
-            {
-                element: '.leaflet-control-zoom',
-                intro: 'You can zoom in and zoom out here. Also you can drag the map to see specific areas.',
-                position:'down'
             }
             ],
             showStepNumbers:false 
