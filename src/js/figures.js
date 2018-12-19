@@ -90,6 +90,9 @@ const start_reading = async function() {
     case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");    
     MyVar._prop1 += (100/load_file_num);
 
+    buildLeftMenu();
+    buildRightMenu();
+
     setTimeout(function(){$('.progress').trigger('loaded')}, 600);
 }
 
@@ -361,7 +364,7 @@ function case_9_1_fig1(scrolled=false) {
         if(!scrolled) clean_layers();
     }
     
-    map.setView([0, 55], 2.5);    
+    //map.setView([0, 55], 2.5);    
     case_no = 9.1;
     fig_no = 1;
     wasActive=false;
@@ -577,6 +580,6 @@ function style(feature) {
 }
 
 function view_world(){
-  map.setView([20.0, 0.0], 3);
+  map.flyTo([20.0, 0.0], 3);
   return
 }

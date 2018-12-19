@@ -139,3 +139,10 @@ p {
   font-size: 1vh;
   cursor: pointer;
 }
+
+.subchapter-img {
+    float: right; 
+    margin: 2% 0 2% 2%;
+    border-radius: 10px;
+    width: 40%;
+}

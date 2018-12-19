@@ -10,6 +10,8 @@ let blocks = [];
 let active_block;
 let body_scroll_pos = $('#right-menu').scrollTop();
 
+let figure_list = ['2-1', '2-3', '6-2', '6-3', '7-4', '8-1', '9-2', '10-3', '10-5', '11-1', '13-1', '14-2', '15-2', '15-3', '16-1', '16-2', '17-1', '17-2'];
+
 function buildRightMenu(){
 
   d3.csv("./data/case_studies.csv").then(function(case_studies){
@@ -22,6 +24,7 @@ function buildRightMenu(){
       if (!only_dynamic || case_studies[i]['dynamic']=='TRUE'){
         chapter = case_studies[i]["ch_no"]
         subchapter = case_studies[i]["number"].replace(".","-")
+
         if (!(all_chapters.includes(chapter))){
           //Division for chapter
           $('#right-menu-body').append("<div id=right-chapter-"+chapter+"></div>")
@@ -36,7 +39,13 @@ function buildRightMenu(){
         //Subchapter title
         $('#right-chapter-'+chapter).append("<h5 id=right-subchapter-"+subchapter+">"+subchapter+": "+case_studies[i]['name']+"</h5>")
         //Subchapter summary
-        $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>"+case_studies[i]['summary']+"</p>")
+        
+        if (figure_list.includes(subchapter)){
+          $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>" +'<img class="subchapter-img" src="../static/figure_and_images/'+ subchapter + '.jpg" alt="subchapter-image">'+case_studies[i]['summary']+'</p>');
+        } else {
+          $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>"+case_studies[i]['summary']+"</p>")
+        }
+
         all_subchapters.push(subchapter);
         blocks.push(subchapter);
         //treat specific figures or images of each case
