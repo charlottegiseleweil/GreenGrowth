@@ -36,7 +36,7 @@ function subchapterClick(chapter, subno){
   scroll_anim = true;
   active_block = chapter+'-'+subno;
   //$('#right-menu').css('overflow', 'hidden');
-  $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() - scroll_margin + $('#right-subchapter-'+chapter+'-'+subno).offset().top - $('#right-menu').position().top}, 500, 'swing');
+  $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() -scroll_margin  + $('#right-subchapter-'+chapter+'-'+subno).offset().top - $('#right-menu').position().top +1}, 500, 'swing');
   timer_scroll = setTimeout(function() {
       $('#right-menu').css('overflow', 'auto');
       scroll_anim = false;

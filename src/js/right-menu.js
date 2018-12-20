@@ -39,7 +39,7 @@ function buildRightMenu(){
         //Subchapter title
         $('#right-chapter-'+chapter).append("<h5 id=right-subchapter-"+subchapter+">"+subchapter+": "+case_studies[i]['name']+"</h5>")
         //Subchapter summary
-        
+
         if (figure_list.includes(subchapter)){
           $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapter + '.jpg" alt="subchapter-image">'+case_studies[i]['summary']+'</p>');
         } else {
@@ -104,7 +104,7 @@ function onScroll(){
   var subchapter_pos_promise = new Promise(function(resolve, reject) {
     let subchapter_scroll_pos = -1;
     for (var i=0;i<all_subchapters.length;i++){
-      if (($('#right-menu-body').scrollTop()+ scroll_margin)>=($('#right-subchapter-'+all_subchapters[i]).offset().top - $('#right-menu').position().top)){
+      if (($('#right-menu-body').scrollTop())>=($('#right-subchapter-'+all_subchapters[i]).offset().top -scroll_margin - $('#right-menu').position().top)){
         subchapter_scroll_pos = i;
       }
       else break
@@ -142,12 +142,13 @@ function onScroll(){
           }
 
           //find at which subchapter right menu is
+          console.log(chapter)
           subchapter_pos_promise.then(function(subchapter_scroll_pos){
             if (chapter < all_subchapters[subchapter_scroll_pos]){
               subchapter = all_subchapters[subchapter_scroll_pos];
             }
             else subchapter = 0;
-
+            console.log(subchapter)
 
             for (var i=0;i<chapter_dict[chapter].length;i++){
               $('#left-subchapter-'+chapter_dict[chapter][i]).css('background-color', 'black')

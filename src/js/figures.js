@@ -87,7 +87,7 @@ const start_reading = async function() {
 
     MyVar._prop1 += (100/load_file_num);
 
-    case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");    
+    case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");
     MyVar._prop1 += (100/load_file_num);
 
     setTimeout(function(){$('.progress').trigger('loaded')}, 600);
@@ -114,7 +114,7 @@ function right_menu_figures(chapter, subchapter){
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
   }
   else if (subchapter == '9-1'){
-    $('#right-subchapter-9-1').after('<div id="water_marker_control" style="float:right; margin: 0 0 0.5vh 1vw;"></div>');        
+    $('#right-subchapter-9-1').after('<div id="water_marker_control" style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
     $('#water_marker_control').css('display','none');
     //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
     }
@@ -206,8 +206,8 @@ function case_6_1_fig1() {
 
 function case_6_1_fig2(scrolled=false) {
     case_6_1_button_active = '1'
-    if(active_subchapter!='6-1') 
-        $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');    
+    if(active_subchapter!='6-1')
+        $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();
         $("#button-1").css('background-color','#39ac73');
@@ -215,23 +215,23 @@ function case_6_1_fig2(scrolled=false) {
         choropleth_map_objs['legend-2'].addTo(map);
         $('#button-div').after('<div id="slider" style="margin: 16px"></div>')
         map.addControl(choropleth_map_objs['slider']);//add slider to map
-        
+
         var htmlObject = choropleth_map_objs['slider'].getContainer();
 
         var newpos = document.getElementById('slider');
-    
+
         function setParent(el, newParent)
         {
         newParent.appendChild(el);
         }
-        setParent(htmlObject, newpos); 
-        choropleth_map_objs['slider'].startSlider();//starting slider     
+        setParent(htmlObject, newpos);
+        choropleth_map_objs['slider'].startSlider();//starting slider
     }
 };
 
 function case_6_1_fig3(scrolled=false) {
     case_6_1_button_active = '2'
-    if(active_subchapter!='6-1') 
+    if(active_subchapter!='6-1')
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();
@@ -245,12 +245,12 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
     choropleth_fips['grades']=grades;
     layers=[]
     for (year_idx=0;year_idx<year_list.length;year_idx++){
-        
+
         year = year_list[year_idx];
-            
+
         for(var i=0;i< data.length;i++){
             if (percent){
-                var sum = sum_values(data,year);                
+                var sum = sum_values(data,year);
                 choropleth_fips[ data[i]['FIPS']]= (parseInt( data[i][year].replace('.',''))/sum)*10000;
             }
             else{
@@ -360,8 +360,8 @@ function case_9_1_fig1(scrolled=false) {
     else {
         if(!scrolled) clean_layers();
     }
-    
-    //map.setView([0, 55], 2.5);    
+
+    //map.setView([0, 55], 2.5);
     case_no = 9.1;
     fig_no = 1;
     wasActive=false;
@@ -377,7 +377,7 @@ function case_9_1_fig1(scrolled=false) {
             for(var i=0;i< data.length;i++){
                 //console.log("Water fund",i," :",data[i]);
                 console.log(get_marker_color('phase_'+data[i]['Phase_Code']));
-                
+
                 var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
                     icon: L.divIcon({
                       html: '<i class="fa fa-tint fa-lg" aria-hidden="true" style="color:'+get_marker_color('phase_'+data[i]['Phase_Code'])+'"></i>',
@@ -423,18 +423,18 @@ function case_9_1_fig1(scrolled=false) {
             };
             waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'topleft'}).addTo(map);
             $('.leaflet-control-layers-selector:checked')
-            
+
             var htmlObject = waterfund_objs['con_layers'].getContainer();
             // Get the desired parent node.
             var newpos = document.getElementById('water_marker_control');
-           
+
             // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
             function setParent(el, newParent)
             {
                newParent.appendChild(el);
             }
             setParent(htmlObject, newpos);
-        
+
         waterfund_bool=true;
     }
 }
@@ -465,12 +465,12 @@ function clean_layers(){
     map.removeControl(choropleth_map_objs['legend-2']);
     map.removeControl(choropleth_map_objs['legend-3']);
     map.removeControl(choropleth_map_objs['slider']);
-    
+
     Object.keys(choropleth_map_objs).forEach(function(key) {
       console.log(key)
         map.removeLayer(choropleth_map_objs[key]);
     });
-   
+
   }
 
   //case_6_3_fig1
@@ -478,8 +478,10 @@ function clean_layers(){
     map.removeLayer(case_6_3_fig1_layer);
     map.removeControl(case_6_3_fig1_legend);
     geojson.eachLayer(function(layer) {
+
         if (layer.feature.properties.name == 'South Africa') {
-            layer.setStyle({fillOpacity: 0});
+            //layer.setStyle({fillOpacity: 0});
+            geojson.resetStyle(layer);
         }
     });
   }
@@ -545,7 +547,7 @@ function get_marker_color(phase){
            phase == 'phase_4' ?'#00FA9A' :
            phase == 'phase_5' ?'Green' :
                                 'Aquamarine';
-           
+
 }
 
 function getColor(d,grades) {
