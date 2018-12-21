@@ -393,7 +393,7 @@ function case_9_1_fig1(scrolled=false) {
                 //waterfund_objs[i];//.addTo(map);
                 if (data[i]['Phase']==('Operation'||'Maturity')){
                     marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>"+"<b>State:</b>"+data[i]['State']
+                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<br>"+"<b>State:</b>"+data[i]['State']
                     +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']).on('mouseover', function (e) {
                         this.openPopup();
                     }).on('mouseout', function (e) {
@@ -402,7 +402,7 @@ function case_9_1_fig1(scrolled=false) {
                 }
                 else{
                     marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']+"<br>","<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
+                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
                         this.openPopup();
                     }).on('mouseout', function (e) {
                         this.closePopup();
