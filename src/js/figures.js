@@ -207,7 +207,7 @@ function case_6_1_fig1() {
         data: [{
             type: "spline",
             name: "Land Enrolled",
-            xValueFormatString: "$####",
+            xValueFormatString: "####",
             yValueFormatString: "$####",
             dataPoints: data_points_acres
         },
@@ -216,7 +216,7 @@ function case_6_1_fig1() {
             axisYType: "secondary",
             name: "CRP Payments",
             yValueFormatString: "$####",
-            xValueFormatString: "$####",
+            xValueFormatString: "####",
             dataPoints: data_points_money
         }]
     };
