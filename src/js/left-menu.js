@@ -1,5 +1,3 @@
-
-
 function buildLeftMenu(){
   let all_chapters_temp =[];
   d3.csv("./data/case_studies.csv").then(function(case_studies){

@@ -13,27 +13,30 @@ figures = {}
 var case_with_figure = []
 var case_no_fig_title= {};
 
+// list of subchapters
 let figure_list = ['2-1', '2-3', '6-2', '6-3', '7-4', '8-1', '9-2', '10-3', '10-5', '11-1', '13-1', '14-2', '15-2', '15-3', '16-1', '16-2', '17-1', '17-2'];
 
+//build scrollable right menu containing descriptions of each chapter 
 function buildRightMenu(){
-
+  // read csv file containing figure information
   d3.csv('./data/figures.csv').then(function(figures){
     for(var i=0;i<figures.length;i++){
   
       if (figures[i]['static']=='TRUE'){
-        case_with_figure.push(figures[i]['case_no'].toString().replace('.','-'))
-        case_no_fig_title[figures[i]['case_no'].toString().replace('.','-')] = figures[i]['name']
+        case_with_figure.push(figures[i]['case_no'].toString().replace('.','-'))// add case no
+        case_no_fig_title[figures[i]['case_no'].toString().replace('.','-')] = figures[i]['name'] // add name of figure to dictionary(key figures case no)
       }
     }
   });
-
-
+  //read case studies csv file containing details of each case study
   d3.csv("./data/case_studies.csv").then(function(case_studies){
     $('#right-menu-body').append("<div id=title></div>")
+    // add title of right menu
     $('#title').append("<h2> Pathways to Green Growth</h2>")
     $('#title').append("<h3> Mainstreaming Natural Capital into Policy and Finance: International Case Studies </h3>")
     blocks.push('title')
 
+    //iterate over case studies to add to right menu
     for(var i=0;i<case_studies.length;i++){
       if (!only_dynamic || case_studies[i]['dynamic']=='TRUE'){
         chapter = case_studies[i]["ch_no"]
@@ -88,6 +91,7 @@ function onScroll(){
     else if ($('#right-menu').scrollTop()<body_scroll_pos && blocks.indexOf(active_block)!=0){
       active_block = blocks[blocks.indexOf(active_block)-1]
     }
+    //if title active, then stop scrolling for 0.5 sev
     if (active_block == 'title'){
       $('#right-menu').stop().animate({scrollTop:0}, 500, 'swing');
     }
@@ -103,7 +107,6 @@ function onScroll(){
     }, 600);
   }
   body_scroll_pos = $('#right-menu').scrollTop();
-
 
   var chapter_pos_promise = new Promise(function(resolve, reject) {
     let chapter_scroll_pos = -1;
@@ -163,7 +166,7 @@ function onScroll(){
               subchapter = all_subchapters[subchapter_scroll_pos];
             }
             else subchapter = 0;
-
+            
             for (var i=0;i<chapter_dict[chapter].length;i++){
               $('#left-subchapter-'+chapter_dict[chapter][i]).css('background-color', 'black')
             }
@@ -177,7 +180,4 @@ function onScroll(){
 
       });
     }, 100);
-
-
-
 }

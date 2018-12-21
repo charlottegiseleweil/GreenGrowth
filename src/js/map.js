@@ -14,6 +14,7 @@
     'Australia'
  ]
 
+ //filter out the countries which have no related case study
  function filter_countries(data) {
      if (COUNTRIES.includes(data.properties.admin)){
          return true;
@@ -22,14 +23,14 @@
      return false;
  };
 
-
+ // create Leaflet Map
  var map = L.map('map', {
     center: [20.0, 0.0],
     zoom: 3,
     zoomSnap: 0.2
 });
 
-
+// define tile layer
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
     subdomains: 'abcd',
@@ -37,14 +38,15 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
     minZoom: 2
 });
 
+//opening click after data loaded
 function openingClick() {
     $(".opening-page").fadeOut( 1000, function() {
         $(".opening-page").remove();
-        map.addLayer(Esri_WorldImagery);
+        map.addLayer(Esri_WorldImagery);// add tile layer
         $(".mapbox").css({'display': 'block'});
         map.invalidateSize();
 
-        $.getJSON('./data/countries.geojson', function(data) {
+        $.getJSON('./data/countries.geojson', function(data) {//add layer of boundaries of filtered countries
             geojson = L.geoJson(data, {
                 filter: filter_countries,
                 style: myStyle,
@@ -52,12 +54,11 @@ function openingClick() {
                 scrollWheelZoom: false}).addTo(map);
         });
 
-        //$( "#chapter2" ).load( "./chapter-templates/chapter2.html");
-        //$( "#chapter6" ).load( "./chapter-templates/chapter6.html");
-
+        //build left and right menu
         buildLeftMenu();
         buildRightMenu();
 
+        //create user guide
         var intro = introJs();
         
         intro.setOptions({
@@ -79,7 +80,7 @@ function openingClick() {
             showStepNumbers:false 
       });
 
-      intro.start();
+      intro.start();//start user-guide
         
     });
 }
@@ -90,6 +91,7 @@ var myStyle = {
 "opacity": 0.65
 };
 
+// reset highlightning on filtered countries on mouse hover
 function onEachFeature(feature, layer) {
 
     layer.on({

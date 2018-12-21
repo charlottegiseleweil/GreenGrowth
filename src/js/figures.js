@@ -1,4 +1,3 @@
-//<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
 var active_subchapter
 var choropleth_fips={}
 var choropleth_map_objs = {}
@@ -17,6 +16,7 @@ var case_8_1_fig1_layer1;
 var case_8_1_fig1_layer2;
 var case_8_1_fig1_layer3;
 
+//marker options
 var geojsonMarkerOptions = {
     radius: 8,
     fillColor: "#ff7800",
@@ -26,12 +26,14 @@ var geojsonMarkerOptions = {
     fillOpacity: 0.8
 };
 
+//progress bar on loading page
 var progress_bar = {
     progress: 0,
     get _progress() { return this.progress; },
     set _progress(value) { this.progress = value; $('.progress-bar').css({'width': this.progress + '%'}) }
   };
 
+//read csv files, meanwhile update progress bar and create all leaflet layers on pre-loading page
 const start_reading = async function() {
     //preload 6_1-1
     lineplot_data = await d3.csv("data/line_plot.csv");
@@ -102,6 +104,7 @@ const start_reading = async function() {
     setTimeout(function(){$('.progress').trigger('loaded')}, 600);
 }
 
+// create progress bar
 $( 'body' ).ready(function() {
 
     $('.progress').bind('loaded',function(){
@@ -112,29 +115,28 @@ $( 'body' ).ready(function() {
     start_reading();
 });
 
+// add figures on right menu
 function right_menu_figures(chapter, subchapter){
   if (subchapter == '6-1'){
     $('#'+subchapter+'-summary').after('<div id="chart-container" style="height: 300px;"></div>');
-    //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
     case_6_1_fig1();
+    //add case 6 buttons
     $('#chart-container').after('<div id="button-div"></div><br><br>');
-
     $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="case_6_1_fig2();">Enrollment per county</button>');
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
   }
   else if (subchapter == '9-1'){
-    //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
     }
 
   else if (case_with_figure.includes(subchapter)){
-
+    //add divs for figures of case studies
     $('#'+subchapter+'-summary').after('<div id="figure-'+subchapter+' style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
     cases_static_figs(subchapter);
 
   }
 }
 
-
+// display figures of each study
 function display_figure(subchapter){
   if (!(subchapter == active_subchapter)){
     clean_layers()
@@ -164,14 +166,16 @@ function display_figure(subchapter){
   }
 }
 
+// add static visuals
 function cases_static_figs(subchapter){
     fig_file = './static/figure_and_images/'+subchapter.toString().replace('-','_')+'-1.png';
     $('#'+subchapter+'-summary').append('<img class="img-center" src="' + fig_file + '">');
     $('#'+subchapter+'-summary').append('<p class="figure-text">Figure: ' + case_no_fig_title[subchapter]+ '</p>');
 }
 
+//create line plot of case study 6.1
 function case_6_1_fig1() {
-
+    //set options of line plot
     var options={
         animationEnabled: true,
         title:{
@@ -224,19 +228,19 @@ function case_6_1_fig1() {
 
 function case_6_1_fig2(scrolled=false) {
     case_6_1_button_active = '1'
-    if(active_subchapter!='6-1')
+    if(active_subchapter!='6-1')// if chapter 6 is active  
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
-        if(!scrolled) clean_layers();
+        if(!scrolled) clean_layers();// clean layers if navigating to another case 
         $("#button-1").css('background-color','#39ac73');
-        choropleth_map_objs['2014geo-2'].addTo(map)
-        choropleth_map_objs['legend-2'].addTo(map);
+        choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
+        choropleth_map_objs['legend-2'].addTo(map);//add legend
         $('#button-div').after('<div id="slider" style="margin: 16px"></div>')
         map.addControl(choropleth_map_objs['slider']);//add slider to map
 
-        var htmlObject = choropleth_map_objs['slider'].getContainer();
+        var htmlObject = choropleth_map_objs['slider'].getContainer();//get slider container
 
-        var newpos = document.getElementById('slider');
+        var newpos = document.getElementById('slider');//set time slider
 
         function setParent(el, newParent)
         {
@@ -247,6 +251,7 @@ function case_6_1_fig2(scrolled=false) {
     }
 };
 
+// add choropleth of case 6.1 fig3 to map 
 function case_6_1_fig3(scrolled=false) {
     case_6_1_button_active = '2'
     if(active_subchapter!='6-1')
@@ -259,9 +264,11 @@ function case_6_1_fig3(scrolled=false) {
     }
 };
 
+// creating choropleth layer given values for each county data as parameter
 function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
     choropleth_fips['grades']=grades;
     layers=[]
+    
     for (year_idx=0;year_idx<year_list.length;year_idx++){
 
         year = year_list[year_idx];
@@ -278,7 +285,6 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
 
         choropleth_map_objs[year+'geo-'+fig] = L.geoJson(choropleth_map_county, {style: style, time: year})
         layers.push(choropleth_map_objs[year+'geo-'+fig]);
-        //choropleth_map_objs['geo'].addTo(map);
 
         choropleth_map_objs['legend-'+fig] = L.control({position: 'bottomleft'});
 
@@ -295,7 +301,7 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
     //choropleth_map_objs['legend'].addTo(map);
 }
 
-
+// add png of south africa on map
 function case_6_3_fig1() {
     var lg;
       var imageUrl = './data/sonuc.png';
@@ -320,23 +326,24 @@ function case_6_3_fig1() {
           div.innerHTML = lgnd.join('<br>');
           return div;
           };
-
+      //add legend
       case_6_3_fig1_legend.addTo(map);
 
       imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
-      case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+      case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);//add image as overlay on the map using boundaries of South Africa
 
 
 };
 
 function case_8_1_fig1() {
-
+    //add layers of ARPA
     case_8_1_fig1_layer1.addTo(map);
     case_8_1_fig1_layer2.addTo(map);
     case_8_1_fig1_layer3.addTo(map);
 
     case_8_1_fig1_legend = L.control({position: 'bottomleft'});
 
+    //create legend
     case_8_1_fig1_legend.onAdd = function (map) {
         var div = L.DomUtil.create('div', 'info legend');
         categories = ['Amazon Basin','ARPA System','Amazon River'];
@@ -355,6 +362,7 @@ function case_8_1_fig1() {
 
 };
 
+// add water fund markers
 function case_9_1_fig1(scrolled=false) {
     data=case_9_1_fig1_data;
     case_6_1_button_active = '1'
@@ -368,6 +376,7 @@ function case_9_1_fig1(scrolled=false) {
     wasActive=false;
 
     if(!wasActive){
+            //init marker lists of each phase
             waterfund_markers['phase_'] = [];
             waterfund_markers['phase_0'] = [];
             waterfund_markers['phase_1'] = [];
@@ -376,15 +385,17 @@ function case_9_1_fig1(scrolled=false) {
             waterfund_markers['phase_4'] = [];
             waterfund_markers['phase_5'] = [];
 
+            // iterate over water funds
             for(var i=0;i< data.length;i++){
-
+                //create marker
                 var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
                     icon: L.divIcon({
                       html: '<i class="fa fa-tint fa-lg" aria-hidden="true" style="color:'+get_marker_color('phase_'+data[i]['Phase_Code'])+'"></i>',
                       className: 'myDivIcon'
                     })}
                 );
-
+                
+                //set values in popup
                 if (data[i]['Phase']==('Operation'||'Maturity')){
                     marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
                     +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']
@@ -405,6 +416,7 @@ function case_9_1_fig1(scrolled=false) {
                 waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
                 //waterfund_objs[i]=marker
             }
+            //create layer groups containing markers for each case
             waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']).addTo(map);
             waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']).addTo(map);
             waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']).addTo(map);
@@ -412,6 +424,7 @@ function case_9_1_fig1(scrolled=false) {
             waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
             waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
             waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
+            
             var overlayMaps = {
                 "Being Explored":               waterfund_objs['phase_'] ,
                 "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
@@ -421,6 +434,7 @@ function case_9_1_fig1(scrolled=false) {
                 "Phase 4: Operation":           waterfund_objs['phase_4'],
                 "Phase 5: Maturity":            waterfund_objs['phase_5']
             };
+            //create layer control by adding layer groups 
             waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
             $('.leaflet-control-layers-selector:checked')
  
@@ -506,6 +520,7 @@ function clean_layers(){
 
 }
 
+//create legends, give grades as parameter
 function legend(grades){
     var div = L.DomUtil.create('div', 'info legend'),
     labels = [];
@@ -524,6 +539,7 @@ function legend(grades){
     return div;
 }
 
+//get color of water fund marker
 function get_marker_color(phase){
     return phase == 'phase_' ?  'Maroon' :
            phase == 'phase_0' ?  'LightCoral' :
@@ -536,6 +552,7 @@ function get_marker_color(phase){
 
 }
 
+// get colors of legend
 function getColor(d,grades) {
     return d > grades[4] ?  '#800026' :
            d > grades[3] ?  '#BD0026' :
@@ -544,6 +561,7 @@ function getColor(d,grades) {
                             '#FFFFFF' ;
 }
 
+//return sum of given array
 function sum_values(data,column){
     var sum=0.0;
     for(var i=0;i<data.length;i++){
@@ -552,6 +570,7 @@ function sum_values(data,column){
     return sum
 }
 
+//get colors of choropleth
 function style(feature) {
     return {
         fillColor: getColor(choropleth_fips[feature.properties.fips],choropleth_fips['grades']),
@@ -563,6 +582,7 @@ function style(feature) {
     };
 }
 
+//set map to show whole world
 function view_world(){
   map.flyTo([20.0, 0.0], 3);
   return
