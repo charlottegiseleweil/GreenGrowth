@@ -183,7 +183,7 @@ function case_6_1_fig1() {
         axisX: {
             title: "Year",
             suffix : "",
-            valueFormatString:"$####"
+            valueFormatString:"####"
         },
         axisY: {
             title: "Land Enrolled",
@@ -191,7 +191,7 @@ function case_6_1_fig1() {
             suffix : "M",
             lineColor: "#4F81BC",
             tickColor: "#4F81BC",
-            valueFormatString:"$####"
+            valueFormatString:"####"
         },
         axisY2: {
             title: "CRP Payments",
@@ -203,8 +203,8 @@ function case_6_1_fig1() {
         data: [{
             type: "spline",
             name: "Land Enrolled",
-            xValueFormatString: "$####",
-            yValueFormatString: "$####",
+            xValueFormatString: "####",
+            yValueFormatString: "#### million acres",
             dataPoints: data_points_acres
         },
         {
@@ -212,7 +212,7 @@ function case_6_1_fig1() {
             axisYType: "secondary",
             name: "CRP Payments",
             yValueFormatString: "$####",
-            xValueFormatString: "$####",
+            xValueFormatString: "####",
             dataPoints: data_points_money
         }]
     };
