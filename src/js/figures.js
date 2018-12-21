@@ -187,7 +187,7 @@ function case_6_1_fig1() {
         axisX: {
             title: "Year",
             suffix : "",
-            valueFormatString:"$####"
+            valueFormatString:"####"
         },
         axisY: {
             title: "Land Enrolled",
