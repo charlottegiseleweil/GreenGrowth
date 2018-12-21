@@ -44,7 +44,7 @@ function buildRightMenu(){
           //Division for chapter
           $('#right-menu-body').append("<div id=right-chapter-"+chapter+"></div>")
           //Chapter Title
-          $('#right-chapter-'+chapter).append("<hr><h4>Chapter "+chapter+": "+case_studies[i]['ch_title']+"</h4>")
+          $('#right-chapter-'+chapter).append('<hr><h4>Chapter ' + chapter+': ' + case_studies[i]['ch_title'] + '</h4>')
           chapter_dict[chapter] = [];
           all_chapters.push(chapter)
           blocks.push(chapter);
@@ -70,7 +70,8 @@ function buildRightMenu(){
       }
     }
     active_block = blocks[0];
-    $('#right-menu-body').after('<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>')
+    $('#right-menu-body').append('<div style="padding:1%; text-align:justify;"><p><h3>Credits</h3>The case studies survey a range of policy and finance mechanisms that channel economic resources and other benefits towards securing and enhancing natural capital. These mechanisms typically also aim to increase equity and well-being, both through poverty alleviation and in access to ecosystem goods and services. Illustrative examples have been contributed by a range of experts who come from the natural and social sciences, government, private companies, financial institutions, and civil society organizations. These case studies were compiled by Lisa Mandle, James Salzman and Gretchen C. Daily and illustrated by Charlotte Weil. This application is developed by <b>Can Yilmaz Altinigne</b>, <b>Cyril van Schreven</b> and <b>Günes Yurdakul</b>.</p></div>')
+    $('#right-menu-body').append('<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>')
   });
   }
 

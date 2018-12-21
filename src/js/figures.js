@@ -161,8 +161,8 @@ function display_figure(subchapter){
 
 function cases_static_figs(subchapter){
     fig_file = './static/figure_and_images/'+subchapter.toString().replace('-','_')+'-1.png';
-    $('#'+subchapter+'-summary').append("<br> <br><img src="+fig_file+" style='width:100%; height:100%;'>");
-    $('#'+subchapter+'-summary').append("<u>"+case_no_fig_title[subchapter]+"</u>");
+    $('#'+subchapter+'-summary').append('<img class="img-center" src="' + fig_file + '">');
+    $('#'+subchapter+'-summary').append('<p class="figure-text">Figure: ' + case_no_fig_title[subchapter]+ '</p>');
 }
 
 function case_6_1_fig1() {
