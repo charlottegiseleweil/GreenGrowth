@@ -11,6 +11,7 @@ let active_block;
 let body_scroll_pos = $('#right-menu').scrollTop();
 figures = {}
 var case_with_figure = []
+var case_no_fig_title= {};
 
 let figure_list = ['2-1', '2-3', '6-2', '6-3', '7-4', '8-1', '9-2', '10-3', '10-5', '11-1', '13-1', '14-2', '15-2', '15-3', '16-1', '16-2', '17-1', '17-2'];
 
@@ -18,16 +19,13 @@ function buildRightMenu(){
 
   d3.csv('./data/figures.csv').then(function(figures){
     for(var i=0;i<figures.length;i++){
-      //console.log(figures)
-      //console.log(figures[i]['case_no'])
       console.log(figures[i]['static'])
       if (figures[i]['static']=='TRUE'){
         console.log('test')
         case_with_figure.push(figures[i]['case_no'].toString().replace('.','-'))
+        case_no_fig_title[figures[i]['case_no'].toString().replace('.','-')] = figures[i]['name']
       }
-      //figures['case_no'].push(figure['fig_no'])
     }
-    console.log(case_with_figure)
   });
 
 
