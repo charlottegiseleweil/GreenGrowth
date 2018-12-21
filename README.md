@@ -10,7 +10,7 @@ This project aims to locate about 20 case studies across the world. These exampl
 ## Access the project
 * Project website: https://schreven.github.io/Map-intl-env-projects/src/index.html
 * Project report:
-* Screencast: 
+* Screencast: https://www.youtube.com/watch?v=MbKB95NhoIs&frags=pl%2Cwn
 ## Run it locally
 Please use the following bash commands below to run the application in your computer.
 ```bash
