@@ -126,14 +126,18 @@ p {
 
 .legend {
     line-height: 18px;
-    color: #BBB;
+    padding: 1%;
+    background-color: white;
+    border-radius: 5px;
+    width: 8vw;
 }
 .legend i {
     width: 18px;
     height: 18px;
+    margin-left: 0.5vw;
     float: left;
-    margin-right: 8px;
-    opacity: 0.7;
+    margin-right: 1vw;
+    border: 1px solid black;
 }
 
 .case-6-1-button{

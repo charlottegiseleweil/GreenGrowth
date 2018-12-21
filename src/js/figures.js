@@ -13,8 +13,9 @@ var case_7_4_fig1_layer;
 var case_9_1_fig1_data;
 var choropleth_map_county;
 var progress_bar = 0;
-
-let load_file_num = 7;
+var case_8_1_fig1_layer1;
+var case_8_1_fig1_layer2;
+var case_8_1_fig1_layer3;
 
 var geojsonMarkerOptions = {
     radius: 8,
@@ -25,16 +26,15 @@ var geojsonMarkerOptions = {
     fillOpacity: 0.8
 };
 
-var MyVar = {
-    prop1: 0,
-    get _prop1() { return this.prop1; },
-    set _prop1(value) { this.prop1 = value; $('.progress-bar').css({'width': this.prop1 + '%'}) }
+var progress_bar = {
+    progress: 0,
+    get _progress() { return this.progress; },
+    set _progress(value) { this.progress = value; $('.progress-bar').css({'width': this.progress + '%'}) }
   };
 
 const start_reading = async function() {
     //preload 6_1-1
     lineplot_data = await d3.csv("data/line_plot.csv");
-    MyVar._prop1 += (100/load_file_num);
     data_points_acres=[];
     data_points_money=[];
 
@@ -43,20 +43,20 @@ const start_reading = async function() {
         data_points_money.push({x: parseInt(lineplot_data[i]['yr'],10),y:lineplot_data[i]['Total_Money']/1000000})
     }
 
+    progress_bar._progress += 20;
+
     //preload case_6_1-2
     choropleth_map_county = await shp("data/county/counties");
-    MyVar._prop1 += (100/load_file_num);
-
     data = await $.getJSON('data/mitigation_bank.json');
-
     case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
-    MyVar._prop1 += (100/load_file_num);
+    
     case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
 
     //preload case_6_1-3
     case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
-    MyVar._prop1 += (100/load_file_num);
     case_6_1_choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,3);
+
+    progress_bar._progress += 20;
 
     //preload case 7_2-1
     case_7_2_fig1_layer = L.geoJson(data, {
@@ -66,7 +66,7 @@ const start_reading = async function() {
         }
     });
 
-    MyVar._prop1 += (100/load_file_num);
+    progress_bar._progress += 20;
 
     //preload case_7_4-1
     geojson = await shp("data/forest/forest.offset.projects.updated2017");
@@ -74,7 +74,7 @@ const start_reading = async function() {
         pointToLayer: function (feature, latlng) {
             return new L.marker(latlng, {
                 icon: L.divIcon({
-                html: '<i class="fa fa-tree" aria-hidden="true" style="color:green"></i>',
+                html: '<i class="fa fa-tree" aria-hidden="true" style="color:lightgreen"></i>',
                 className: 'myDivIcon'
                 })
             }).bindPopup('<i>'+String(feature.properties.NAME)+'</i><br>'+String(feature.properties.Area2)+' <strong>hectares.</strong>').on('mouseover', function (e) {
@@ -85,10 +85,19 @@ const start_reading = async function() {
         }
     })
 
-    MyVar._prop1 += (100/load_file_num);
+    progress_bar._progress += 20;
 
     case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");
-    MyVar._prop1 += (100/load_file_num);
+    geojson = await shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w");
+    case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {"color": "#00994c","opacity": 0.65}});
+
+    data = await $.getJSON('data/brazil/amapoly_ivb.json');
+    case_8_1_fig1_layer2 = L.geoJson(data, {style: {"color": "#665BCE"}});
+
+    data = await $.getJSON('data/brazil/amazonriver_865.json');
+    case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
+
+    progress_bar._progress += 20;
 
     setTimeout(function(){$('.progress').trigger('loaded')}, 600);
 }
@@ -303,13 +312,13 @@ function case_6_3_fig1() {
       });
 
       case_6_3_fig1_legend.onAdd = function (map) {
-          var div = L.DomUtil.create('div', 'info legend bg-color');
+          var div = L.DomUtil.create('div', 'info legend');
           categories = ['0 or no data','0 - 5%','5 - 10%','> 10%','Clearing areas'];
           colors = ['#ffffff', '#EBB57D', '#CF6042', '#980001', '#386507']
-          lgnd = ["<strong>Legend</strong>"];
+          lgnd = [];
 
           for (var i = 0; i < categories.length; i++) {
-              div.innerHTML +=  lgnd.push('<i class="circle border" style="background:' + colors[i] + '"></i> ' + (categories[i]));
+              div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
           }
 
           div.innerHTML = lgnd.join('<br>');
@@ -325,44 +334,28 @@ function case_6_3_fig1() {
 };
 
 function case_8_1_fig1() {
-    shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w").then(function(geojson){
-        case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {
-            "color": "#00994c",
-            "opacity": 0.65
-            }
-        }).addTo(map);
-    }).then(
-        $.getJSON('data/brazil/amapoly_ivb.json', function(data) {
-            case_8_1_fig1_layer2 = L.geoJson(data, {style: {
-                "opacity": 0.2
-                }
-            }).addTo(map);
-        })
-    ).then(
-        $.getJSON('data/brazil/amazonriver_865.json', function(data) {
-            case_8_1_fig1_layer3 = L.geoJson(data, {style: {
-                "weight": 5
-                }
-            }).addTo(map);
-        })
-    ).then(() => {
-        case_8_1_fig1_legend = L.control({position: 'bottomleft'});
-        case_8_1_fig1_legend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info legend bg-color');
-            categories = ['Amazon Basin','ARPA System','Amazon River main stream'];
-            colors = ["rgb(215, 225, 244)", "rgb(110, 168, 117)", "rgb(84, 131, 244)"]
-            lgnd = ["<strong>Legend</strong>"];
 
-            for (var i = 0; i < categories.length; i++) {
-                div.innerHTML +=  lgnd.push('<i class="circle border" style="background:' + colors[i] + '"></i> ' + (categories[i]));
-            }
+    case_8_1_fig1_layer1.addTo(map);
+    case_8_1_fig1_layer2.addTo(map);
+    case_8_1_fig1_layer3.addTo(map);
 
-            div.innerHTML = lgnd.join('<br>');
-            return div;
-         };
+    case_8_1_fig1_legend = L.control({position: 'bottomleft'});
 
-    });
+    case_8_1_fig1_legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend');
+        categories = ['Amazon Basin','ARPA System','Amazon River'];
+        colors = ["rgb(102, 91, 206)", "rgb(110, 168, 117)", "rgb(84, 131, 244)"]
+        lgnd = [];
 
+        for (var i = 0; i < categories.length; i++) {
+            div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
+        }
+
+        div.innerHTML = lgnd.join('<br>');
+        return div;
+    };
+  
+    case_8_1_fig1_legend.addTo(map);
 
 };
 
