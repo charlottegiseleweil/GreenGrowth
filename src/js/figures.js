@@ -123,8 +123,6 @@ function right_menu_figures(chapter, subchapter){
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
   }
   else if (subchapter == '9-1'){
-    $('#right-subchapter-9-1').after('<div id="water_marker_control" style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
-    $('#water_marker_control').css('display','none');
     //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
     }
 
@@ -160,8 +158,6 @@ function display_figure(subchapter){
         case_8_1_fig1();
         break
       case '9-1':
-        console.log("9-1");
-        $('#water_marker_control').show();
         case_9_1_fig1(scrolled=true)
         break
     }
@@ -367,11 +363,10 @@ function case_9_1_fig1(scrolled=false) {
         if(!scrolled) clean_layers();
     }
 
-    //map.setView([0, 55], 2.5);
     case_no = 9.1;
     fig_no = 1;
     wasActive=false;
-    //console.log("9.1 clicked", waterfund_bool)
+
     if(!wasActive){
             waterfund_markers['phase_'] = [];
             waterfund_markers['phase_0'] = [];
@@ -380,9 +375,8 @@ function case_9_1_fig1(scrolled=false) {
             waterfund_markers['phase_3'] = [];
             waterfund_markers['phase_4'] = [];
             waterfund_markers['phase_5'] = [];
+
             for(var i=0;i< data.length;i++){
-                //console.log("Water fund",i," :",data[i]);
-                console.log(get_marker_color('phase_'+data[i]['Phase_Code']));
 
                 var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
                     icon: L.divIcon({
@@ -390,7 +384,7 @@ function case_9_1_fig1(scrolled=false) {
                       className: 'myDivIcon'
                     })}
                 );
-                //waterfund_objs[i];//.addTo(map);
+
                 if (data[i]['Phase']==('Operation'||'Maturity')){
                     marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
                     +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']
@@ -427,20 +421,11 @@ function case_9_1_fig1(scrolled=false) {
                 "Phase 4: Operation":           waterfund_objs['phase_4'],
                 "Phase 5: Maturity":            waterfund_objs['phase_5']
             };
-            waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'topleft'}).addTo(map);
+            waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
             $('.leaflet-control-layers-selector:checked')
-
-            var htmlObject = waterfund_objs['con_layers'].getContainer();
-            // Get the desired parent node.
-            var newpos = document.getElementById('water_marker_control');
-
-            // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
-            function setParent(el, newParent)
-            {
-               newParent.appendChild(el);
-            }
-            setParent(htmlObject, newpos);
-
+ 
+            //document.getElementById('water_marker_control').appendChild(waterfund_objs['con_layers'].getContainer());
+       
         waterfund_bool=true;
     }
 }
@@ -462,9 +447,6 @@ function handle_view(subchapter){
 
 function clean_layers(){
 
-  //case_6_1_fig2 and case_6_1_fig3
-    //remove choropleth
-    //console.log(active_subchapter)
   if(active_subchapter=='6-1'){
     $('#button-1').css('background-color', 'rgba(255, 255, 255, 0.8)');
     $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
@@ -473,7 +455,6 @@ function clean_layers(){
     map.removeControl(choropleth_map_objs['slider']);
 
     Object.keys(choropleth_map_objs).forEach(function(key) {
-      console.log(key)
         map.removeLayer(choropleth_map_objs[key]);
     });
 
@@ -521,7 +502,6 @@ function clean_layers(){
     waterfund_objs['phase_3'].clearLayers();
     waterfund_objs['phase_4'].clearLayers();
     waterfund_objs['phase_5'].clearLayers();
-    $("#water_marker_control").css('display','none');
   }
 
 }

@@ -19,9 +19,8 @@ function buildRightMenu(){
 
   d3.csv('./data/figures.csv').then(function(figures){
     for(var i=0;i<figures.length;i++){
-      console.log(figures[i]['static'])
+  
       if (figures[i]['static']=='TRUE'){
-        console.log('test')
         case_with_figure.push(figures[i]['case_no'].toString().replace('.','-'))
         case_no_fig_title[figures[i]['case_no'].toString().replace('.','-')] = figures[i]['name']
       }
@@ -79,7 +78,7 @@ function onScroll(){
   //animate scrolling
   if (scroll_anim == false){
     $('#right-menu').css('overflow-y', 'scroll');
-    //console.log(active_block)
+
     scroll_anim = true;
     //scrolling down
     if($('#right-menu').scrollTop()>body_scroll_pos && blocks.indexOf(active_block)!=(blocks.length-1)){
@@ -158,18 +157,17 @@ function onScroll(){
           }
 
           //find at which subchapter right menu is
-          console.log(chapter)
+       
           subchapter_pos_promise.then(function(subchapter_scroll_pos){
             if (chapter < all_subchapters[subchapter_scroll_pos]){
               subchapter = all_subchapters[subchapter_scroll_pos];
             }
             else subchapter = 0;
-            console.log(subchapter)
 
             for (var i=0;i<chapter_dict[chapter].length;i++){
               $('#left-subchapter-'+chapter_dict[chapter][i]).css('background-color', 'black')
             }
-            //console.log(subchapter)
+          
             if (subchapter != -1){
               $('#left-subchapter-'+subchapter).css('background-color', 'hsl(129, 67%, 64%)')
             }

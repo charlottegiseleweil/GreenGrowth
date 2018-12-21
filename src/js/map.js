@@ -81,12 +81,6 @@ function openingClick() {
 
       intro.start();
         
-        /*
-        setTimeout(function(){
-          console.log($('#chapter6').position().top)
-          $('#right-menu').scrollTop($('#right-menu').scrollTop() + $('#chapter6').position().top);
-        }, 1000);
-        */
     });
 }
 

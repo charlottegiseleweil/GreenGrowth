@@ -68,7 +68,7 @@ html, body {
 
 #left-menu {
     position:absolute;
-    top:15vh;
+    top:10vh;
     width: 4vh;
     z-index: 100;
     text-align:center;
@@ -130,7 +130,9 @@ p {
     background-color: white;
     border-radius: 5px;
     width: 8vw;
+    font-family: 'Maven Pro', sans-serif;
 }
+
 .legend i {
     width: 18px;
     height: 18px;
@@ -164,4 +166,20 @@ p {
     margin: 2% 0 2% 2%;
     border-radius: 10px;
     width: 40%;
+}
+
+#water_marker_control {
+    float:right; 
+    margin-left: 1%;
+    width: 13vw;
+    height: 25vh;
+    padding: 0;
+}
+
+.leaflet-control-layers-expanded {
+    padding: 1%;
+    background-color: white;
+    border-radius: 5px;
+    width: 10vw;
+    font-family: 'Maven Pro', sans-serif;
 }

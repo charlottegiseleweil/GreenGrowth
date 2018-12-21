@@ -21,13 +21,10 @@ function chapterClick(chapter){
   //scroll to location in right-menu (as 0.5sec animation)
   scroll_anim = true;
   active_block = chapter+'';
-  //console.log(active_block)
-  //$('#right-menu').css('overflow', 'hidden');
   $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-chapter-'+chapter).offset().top - $('#right-menu').position().top}, 500, 'swing');
   timer_scroll = setTimeout(function() {
     $('#right-menu').css('overflow', 'auto');
     scroll_anim = false;
-    //console.log('test')
   }, 600);
 }
 
@@ -35,12 +32,11 @@ function subchapterClick(chapter, subno){
   //scroll to location in right-menu (as 0.5sec animation)
   scroll_anim = true;
   active_block = chapter+'-'+subno;
-  //$('#right-menu').css('overflow', 'hidden');
+
   $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() -scroll_margin  + $('#right-subchapter-'+chapter+'-'+subno).offset().top - $('#right-menu').position().top +1}, 500, 'swing');
   timer_scroll = setTimeout(function() {
       $('#right-menu').css('overflow', 'auto');
       scroll_anim = false;
-      //console.log('test')
   }, 600);
 
 }
