@@ -9,7 +9,7 @@ This project aims to locate about 20 case studies across the world. These exampl
 - Günes Yurdakul | gunes.yurdakul@epfl.ch
 ## Access the project
 * Project website: https://schreven.github.io/Map-intl-env-projects/src/index.html
-* Project report:
+* Project report: https://drive.google.com/open?id=1WU9sILkX6wAXK3CFvv_4IRCCQ1SDDjsW
 * Screencast: https://www.youtube.com/watch?v=MbKB95NhoIs&frags=pl%2Cwn
 ## Run it locally
 Please use the following bash commands below to run the application in your computer.
