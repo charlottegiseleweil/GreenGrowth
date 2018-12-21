@@ -195,7 +195,7 @@ function case_6_1_fig1() {
             suffix : "M",
             lineColor: "#4F81BC",
             tickColor: "#4F81BC",
-            valueFormatString:"$####"
+            valueFormatString:"####"
         },
         axisY2: {
             title: "CRP Payments",
@@ -208,7 +208,7 @@ function case_6_1_fig1() {
             type: "spline",
             name: "Land Enrolled",
             xValueFormatString: "####",
-            yValueFormatString: "$####",
+            yValueFormatString: "#### million acres",
             dataPoints: data_points_acres
         },
         {
