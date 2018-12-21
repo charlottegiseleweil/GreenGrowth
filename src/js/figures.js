@@ -118,6 +118,13 @@ function right_menu_figures(chapter, subchapter){
     $('#water_marker_control').css('display','none');
     //<div id="chartContainer" class="dialog" style="height: 100%; width: 100%;"></div>
     }
+
+  else if (case_with_figure.includes(subchapter)){
+
+    $('#'+subchapter+'-summary').after('<div id="figure-'+subchapter+' style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
+    cases_static_figs(subchapter);
+
+  }
 }
 
 
@@ -150,6 +157,11 @@ function display_figure(subchapter){
         break
     }
   }
+}
+
+function cases_static_figs(subchapter){
+    fig_file = './static/figure_and_images/'+subchapter.toString().replace('-','_')+'-1.png';
+    $('#'+subchapter+'-summary').append("<img src="+fig_file+" style='width:100%; height:100%;'>");
 }
 
 function case_6_1_fig1() {
