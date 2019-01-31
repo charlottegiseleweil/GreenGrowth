@@ -1,27 +1,27 @@
 let all_chapters = [];
-let all_subchapters =[];
-let chapter_dict = {};
+let subchapters =[];
 let timer;
 let only_dynamic = false;
 let case_location_view = {};
 let scroll_anim = false;
 const scroll_margin = 8;
-let blocks = [];
-let active_block;
+let active_subchapter;
 let body_scroll_pos = $('#right-menu').scrollTop();
 figures = {}
 var case_with_figure = []
 var case_no_fig_title= {};
+var subchapters_in_chapter = {};
 
 // list of subchapters
 let figure_list = ['2-1', '2-3', '6-2', '6-3', '7-4', '8-1', '9-2', '10-3', '10-5', '11-1', '13-1', '14-2', '15-2', '15-3', '16-1', '16-2', '17-1', '17-2'];
 
-//build scrollable right menu containing descriptions of each chapter 
+//build scrollable right menu containing descriptions of each chapter
 function buildRightMenu(){
+
   // read csv file containing figure information
   d3.csv('./data/figures.csv').then(function(figures){
     for(var i=0;i<figures.length;i++){
-  
+
       if (figures[i]['static']=='TRUE'){
         case_with_figure.push(figures[i]['case_no'].toString().replace('.','-'))// add case no
         case_no_fig_title[figures[i]['case_no'].toString().replace('.','-')] = figures[i]['name'] // add name of figure to dictionary(key figures case no)
@@ -30,53 +30,51 @@ function buildRightMenu(){
   });
   //read case studies csv file containing details of each case study
   d3.csv("./data/case_studies.csv").then(function(case_studies){
-    $('#right-menu-body').append("<div id=title></div>")
-    // add title of right menu
-    $('#title').append("<h2> Pathways to Green Growth</h2>")
-    $('#title').append("<h3> Mainstreaming Natural Capital into Policy and Finance: International Case Studies </h3>")
-    blocks.push('title')
-
     //iterate over case studies to add to right menu
     for(var i=0;i<case_studies.length;i++){
       if (!only_dynamic || case_studies[i]['dynamic']=='TRUE'){
-        chapter = case_studies[i]["ch_no"]
         subchapter = case_studies[i]["number"].replace(".","-")
-
-        if (!(all_chapters.includes(chapter))){
-          //Division for chapter
-          $('#right-menu-body').append("<div id=right-chapter-"+chapter+"></div>")
-          //Chapter Title
-          $('#right-chapter-'+chapter).append('<hr><h4>Chapter ' + chapter+': ' + case_studies[i]['ch_title'] + '</h4>')
-          chapter_dict[chapter] = [];
-          all_chapters.push(chapter)
-          blocks.push(chapter);
-
+        chapter = case_studies[i]["ch_no"]
+        console.log(chapter)
+        if (!(chapter in subchapters_in_chapter)){
+            subchapters_in_chapter[chapter] = [];
         }
-        chapter_dict[chapter].push(subchapter);
+        subchapters_in_chapter[chapter].push(subchapter);
+
+        //Subchapter
+        $('#right-menu-body').append("<p id=right-subchapter-"+subchapter+" class=subchapter></p>")
         //Subchapter title
-        $('#right-chapter-'+chapter).append("<h5 id=right-subchapter-"+subchapter+">"+subchapter+": "+case_studies[i]['name']+"</h5>")
+        $("#right-subchapter-"+subchapter).append("<h5 id="+subchapter+"-title class=text-body>"+subchapter+": "+case_studies[i]['name']+"</h5>")
+        $("#right-subchapter-"+subchapter).hide()
         //Subchapter summary
-
         if (figure_list.includes(subchapter)){
-          $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapter + '.jpg" alt="subchapter-image">'+case_studies[i]['summary']+'</p>');
+          $('#right-subchapter-'+subchapter).append("<p id="+subchapter+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapter + '.jpg" alt="subchapter-image">'+case_studies[i]['summary']+'</p>');
         } else {
-          $('#right-subchapter-'+subchapter).after("<p id="+subchapter+"-summary>"+case_studies[i]['summary']+"</p>")
+          $('#right-subchapter-'+subchapter).append("<p id="+subchapter+"-summary>"+case_studies[i]['summary']+ "class=text-body"+"</p>")
         }
+        //console.log(right-subchapter-'+subchapter)
 
-        all_subchapters.push(subchapter);
-        blocks.push(subchapter);
+        subchapters.push(subchapter);
         //treat specific figures or images of each case
-        right_menu_figures(chapter, subchapter);
+        right_menu_figures(subchapter);
         case_location_view[subchapter] = case_studies[i]['location_view']
+
+
+        //
 
       }
     }
-    active_block = blocks[0];
+    console.log(subchapters)
+    active_subchapter = subchapters[0];
+    $("#right-subchapter-"+active_subchapter).show();
+    /*
     $('#right-menu-body').append('<div style="padding:1%; text-align:justify;"><p><h3>Credits</h3>The case studies survey a range of policy and finance mechanisms that channel economic resources and other benefits towards securing and enhancing natural capital. These mechanisms typically also aim to increase equity and well-being, both through poverty alleviation and in access to ecosystem goods and services. Illustrative examples have been contributed by a range of experts who come from the natural and social sciences, government, private companies, financial institutions, and civil society organizations. These case studies were compiled by Lisa Mandle, James Salzman and Gretchen C. Daily and illustrated by Charlotte Weil. This application is developed by <b>Can Yilmaz Altinigne</b>, <b>Cyril van Schreven</b> and <b>Günes Yurdakul</b>.</p></div>')
     $('#right-menu-body').append('<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>')
+    */
   });
   }
 
+/*
 function onScroll(){
   //animate scrolling
   if (scroll_anim == false){
@@ -121,8 +119,8 @@ function onScroll(){
 
   var subchapter_pos_promise = new Promise(function(resolve, reject) {
     let subchapter_scroll_pos = -1;
-    for (var i=0;i<all_subchapters.length;i++){
-      if (($('#right-menu-body').scrollTop())>=($('#right-subchapter-'+all_subchapters[i]).offset().top -scroll_margin - $('#right-menu').position().top)){
+    for (var i=0;i<subchapters.length;i++){
+      if (($('#right-menu-body').scrollTop())>=($('#right-subchapter-'+subchapters[i]).offset().top -scroll_margin - $('#right-menu').position().top)){
         subchapter_scroll_pos = i;
       }
       else break
@@ -160,17 +158,17 @@ function onScroll(){
           }
 
           //find at which subchapter right menu is
-       
+
           subchapter_pos_promise.then(function(subchapter_scroll_pos){
-            if (chapter < all_subchapters[subchapter_scroll_pos]){
-              subchapter = all_subchapters[subchapter_scroll_pos];
+            if (chapter < subchapters[subchapter_scroll_pos]){
+              subchapter = subchapters[subchapter_scroll_pos];
             }
             else subchapter = 0;
-            
+
             for (var i=0;i<chapter_dict[chapter].length;i++){
               $('#left-subchapter-'+chapter_dict[chapter][i]).css('background-color', 'black')
             }
-          
+
             if (subchapter != -1){
               $('#left-subchapter-'+subchapter).css('background-color', 'hsl(129, 67%, 64%)')
             }
@@ -181,3 +179,4 @@ function onScroll(){
       });
     }, 100);
 }
+*/
