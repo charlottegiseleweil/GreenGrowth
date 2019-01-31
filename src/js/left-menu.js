@@ -1,19 +1,29 @@
 function buildLeftMenu(){
+  //add left-menu title
+  $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
+
+  //add chapter number to (main) left-menu
   let all_chapters_temp =[];
-  d3.csv("./data/case_studies.csv").then(function(case_studies){
-    //adding chapter values
-    for(var i=0;i<case_studies.length;i++){
-      if (!only_dynamic || case_studies[i]['dynamic']=='TRUE'){
-        if (!(all_chapters_temp.includes(case_studies[i]["ch_no"]))){
-          $('#left-menu').append("<span id=left-chapter-"+case_studies[i]["ch_no"]+" class='left-chapter' onclick=subchapterClick("+case_studies[i]["ch_no"]+",0);>" +case_studies[i]['ch_no']+ "</span>");
-          all_chapters_temp.push(case_studies[i]["ch_no"])
-        }
-      }
-    }
-    $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
+  console.log(Object.keys(subchapters_in_chapter).length)
+  for(var i=0;i<Object.keys(subchapters_in_chapter).length;i++){
+    console.log('est')
+    chap_temp = subchapters_in_chapter[i]
+    console.log(chap_temp)
+    $('#left-menu').append("<span id=left-chapter-"+chap_temp+" class='left-chapter' onclick=subchapterClick("+chap_temp+",0);>" +chap_temp+ "</span>");
+  }
 
-  });
+  //add submenus for each chapter and corresponding subchapters
+  /*
+  let subchaps = subchapters_in_chapter[chapter];
+  $('#left-chapter-'+chapter).after("<div id=left-menu-sub"+chapter+" style= top:"+$('#left-chapter-'+chapter).position().top+"px;'></div>")
+  for (var i=0;i<subchapters_in_chapter[chapter].length;i++){
+    $('#left-menu-sub').append("<span id=left-subchapter-"+subchaps[i]+" class='left-subchapter' onclick=subchapterClick("+subchaps[i].toString().split('-')[0]+','+subchaps[i].toString().split('-')[1]+");>" +subchaps[i].toString().split('-')[1]+ "</span>");
+  }
+  */
 
+
+
+  //add key-press event listener (should be moved elsewhere)
   document.addEventListener("keydown", function(event) {
     //clicked right-arrow or down-arrow
     if (event.which == '39' || event.which == '40'){
@@ -43,7 +53,7 @@ function subchapterClick(chapter, subno){
   else{
     active_subchapter = chapter+'-'+subno;
   }
-  $(".subchapter").hide()
+  $(".right-subchapter").hide()
   $("#right-subchapter-"+active_subchapter).slideDown( "slow",  function() {
     // Animation complete.
   });
@@ -51,15 +61,6 @@ function subchapterClick(chapter, subno){
   //set the color on clicked chapter button (and not others)
   $('.left-chapter').css('background-color', 'black')
   $('#left-chapter-'+chapter).css('background-color', 'hsl(129, 67%, 64%)')
-
-  let subchaps = subchapters_in_chapter[chapter];
-  let width = subchaps.length*3.5 + 2
-  $('#left-chapter-'+chapter).after("<div id=left-menu-sub style='top:"+$('#left-chapter-'+chapter).position().top+"px; width:4vh; left:4vh;'></div>")
-  for (var i=0;i<subchapters_in_chapter[chapter].length;i++){
-    $('#left-menu-sub').append("<span id=left-subchapter-"+subchaps[i]+" class='left-subchapter' onclick=subchapterClick("+subchaps[i].toString().split('-')[0]+','+subchaps[i].toString().split('-')[1]+");>" +subchaps[i].toString().split('-')[1]+ "</span>");
-  }
-
-
 
   $('.left-subchapter').css('background-color', 'black')
   $('#left-subchapter-'+active_subchapter).css('background-color', 'hsl(129, 67%, 64%)')
