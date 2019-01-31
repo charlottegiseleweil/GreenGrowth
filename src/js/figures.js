@@ -1,4 +1,3 @@
-var active_subchapter
 var choropleth_fips={}
 var choropleth_map_objs = {}
 var waterfund_objs={}
@@ -51,7 +50,7 @@ const start_reading = async function() {
     choropleth_map_county = await shp("data/county/counties");
     data = await $.getJSON('data/mitigation_bank.json');
     case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
-    
+
     case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
 
     //preload case_6_1-3
@@ -111,12 +110,12 @@ $( 'body' ).ready(function() {
         $('.progress').hide();
         $('.entry-button').show();
     });
-
+    //setTimeout(function(){$('.progress').trigger('loaded')}, 0);
     start_reading();
 });
 
 // add figures on right menu
-function right_menu_figures(chapter, subchapter){
+function right_menu_figures(subchapter){
   if (subchapter == '6-1'){
     $('#'+subchapter+'-summary').after('<div id="chart-container" style="height: 300px;"></div>');
     case_6_1_fig1();
@@ -228,10 +227,10 @@ function case_6_1_fig1() {
 
 function case_6_1_fig2(scrolled=false) {
     case_6_1_button_active = '1'
-    if(active_subchapter!='6-1')// if chapter 6 is active  
+    if(active_subchapter!='6-1')// if chapter 6 is active
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
-        if(!scrolled) clean_layers();// clean layers if navigating to another case 
+        if(!scrolled) clean_layers();// clean layers if navigating to another case
         $("#button-1").css('background-color','#39ac73');
         choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
         choropleth_map_objs['legend-2'].addTo(map);//add legend
@@ -251,7 +250,7 @@ function case_6_1_fig2(scrolled=false) {
     }
 };
 
-// add choropleth of case 6.1 fig3 to map 
+// add choropleth of case 6.1 fig3 to map
 function case_6_1_fig3(scrolled=false) {
     case_6_1_button_active = '2'
     if(active_subchapter!='6-1')
@@ -268,7 +267,7 @@ function case_6_1_fig3(scrolled=false) {
 function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
     choropleth_fips['grades']=grades;
     layers=[]
-    
+
     for (year_idx=0;year_idx<year_list.length;year_idx++){
 
         year = year_list[year_idx];
@@ -357,7 +356,7 @@ function case_8_1_fig1() {
         div.innerHTML = lgnd.join('<br>');
         return div;
     };
-  
+
     case_8_1_fig1_legend.addTo(map);
 
 };
@@ -394,7 +393,7 @@ function case_9_1_fig1(scrolled=false) {
                       className: 'myDivIcon'
                     })}
                 );
-                
+
                 //set values in popup
                 if (data[i]['Phase']==('Operation'||'Maturity')){
                     marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
@@ -424,7 +423,7 @@ function case_9_1_fig1(scrolled=false) {
             waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
             waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
             waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
-            
+
             var overlayMaps = {
                 "Being Explored":               waterfund_objs['phase_'] ,
                 "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
@@ -434,12 +433,12 @@ function case_9_1_fig1(scrolled=false) {
                 "Phase 4: Operation":           waterfund_objs['phase_4'],
                 "Phase 5: Maturity":            waterfund_objs['phase_5']
             };
-            //create layer control by adding layer groups 
+            //create layer control by adding layer groups
             waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
             $('.leaflet-control-layers-selector:checked')
- 
+
             //document.getElementById('water_marker_control').appendChild(waterfund_objs['con_layers'].getContainer());
-       
+
         waterfund_bool=true;
     }
 }

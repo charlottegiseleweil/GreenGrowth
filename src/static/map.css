@@ -55,6 +55,33 @@ html, body {
     font-family: 'Maven Pro', sans-serif;
 }
 
+.text-body {
+  text-align: left;
+}
+
+.chapter {
+  display : none;
+}
+
+.subchapter {
+  display : block;
+}
+
+#title{
+  display : none;
+}
+
+.h5 {
+    display: block;
+    font-size: .83em;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    text-align: right;
+}
+
 .center-div {
     margin: 0 auto;
     max-width: 50%;
@@ -88,32 +115,34 @@ html, body {
   padding-bottom: 1vh;
 }
 
+.left-chapter{
+  height: 3vh;
+  width: 3vh;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+  margin-top: 1vh;
+  font-size: 1.5vh;
+  line-height: 3vh;
+  background-color : black;
+}
+
+.left-subchapter{
+  height: 3vh;
+  width: 3vh;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+  margin-top: 1vh;
+  font-size: 1.5vh;
+  line-height: 3vh;
+  background-color : black;
+}
+
 p {
     text-align: justify;
-}
-
-.dot {
-    height: 3vh;
-    width: 3vh;
-    background-color: black;
-    border-radius: 50%;
-    display: inline-block;
-    color: white;
-    margin-top: 1vh;
-    font-size: 1.5vh;
-    line-height: 3vh;
-}
-
-.dot-sub {
-    height: 3vh;
-    width: 3vh;
-    background-color: black;
-    border-radius: 50%;
-    display: inline-block;
-    color: white;
-    margin-top: 1vh;
-    font-size: 1.5vh;
-    line-height: 3vh;
 }
 
 
@@ -162,14 +191,14 @@ p {
 }
 
 .subchapter-img {
-    float: right; 
+    float: right;
     margin: 2% 0 2% 2%;
     border-radius: 10px;
     width: 40%;
 }
 
 #water_marker_control {
-    float:right; 
+    float:right;
     margin-left: 1%;
     width: 13vw;
     height: 25vh;

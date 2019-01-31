@@ -60,10 +60,10 @@ function openingClick() {
 
         //create user guide
         var intro = introJs();
-        
+
         intro.setOptions({
             steps: [
-            { 
+            {
                 intro: "This help menu will guide you through the steps necessary to use the app properly."
             },
             {
@@ -77,11 +77,11 @@ function openingClick() {
                 position: 'left'
             }
             ],
-            showStepNumbers:false 
+            showStepNumbers:false
       });
 
-      intro.start();//start user-guide
-        
+      //intro.start();//start user-guide
+
     });
 }
 
