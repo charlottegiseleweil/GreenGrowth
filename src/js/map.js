@@ -55,8 +55,8 @@ function openingClick() {
         });
 
         //build left and right menu
-        buildLeftMenu();
         buildRightMenu();
+        buildLeftMenu();
 
         //create user guide
         var intro = introJs();

@@ -114,26 +114,7 @@ $( 'body' ).ready(function() {
     start_reading();
 });
 
-// add figures on right menu
-function right_menu_figures(subchapter){
-  if (subchapter == '6-1'){
-    $('#'+subchapter+'-summary').after('<div id="chart-container" style="height: 300px;"></div>');
-    case_6_1_fig1();
-    //add case 6 buttons
-    $('#chart-container').after('<div id="button-div"></div><br><br>');
-    $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="case_6_1_fig2();">Enrollment per county</button>');
-    $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
-  }
-  else if (subchapter == '9-1'){
-    }
 
-  else if (case_with_figure.includes(subchapter)){
-    //add divs for figures of case studies
-    $('#'+subchapter+'-summary').after('<div id="figure-'+subchapter+' style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
-    cases_static_figs(subchapter);
-
-  }
-}
 
 // display figures of each study
 function display_figure(subchapter){
@@ -165,64 +146,8 @@ function display_figure(subchapter){
   }
 }
 
-// add static visuals
-function cases_static_figs(subchapter){
-    fig_file = './static/figure_and_images/'+subchapter.toString().replace('-','_')+'-1.png';
-    $('#'+subchapter+'-summary').append('<img class="img-center" src="' + fig_file + '">');
-    $('#'+subchapter+'-summary').append('<p class="figure-text">Figure: ' + case_no_fig_title[subchapter]+ '</p>');
-}
 
-//create line plot of case study 6.1
-function case_6_1_fig1() {
-    //set options of line plot
-    var options={
-        animationEnabled: true,
-        title:{
-            text: "CRP Enrollments and Payment"
-        },
-        toolTip: {
-            shared: true
-        },
-        axisX: {
-            title: "Year",
-            suffix : "",
-            valueFormatString:"####"
-        },
-        axisY: {
-            title: "Land Enrolled",
-            titleFontColor: "#4F81BC",
-            suffix : "M",
-            lineColor: "#4F81BC",
-            tickColor: "#4F81BC",
-            valueFormatString:"####"
-        },
-        axisY2: {
-            title: "CRP Payments",
-            titleFontColor: "#C0504E",
-            suffix : "M",
-            lineColor: "#C0504E",
-            tickColor: "#C0504E"
-        },
-        data: [{
-            type: "spline",
-            name: "Land Enrolled",
-            xValueFormatString: "####",
-            yValueFormatString: "#### million acres",
-            dataPoints: data_points_acres
-        },
-        {
-            type: "spline",
-            axisYType: "secondary",
-            name: "CRP Payments",
-            yValueFormatString: "$####",
-            xValueFormatString: "####",
-            dataPoints: data_points_money
-        }]
-    };
 
-    $("#chart-container").CanvasJSChart(options);
-
-};
 
 
 function case_6_1_fig2(scrolled=false) {
