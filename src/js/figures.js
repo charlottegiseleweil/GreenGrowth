@@ -1,128 +1,11 @@
-var choropleth_fips={}
-var choropleth_map_objs = {}
-var waterfund_objs={}
-var waterfund_markers={}
-var case_6_1_button_active = '1'
-var lineplot_data;
-var case_6_1_fig3_data;
-var case_6_1_fig2_data;
-var case_7_2_fig1_layer;
-var case_7_4_fig1_layer;
-var case_9_1_fig1_data;
-var choropleth_map_county;
-var progress_bar = 0;
-var case_8_1_fig1_layer1;
-var case_8_1_fig1_layer2;
-var case_8_1_fig1_layer3;
+let previous_active_subchapter = '0-0';
 
-//marker options
-var geojsonMarkerOptions = {
-    radius: 8,
-    fillColor: "#ff7800",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-
-//progress bar on loading page
-var progress_bar = {
-    progress: 0,
-    get _progress() { return this.progress; },
-    set _progress(value) { this.progress = value; $('.progress-bar').css({'width': this.progress + '%'}) }
-  };
-
-//read csv files, meanwhile update progress bar and create all leaflet layers on pre-loading page
-const start_reading = async function() {
-    //preload 6_1-1
-    lineplot_data = await d3.csv("data/line_plot.csv");
-    data_points_acres=[];
-    data_points_money=[];
-
-    for(var i=0;i<lineplot_data.length;i++){
-        data_points_acres.push({x: parseInt(lineplot_data[i]['yr'],10) ,y:lineplot_data[i]['Total_Acres']/1000000})
-        data_points_money.push({x: parseInt(lineplot_data[i]['yr'],10),y:lineplot_data[i]['Total_Money']/1000000})
-    }
-
-    progress_bar._progress += 20;
-
-    //preload case_6_1-2
-    choropleth_map_county = await shp("data/county/counties");
-    data = await $.getJSON('data/mitigation_bank.json');
-    case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
-
-    case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
-
-    //preload case_6_1-3
-    case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
-    case_6_1_choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,3);
-
-    progress_bar._progress += 20;
-
-    //preload case 7_2-1
-    case_7_2_fig1_layer = L.geoJson(data, {
-        pointToLayer: function (feature, latlng) {
-            label = String(feature.properties.NUMPOINTS)
-            return new L.circleMarker(latlng, geojsonMarkerOptions).bindTooltip(label, {permanent: true, opacity: 0.7}).openTooltip();
-        }
-    });
-
-    progress_bar._progress += 20;
-
-    //preload case_7_4-1
-    geojson = await shp("data/forest/forest.offset.projects.updated2017");
-    case_7_4_fig1_layer = L.geoJson(geojson, {
-        pointToLayer: function (feature, latlng) {
-            return new L.marker(latlng, {
-                icon: L.divIcon({
-                html: '<i class="fa fa-tree" aria-hidden="true" style="color:lightgreen"></i>',
-                className: 'myDivIcon'
-                })
-            }).bindPopup('<i>'+String(feature.properties.NAME)+'</i><br>'+String(feature.properties.Area2)+' <strong>hectares.</strong>').on('mouseover', function (e) {
-                this.openPopup();
-            }).on('mouseout', function (e) {
-                this.closePopup();
-            });
-        }
-    })
-
-    progress_bar._progress += 20;
-
-    case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");
-    geojson = await shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w");
-    case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {"color": "#00994c","opacity": 0.65}});
-
-    data = await $.getJSON('data/brazil/amapoly_ivb.json');
-    case_8_1_fig1_layer2 = L.geoJson(data, {style: {"color": "#665BCE"}});
-
-    data = await $.getJSON('data/brazil/amazonriver_865.json');
-    case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
-
-    progress_bar._progress += 20;
-
-    setTimeout(function(){$('.progress').trigger('loaded')}, 600);
-}
-
-// create progress bar
-$( 'body' ).ready(function() {
-
-    $('.progress').bind('loaded',function(){
-        $('.progress').hide();
-        $('.entry-button').show();
-    });
-    //setTimeout(function(){$('.progress').trigger('loaded')}, 0);
-    start_reading();
-});
-
-
-
-// display figures of each study
+// display dynamic figures (on map) for cases (subchapters) that have one
 function display_figure(subchapter){
-  if (!(subchapter == active_subchapter)){
+  //if (true){
     clean_layers()
-    handle_view(subchapter)
-    active_subchapter = subchapter
-    switch(subchapter){
+    zoom_to(subchapter)
+    switch(subchapter["id"]){
       case '6-1':
         if (case_6_1_button_active==1) case_6_1_fig2(scrolled=true)
         else case_6_1_fig3(scrolled=true);
@@ -140,10 +23,11 @@ function display_figure(subchapter){
         case_8_1_fig1();
         break
       case '9-1':
-        case_9_1_fig1(scrolled=true)
+        case_9_1_fig1(scrolled=true);
         break
     }
-  }
+    previous_active_subchapter = active_subchapter;
+  //}
 }
 
 
@@ -152,7 +36,7 @@ function display_figure(subchapter){
 
 function case_6_1_fig2(scrolled=false) {
     case_6_1_button_active = '1'
-    if(active_subchapter!='6-1')// if chapter 6 is active
+    if(previous_active_subchapter["id"]!='6-1')// if chapter 6 is active
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();// clean layers if navigating to another case
@@ -178,7 +62,7 @@ function case_6_1_fig2(scrolled=false) {
 // add choropleth of case 6.1 fig3 to map
 function case_6_1_fig3(scrolled=false) {
     case_6_1_button_active = '2'
-    if(active_subchapter!='6-1')
+    if(previous_active_subchapter["id"]!='6-1')
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();
@@ -290,7 +174,7 @@ function case_8_1_fig1() {
 function case_9_1_fig1(scrolled=false) {
     data=case_9_1_fig1_data;
     case_6_1_button_active = '1'
-    if(active_subchapter!='9-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-9-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
+    if(previous_active_subchapter["id"]!='9-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-9-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();
     }
@@ -370,22 +254,20 @@ function case_9_1_fig1(scrolled=false) {
 
 
 
-function handle_view(subchapter){
-
+function zoom_to(subchapter){
   //At title
-  if(subchapter=='0') view_world();
-  else{
+//if(subchapter['id']=='0') view_world();
+//  else
   //User clicked on active subchapter: reset
-    lat = case_location_view[subchapter].split(',')[0];
-    long = parseFloat(case_location_view[subchapter].split(',')[1]);
-    zoom = case_location_view[subchapter].split(',')[2]
-    map.flyTo([lat, long],zoom);
-}
+  lat = subchapter["loc_view"].split(',')[0];
+  long = subchapter["loc_view"].split(',')[1];
+  zoom = subchapter["loc_view"].split(',')[2]
+  map.flyTo([lat, long],zoom);
 }
 
 function clean_layers(){
 
-  if(active_subchapter=='6-1'){
+  if(previous_active_subchapter["id"]=='6-1'){
     $('#button-1').css('background-color', 'rgba(255, 255, 255, 0.8)');
     $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
     map.removeControl(choropleth_map_objs['legend-2']);
@@ -399,7 +281,7 @@ function clean_layers(){
   }
 
   //case_6_3_fig1
-  else if(active_subchapter=='6-3'){
+  else if(previous_active_subchapter["id"]=='6-3'){
     map.removeLayer(case_6_3_fig1_layer);
     map.removeControl(case_6_3_fig1_legend);
     geojson.eachLayer(function(layer) {
@@ -412,17 +294,17 @@ function clean_layers(){
   }
 
   //case_7_2_fig1
-  else if(active_subchapter=='7-2'){
+  else if(previous_active_subchapter["id"]=='7-2'){
     map.removeLayer(case_7_2_fig1_layer);
   }
 
   //case_7_4_fig1
-  else if(active_subchapter=='7-4'){
+  else if(previous_active_subchapter["id"]=='7-4'){
     map.removeLayer(case_7_4_fig1_layer);
   }
 
   //case_8_1_fig1
-  else if(active_subchapter=='8-1'){
+  else if(previous_active_subchapter["id"]=='8-1'){
     map.removeLayer(case_8_1_fig1_layer1);
     map.removeLayer(case_8_1_fig1_layer2);
     map.removeLayer(case_8_1_fig1_layer3);
@@ -430,7 +312,7 @@ function clean_layers(){
   }
 
   //case_9_1_fig1
-  else if(active_subchapter=='9-1'){
+  else if(previous_active_subchapter["id"]=='9-1'){
     waterfund_markers=[]
     waterfund_objs['con_layers'].remove(map);
     waterfund_objs['phase_'].clearLayers();
