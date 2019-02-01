@@ -104,16 +104,6 @@ html, body {
     font-family: 'Righteous', cursive;
 }
 
-#left-menu-sub{
-  position:absolute;
-  z-index: 100;
-  text-align:center;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 2vh 2vh 2vh 2vh;
-  font-family: 'Righteous', cursive;
-  width: 4vh;
-  padding-bottom: 1vh;
-}
 
 .left-chapter{
   height: 3vh;
@@ -126,6 +116,19 @@ html, body {
   font-size: 1.5vh;
   line-height: 3vh;
   background-color : black;
+}
+
+.left-menu-sub{
+  display: block;
+  position:absolute;
+  z-index: 100;
+  text-align:center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 2vh 2vh 2vh 2vh;
+  font-family: 'Righteous', cursive;
+  width: 4vh;
+  left:4vh;
+  padding-bottom: 1vh;
 }
 
 .left-subchapter{
@@ -141,10 +144,8 @@ html, body {
   background-color : black;
 }
 
-.left-submenu {
-  width:4vh;
-  left:4vh;
-}
+
+
 
 p {
     text-align: justify;
