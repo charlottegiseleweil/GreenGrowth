@@ -4,7 +4,7 @@ let previous_active_subchapter = '0-0';
 function display_figure(subchapter){
   //if (true){
     clean_layers()
-    zoom_to(subchapter)
+    zoom_to_case(subchapter)
     switch(subchapter.id){
       case '6-1':
         if (case_6_1_button_active==1) case_6_1_fig2(scrolled=true)
@@ -252,19 +252,6 @@ function case_9_1_fig1(scrolled=false) {
 
         waterfund_bool=true;
     }
-}
-
-
-
-function zoom_to(subchapter){
-  //At title
-//if(subchapter['id']=='0') view_world();
-//  else
-  //User clicked on active subchapter: reset
-  lat = subchapter["loc_view"].split(',')[0];
-  long = subchapter["loc_view"].split(',')[1];
-  zoom = subchapter["loc_view"].split(',')[2]
-  map.setView([lat, long],zoom);
 }
 
 function clean_layers(){

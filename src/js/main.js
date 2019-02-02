@@ -1,5 +1,5 @@
 var data_loader = new DataLoader();
-
+let geojson;
 const load_data = async function(){
   $( 'body' ).ready(function() {
       // create progress bar
