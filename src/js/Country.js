@@ -27,7 +27,7 @@ class Country{
           //set new active country
           data_loader.active_country =this;
           //zoom to country
-          zoom_to_country(data_loader.active_country);
+          zoom_to(data_loader.active_country);
 
 
           console.log(data_loader.active_country);
@@ -66,7 +66,7 @@ async function handleCountryClick(e) {
     //set to active country highlight
     activeHighlight(e);
     //zoom to country
-    zoom_to_country(data_loader.active_country);
+    zoom_to(data_loader.active_country);
     console.log("moved to: "+data_loader.active_country.name);
     //use all data again
     await data_loader.prepareDataframes()

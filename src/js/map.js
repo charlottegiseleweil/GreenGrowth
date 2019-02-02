@@ -84,20 +84,13 @@ function resetHighlight(e) {
   }
 }
 
-function zoom_to_case(subchapter){
-  lat = subchapter["loc_view"].split(',')[0];
-  long = subchapter["loc_view"].split(',')[1];
-  zoom = subchapter["loc_view"].split(',')[2]
+function zoom_to(object){
+  lat = object["loc_view"].split(',')[0];
+  long = object["loc_view"].split(',')[1];
+  zoom = object["loc_view"].split(',')[2]
   map.setView([lat, long],zoom);
 }
 
-function zoom_to_country(country){
-  console.log(country)
-  lat = country["loc_view"].split(',')[0];
-  long = country["loc_view"].split(',')[1];
-  zoom = country["loc_view"].split(',')[2]
-  map.setView([lat, long],zoom);
-}
 
 function resetAllLayers(){
   geojson.eachLayer(function(layer){
