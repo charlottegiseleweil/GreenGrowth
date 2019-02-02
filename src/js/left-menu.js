@@ -1,6 +1,8 @@
 const active_button_color = "hsl(129, 67%, 64%)";
 
 function buildLeftMenu(){
+  //clear left menu, in case it's being overwritten
+  $('#left-menu').html("");
   //add left-menu title
   chapters = data_loader.chapters;
   subchapters = data_loader.subchapters;

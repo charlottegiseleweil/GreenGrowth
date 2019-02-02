@@ -11,7 +11,8 @@ const load_data = async function(){
       //load and prepare dataframes
       data_loader.prepareDataframes();
       //preload the data of the dynamic figures (slow)
-      data_loader.preloadDynamicFigures();
+      //data_loader.preloadDynamicFigures();
+      setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }
 

@@ -1,7 +1,9 @@
 
 //build scrollable right menu containing content of each case
 function buildRightMenu(){
-    subchapters = data_loader.subchapters;
+  //clear right menu, in case it's being overwritten
+  $('#right-menu-body').html("");
+  subchapters = data_loader.subchapters;
   //iterate over subchapters to add to right menu
   for (var i in subchapters){
         //Subchapter
