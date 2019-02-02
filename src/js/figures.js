@@ -43,21 +43,7 @@ function case_6_1_fig2(scrolled=false) {
         $("#button-1").css('background-color','#39ac73');
         choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
         choropleth_map_objs['legend-2'].addTo(map);//add legend
-        /*
-        $('#button-div').after('<div id="slider" style="margin: 16px"></div>')
-        map.addControl(choropleth_map_objs['slider']);//add slider to map
-
-        var htmlObject = choropleth_map_objs['slider'].getContainer();//get slider container
-
-        var newpos = document.getElementById('slider');//set time slider
-
-        function setParent(el, newParent)
-        {
-        newParent.appendChild(el);
-        }
-        setParent(htmlObject, newpos);
-        choropleth_map_objs['slider'].startSlider();//starting slider
-        */
+        add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1");
     }
 };
 
@@ -71,6 +57,8 @@ function case_6_1_fig3(scrolled=false) {
         $("#button-2").css('background-color','#39ac73');
         choropleth_map_objs['2016geo-3'].addTo(map)
         choropleth_map_objs['legend-3'].addTo(map);
+        add_legend_to_right_menu(choropleth_map_objs['legend-3'],"6-1");
+        
     }
 };
 
@@ -108,7 +96,6 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
         //initiate slider, follow = 1 means, show one feature at a time
         choropleth_map_objs['slider'] = L.control.sliderControl({position: "topleft",layer:layerGroup, follow: 1});
     }
-    //choropleth_map_objs['legend'].addTo(map);
 }
 
 // add png of south africa on map
@@ -138,7 +125,8 @@ function case_6_3_fig1() {
           };
       //add legend
       case_6_3_fig1_legend.addTo(map);
-
+      add_legend_to_right_menu(case_6_3_fig1_legend,"6-3");
+      
       imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
       case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);//add image as overlay on the map using boundaries of South Africa
 
@@ -169,6 +157,8 @@ function case_8_1_fig1() {
     };
 
     case_8_1_fig1_legend.addTo(map);
+    add_legend_to_right_menu(case_8_1_fig1_legend,"8-1");
+    
 
 };
 
@@ -247,7 +237,8 @@ function case_9_1_fig1(scrolled=false) {
             //create layer control by adding layer groups
             waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
             $('.leaflet-control-layers-selector:checked')
-
+            add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1");
+            
             //document.getElementById('water_marker_control').appendChild(waterfund_objs['con_layers'].getContainer());
 
         waterfund_bool=true;
@@ -391,4 +382,23 @@ function style(feature) {
 function view_world(){
   map.setView([20.0, 0.0], 3);
   return
+}
+
+function add_legend_to_right_menu(legend,id){
+
+    var htmlObject = legend.getContainer();//get slider container
+
+    var newpos = document.getElementById(id+'-summary+');//set time slider
+    var legend_height = htmlObject.clientHeight;
+    console.log("height",legend_height);
+    function setParent(el, newParent)
+    {
+    newParent.appendChild(el);
+    el.style.float='None';
+    el.style.marginLeft="30%";
+    el.style.width = "40%";
+    el.style.fontSize = "0.9vw";
+    el.style.backgroundColor="rgb(230, 224, 224)";
+    }
+    setParent(htmlObject, newpos);
 }

@@ -55,7 +55,7 @@ function onEachFeature(feature, layer) {
 
 
 function resetHighlight(e) {
-    if(e.target.feature.properties.name == 'South Africa'&&main_page.data_loader.active_subchapter=='6-3'){
+    if(e.target.feature.properties.name == 'South Africa'&&data_loader.active_subchapter=='6-3'){
       e.target.setStyle({fillOpacity: 0});
     }
     else{
