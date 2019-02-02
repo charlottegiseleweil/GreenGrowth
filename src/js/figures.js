@@ -5,7 +5,7 @@ function display_figure(subchapter){
   //if (true){
     clean_layers()
     zoom_to(subchapter)
-    switch(subchapter["id"]){
+    switch(subchapter.id){
       case '6-1':
         if (case_6_1_button_active==1) case_6_1_fig2(scrolled=true)
         else case_6_1_fig3(scrolled=true);
@@ -26,7 +26,7 @@ function display_figure(subchapter){
         case_9_1_fig1(scrolled=true);
         break
     }
-    previous_active_subchapter = active_subchapter;
+    previous_active_subchapter = subchapter;
   //}
 }
 
@@ -36,7 +36,7 @@ function display_figure(subchapter){
 
 function case_6_1_fig2(scrolled=false) {
     case_6_1_button_active = '1'
-    if(previous_active_subchapter["id"]!='6-1')// if chapter 6 is active
+    if(previous_active_subchapter.id!='6-1')// if chapter 6 is active
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();// clean layers if navigating to another case
@@ -62,7 +62,7 @@ function case_6_1_fig2(scrolled=false) {
 // add choropleth of case 6.1 fig3 to map
 function case_6_1_fig3(scrolled=false) {
     case_6_1_button_active = '2'
-    if(previous_active_subchapter["id"]!='6-1')
+    if(previous_active_subchapter.id!='6-1')
         $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();
@@ -174,7 +174,7 @@ function case_8_1_fig1() {
 function case_9_1_fig1(scrolled=false) {
     data=case_9_1_fig1_data;
     case_6_1_button_active = '1'
-    if(previous_active_subchapter["id"]!='9-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-9-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
+    if(previous_active_subchapter.id!='9-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-9-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
     else {
         if(!scrolled) clean_layers();
     }
@@ -262,12 +262,11 @@ function zoom_to(subchapter){
   lat = subchapter["loc_view"].split(',')[0];
   long = subchapter["loc_view"].split(',')[1];
   zoom = subchapter["loc_view"].split(',')[2]
-  map.flyTo([lat, long],zoom);
+  map.setView([lat, long],zoom);
 }
 
 function clean_layers(){
-
-  if(previous_active_subchapter["id"]=='6-1'){
+  if(previous_active_subchapter.id =='6-1'){
     $('#button-1').css('background-color', 'rgba(255, 255, 255, 0.8)');
     $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
     map.removeControl(choropleth_map_objs['legend-2']);
@@ -281,7 +280,7 @@ function clean_layers(){
   }
 
   //case_6_3_fig1
-  else if(previous_active_subchapter["id"]=='6-3'){
+  else if(previous_active_subchapter.id=='6-3'){
     map.removeLayer(case_6_3_fig1_layer);
     map.removeControl(case_6_3_fig1_legend);
     geojson.eachLayer(function(layer) {
@@ -294,17 +293,17 @@ function clean_layers(){
   }
 
   //case_7_2_fig1
-  else if(previous_active_subchapter["id"]=='7-2'){
+  else if(previous_active_subchapter.id=='7-2'){
     map.removeLayer(case_7_2_fig1_layer);
   }
 
   //case_7_4_fig1
-  else if(previous_active_subchapter["id"]=='7-4'){
+  else if(previous_active_subchapter.id=='7-4'){
     map.removeLayer(case_7_4_fig1_layer);
   }
 
   //case_8_1_fig1
-  else if(previous_active_subchapter["id"]=='8-1'){
+  else if(previous_active_subchapter.id=='8-1'){
     map.removeLayer(case_8_1_fig1_layer1);
     map.removeLayer(case_8_1_fig1_layer2);
     map.removeLayer(case_8_1_fig1_layer3);
@@ -312,7 +311,7 @@ function clean_layers(){
   }
 
   //case_9_1_fig1
-  else if(previous_active_subchapter["id"]=='9-1'){
+  else if(previous_active_subchapter.id=='9-1'){
     waterfund_markers=[]
     waterfund_objs['con_layers'].remove(map);
     waterfund_objs['phase_'].clearLayers();
@@ -337,9 +336,7 @@ function legend(grades){
             div.innerHTML += '<i style="background:' + getColor(grades[i],grades) + '"></i> ' + (grades[i + 1]) + '<br>';
         }
         else{
-            div.innerHTML +=
-        '<i style="background:' + getColor(grades[i] + 1,grades) + '"></i> ' +
-        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            div.innerHTML += '<i style="background:' + getColor(grades[i] + 1,grades) + '"></i> ' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
     }
     return div;
@@ -390,6 +387,6 @@ function style(feature) {
 
 //set map to show whole world
 function view_world(){
-  map.flyTo([20.0, 0.0], 3);
+  map.setView([20.0, 0.0], 3);
   return
 }
