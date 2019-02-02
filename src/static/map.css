@@ -46,13 +46,15 @@ html, body {
 
     position:absolute;
     top:5vh;
-    right:2vw;
+    right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 20vh;
+    height: 15vh;
+    border-radius: 20px;   
+    padding: 20px; 
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
-    padding: 0px;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 #right-menu {
@@ -62,7 +64,7 @@ html, body {
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 70vh;
+    height: 72vh;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.9);
     overflow: auto;
@@ -71,7 +73,8 @@ html, body {
 
 
 .text-body {
-  text-align: left;
+    text-align: left;
+    font-size: 1vw;
 }
 
 .chapter {
@@ -108,10 +111,12 @@ html, body {
 #right-title{
   color:hsl(100, 84%, 24%, 1);
   font-weight: bold;
+  font-size: 2vw;  
 }
 #right-subtitle{
   color:hsl(72, 84%, 24%, 1);
   font-weight: bold;
+  font-size: 1vw;  
 }
 
 #right-book-link {
@@ -203,12 +208,13 @@ p {
   font-size: 1.5vh;
 }
 
+
 .legend {
     line-height: 18px;
     padding: 1%;
-    background-color: white;
     border-radius: 5px;
-    width: 8vw;
+    border: 3px;
+    width: 12vw;
     font-family: 'Maven Pro', sans-serif;
 }
 

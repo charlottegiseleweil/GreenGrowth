@@ -91,7 +91,7 @@ function home_menu(){
   $(".left-menu-sub").hide()
   $('.left-chapter').css('background-color', 'black')
   $('.left-subchapter').css('background-color', 'black')
-  $("#right-subchapter-"+data_loader.active_subchapter.id).show();
+  $("#right-subchapter-2-1").show();
   view_world();
 }
 
