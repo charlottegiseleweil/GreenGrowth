@@ -1,48 +1,49 @@
 
 //build scrollable right menu containing content of each case
 function buildRightMenu(){
+    subchapters = data_loader.subchapters;  
   //iterate over subchapters to add to right menu
-  for(var i=0;i<subchapters.length;i++){
-      //Subchapter
-      $('#right-menu-body').append("<p id=right-subchapter-"+subchapters[i]["id"]+" class=right-subchapter></p>")
-      //Subchapter title
-      $("#right-subchapter-"+subchapters[i]["id"]).append("<h5 id="+subchapters[i]["id"]+"-title class=text-body>"+subchapters[i]["id"]+": "+subchapters[i]["title"]+"</h5>")
-      //Subchapter summary and static figure if available
-      console.log(subchapters["has_static_fig"])
-      if (subchapters[i]["has_static_fig"]){ //
-        $('#right-subchapter-'+subchapters[i]["id"]).append("<p id="+subchapters[i]["id"]+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapters[i]["id"] + '.jpg" alt="subchapter-image">'+subchapters[i]["summary"]+'</p>');
-      }
-      else {
-        $('#right-subchapter-'+subchapters[i]["id"]).append("<p id="+subchapters[i]["id"]+"-summary+ class=text-body>"+subchapters[i]["summary"]+ "</p>")
-      }
-      //adds figures in right menu (static and dynamic)
-      add_right_menu_figure(subchapters[i]);
+  for (var i in subchapters){
+        //Subchapter
+        $('#right-menu-body').append("<p id=right-subchapter-"+subchapters[i].id+" class=right-subchapter></p>")
+        //Subchapter title
+        $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body>"+subchapters[i].id+": "+subchapters[i]["title"]+"</h5>")
+        //Subchapter summary and static figure if available
+        console.log(subchapters.has_static_fig)
+        if (subchapters[i].has_static_fig){ //
+            $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapters[i].id + '.jpg" alt="subchapter-image">'+subchapters[i].summary+'</p>');
+        }
+        else {
+            $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary+ class=text-body>"+subchapters[i].summary+ "</p>")
+        }
+        //adds figures in right menu (static and dynamic)
+        add_right_menu_figure(subchapters[i]);
+        //console.log(subchapters[i])
     }
-  $(".right-subchapter").hide();
-  active_subchapter = subchapters[0];
-  $("#right-subchapter-"+active_subchapter["id"]).show();
-  /*
-  $('#right-menu-body').append('<div style="padding:1%; text-align:justify;"><p><h3>Credits</h3>The case studies survey a range of policy and finance mechanisms that channel economic resources and other benefits towards securing and enhancing natural capital. These mechanisms typically also aim to increase equity and well-being, both through poverty alleviation and in access to ecosystem goods and services. Illustrative examples have been contributed by a range of experts who come from the natural and social sciences, government, private companies, financial institutions, and civil society organizations. These case studies were compiled by Lisa Mandle, James Salzman and Gretchen C. Daily and illustrated by Charlotte Weil. This application is developed by <b>Can Yilmaz Altinigne</b>, <b>Cyril van Schreven</b> and <b>Günes Yurdakul</b>.</p></div>')
-  */
+    $(".right-subchapter").hide();
+    $("#right-subchapter-"+data_loader.active_subchapter.id).show();
+    /*
+    $('#right-menu-body').append('<div style="padding:1%; text-align:justify;"><p><h3>Credits</h3>The case studies survey a range of policy and finance mechanisms that channel economic resources and other benefits towards securing and enhancing natural capital. These mechanisms typically also aim to increase equity and well-being, both through poverty alleviation and in access to ecosystem goods and services. Illustrative examples have been contributed by a range of experts who come from the natural and social sciences, government, private companies, financial institutions, and civil society organizations. These case studies were compiled by Lisa Mandle, James Salzman and Gretchen C. Daily and illustrated by Charlotte Weil. This application is developed by <b>Can Yilmaz Altinigne</b>, <b>Cyril van Schreven</b> and <b>Günes Yurdakul</b>.</p></div>')
+    */
 }
 
 // add figures on right menu
 function add_right_menu_figure(subchapter){
   //add static figure
-  if (subchapter["has_static_fig"]){
+  if (subchapter.has_static_fig){
     //add div for figure
-    $('#'+subchapter["id"]+'-summary').after('<div id="figure-'+subchapter["id"]+' style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
+    $('#'+subchapter.id+'-summary').after('<div id="figure-'+subchapter.id+' style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
     //load the figure
-    fig_file = './static/figure_and_images/'+subchapter["id"].toString().replace('-','_')+'-1.png';
-    $('#'+subchapter["id"]+'-summary').append('<img class="img-center" src="' + fig_file + '">');
+    fig_file = './static/figure_and_images/'+subchapter.id.toString().replace('-','_')+'-1.png';
+    $('#'+subchapter.id+'-summary').append('<img class="img-center" src="' + fig_file + '">');
     //add figure title
-    $('#'+subchapter["id"]+'-summary').append('<p class="figure-text">Figure: ' + subchapter["static_fig_title"]+ '</p>');
+    $('#'+subchapter.id+'-summary').append('<p class="figure-text">Figure: ' + subchapter.static_fig_title+ '</p>');
   }
 
   //add dynamic figure (special case, subchapter 6-1)
   else if (subchapter == '6-1'){
     //div for figure (chart-container)
-    $('#'+subchapter["id"]+'-summary').after('<div id="chart-container" style="height: 300px;"></div>');
+    $('#'+subchapter.id+'-summary').after('<div id="chart-container" style="height: 300px;"></div>');
     //fill chart-container
     case_6_1_fig1();
     //add the two buttons of the figure
@@ -104,3 +105,4 @@ function case_6_1_fig1() {
     $("#chart-container").CanvasJSChart(options);
 
 };
+

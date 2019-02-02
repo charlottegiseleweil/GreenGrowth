@@ -2,24 +2,36 @@ const active_button_color = "hsl(129, 67%, 64%)";
 
 function buildLeftMenu(){
   //add left-menu title
-  $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
-
+  chapters = data_loader.chapters;
+  subchapters = data_loader.subchapters;  
   //add chapter number to (main) left-menu
-  for(var i=0;i<chapters.length;i++){
+  for (var i in chapters){
+    current_chapter = chapters[i];
     //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
-    //console.log(subchapters[0])
-    $('#left-menu').append("<span id=left-chapter-"+chapters[i]["id"]+" class='left-chapter' onclick=subchapterClick("+subchapters.indexOf(chapters[i]["subchapters"][0])+");>" +chapters[i]["id"]+ "</span>");
-
-
+    $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");>" +current_chapter.id+ "</span>");
+    
+    $("#left-menu #left-chapter-"+current_chapter.id).tooltip(
+      {
+        position: { my: "left center", at: "right+10 center" }
+      }
+    );
+    
     //add submenu for the chapter
-    $('#left-chapter-'+chapters[i]["id"]).after("<div id=left-menu-sub-"+chapters[i]["id"]+" class='left-menu-sub' style= top:"+$('#left-chapter-'+chapters[i]["id"]).position().top+"px;'></div>")
+    $('#left-chapter-'+current_chapter.id).after("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' style= top:"+$('#left-chapter-'+current_chapter.id).position().top+"px;'></div>")
     //add subchapter buttons in submenu
-    for (var j=0;j<chapters[i]["subchapters"].length;j++){
-      $("#left-menu-sub-"+chapters[i]["id"]).append("<span id=left-subchapter-"+chapters[i]["subchapters"][j]["id"]+" class='left-subchapter' onclick=subchapterClick("+subchapters.indexOf(chapters[i]["subchapters"][j])+");>" +chapters[i]["subchapters"][j]["id"].split('-')[1]+ "</span>");
+    for (var j=0;j<current_chapter.subchapters.length;j++){
+      $("#left-menu-sub-"+current_chapter.id).append("<span id=left-subchapter-"+current_chapter.subchapters[j].id+" class='left-subchapter' title='"+current_chapter.subchapters[j].title+"'onclick=subchapterClick("+i+","+j+");>" +current_chapter.subchapters[j].id.split('-')[1]+ "</span>");
+      
+      $("#left-menu-sub-"+current_chapter.id+" #left-chapter-"+current_chapter.subchapters[j].id).tooltip(
+        {
+          position: { my: "left center", at: "right+10 center" }
+        }
+      );
     }
     $(".left-menu-sub").hide()
   }
 
+  $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
 
 
   //add key-press event listener (should be moved elsewhere)
@@ -40,28 +52,28 @@ function buildLeftMenu(){
 
 
 
-function subchapterClick(indexOfsubchapter){
-
-  active_subchapter = subchapters[indexOfsubchapter];
+function subchapterClick(chapter_id,subchapter_id){
+  subchapter_id = data_loader.chapters[chapter_id].subchapters[subchapter_id].id;
 
   //[right-menu] hide all subchapters (text) except active one
   $(".right-subchapter").hide()
-  $("#right-subchapter-"+active_subchapter["id"]).slideDown( "slow",  function() {
+  $("#right-subchapter-"+subchapter_id).slideDown( "slow",  function() {
     // Animation complete.
+    console.log("Animation complete");
   });
 
   //[left-menu] set the color on clicked chapter button (and not others)
   $('.left-chapter').css('background-color', 'black')
-  $('#left-chapter-'+active_subchapter["chapter"]["id"]).css('background-color', 'hsl(129, 67%, 64%)')
+  $('#left-chapter-'+chapter_id).css('background-color', 'hsl(129, 67%, 64%)')
 
   //[left-menu] display submenu of active chapter (and not others)
   $(".left-menu-sub").hide()
-  $("#left-menu-sub-"+active_subchapter["chapter"]["id"]).show()
+  $("#left-menu-sub-"+chapter_id).show()
 
   //[left-menu] set the color on clicked chapter button (and not others)
   $('.left-subchapter').css('background-color', 'black')
-  $('#left-subchapter-'+active_subchapter["id"]).css('background-color', 'hsl(129, 67%, 64%)')
+  $('#left-subchapter-'+subchapter_id).css('background-color', 'hsl(129, 67%, 64%)')
 
-  display_figure(active_subchapter)
+  display_figure(data_loader.subchapters[subchapter_id])
 
 }
