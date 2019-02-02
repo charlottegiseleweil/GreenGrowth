@@ -7,28 +7,25 @@ function buildLeftMenu(){
   chapters = data_loader.chapters;
   subchapters = data_loader.subchapters;
   //add chapter number to (main) left-menu
+  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-home'></i></span>");
+  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span><hr>");
+  add_tooltip("#left-menu #left-chapter-home");
+  add_tooltip("#left-menu #left-chapter-question");
+
   for (var i in chapters){
     current_chapter = chapters[i];
     //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
     $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");>" +current_chapter.id+ "</span>");
 
-    $("#left-menu #left-chapter-"+current_chapter.id).tooltip(
-      {
-        position: { my: "left center", at: "right+10 center" }
-      }
-    );
+    add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
 
     //add submenu for the chapter
     $('#left-chapter-'+current_chapter.id).after("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' style= top:"+$('#left-chapter-'+current_chapter.id).position().top+"px;'></div>")
     //add subchapter buttons in submenu
     for (var j=0;j<current_chapter.subchapters.length;j++){
       $("#left-menu-sub-"+current_chapter.id).append("<span id=left-subchapter-"+current_chapter.subchapters[j].id+" class='left-subchapter' title='"+current_chapter.subchapters[j].title+"'onclick=subchapterClick("+i+","+current_chapter.subchapters[j].id.split('-')[1]+");>" +current_chapter.subchapters[j].id.split('-')[1]+ "</span>");
+      add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-subchapter-"+current_chapter.subchapters[j].id);
 
-      $("#left-menu-sub-"+current_chapter.id+" #left-chapter-"+current_chapter.subchapters[j].id).tooltip(
-        {
-          position: { my: "left center", at: "right+10 center" }
-        }
-      );
     }
   }
 
@@ -47,9 +44,6 @@ function buildLeftMenu(){
 
 
 }
-
-
-
 
 function subchapterClick(chapter_id,subchapter_sub_id){
 
@@ -83,4 +77,32 @@ function subchapterClick(chapter_id,subchapter_sub_id){
 
   display_figure(subchapters[subchapter_id])
 
+}
+
+function home_menu(){
+  //[right-menu] hide all subchapters (text) except active one
+  clean_layers();
+  $(".right-subchapter").hide()
+  $("#right-subchapter-"+data_loader.chapters[0]).slideDown( "slow",  function() {
+    // Animation complete.
+    console.log("Animation complete");
+  });
+
+  $(".left-menu-sub").hide()
+  $('.left-chapter').css('background-color', 'black')
+  $('.left-subchapter').css('background-color', 'black')
+  $("#right-subchapter-"+data_loader.active_subchapter.id).show();
+  view_world();
+}
+
+function tutorial(){
+intro.start();
+}
+
+function add_tooltip(path){
+$(path).tooltip(
+  {
+    position: { my: "left center", at: "right+10 center" }
+  }
+);
 }
