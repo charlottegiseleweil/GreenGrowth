@@ -42,18 +42,33 @@ html, body {
     z-index: 1;
 }
 
+#title-panel {
+
+    position:absolute;
+    top:5vh;
+    right:2vw;
+    z-index: 100;
+    width: 33vw;
+    height: 20vh;
+    overflow: auto;
+    font-family: 'Maven Pro', sans-serif;
+    padding: 0px;
+}
+
 #right-menu {
     border-radius: 20px;
     position:absolute;
-    top:5vh;
+    top:20vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 90vh;
+    height: 70vh;
+    margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.9);
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
 }
+
 
 .text-body {
   text-align: left;
@@ -90,9 +105,27 @@ html, body {
     font-size: calc(1em + 1vw)
 }
 
+#right-title{
+  color:hsl(100, 84%, 24%, 1);
+  font-weight: bold;
+}
+#right-subtitle{
+  color:hsl(72, 84%, 24%, 1);
+  font-weight: bold;
+}
+
+#right-book-link {
+  font-size : 15px;
+  text-align: right;
+  display:block;
+}
+
 .google-font {
     font-family: 'Julius Sans One', sans-serif;
+    text-align : center;
 }
+
+
 
 #left-menu {
     position:absolute;

@@ -11,8 +11,8 @@ const load_data = async function(){
       //load and prepare dataframes
       data_loader.prepareDataframes();
       //preload the data of the dynamic figures (slow)
-      //data_loader.preloadDynamicFigures();
-      setTimeout(function(){$('.progress').trigger('loaded')}, 600)
+      data_loader.preloadDynamicFigures();
+      //setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }
 
@@ -63,7 +63,7 @@ function openingClick() {
           showStepNumbers:false
     });
 
-    intro.start();//start user-guide
+    //intro.start();//start user-guide
 
   });
 }
