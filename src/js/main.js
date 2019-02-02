@@ -1,5 +1,5 @@
 var data_loader = new DataLoader();
-
+var intro;
 const load_data = async function(){
   $( 'body' ).ready(function() {
       // create progress bar
@@ -41,7 +41,7 @@ function openingClick() {
       buildLeftMenu();
 
       //create user guide
-      var intro = introJs();
+      intro = introJs();
 
       intro.setOptions({
           steps: [
@@ -62,7 +62,7 @@ function openingClick() {
           showStepNumbers:false
     });
 
-    //intro.start();//start user-guide
+    intro.start();//start user-guide
 
   });
 }
