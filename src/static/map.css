@@ -119,6 +119,18 @@ html, body {
   background-color : black;
 }
 
+.left-chapter-helper{
+    height: 3vh;
+    width: 3vh;
+    background-color: hsl(4, 72%, 55%, 0.81);
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+    margin-top: 1vh;
+    font-size: 1.5vh;
+    line-height: 3vh;
+  }
+
 .left-menu-sub{
   display: block;
   position:absolute;
@@ -144,8 +156,6 @@ html, body {
   line-height: 3vh;
   background-color : black;
 }
-
-
 
 
 p {
