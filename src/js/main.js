@@ -5,8 +5,8 @@ const load_data = async function(){
       // create progress bar
       $('.progress').bind('loaded',function(){
           $('.progress').hide();
-          $('.entry-button').show();
-      });
+          open_page();          
+    });
 
       //load and prepare dataframes
       data_loader.prepareDataframes();
@@ -19,7 +19,7 @@ const load_data = async function(){
 load_data();
 
 //opening click after data loaded
-function openingClick() {
+function open_page() {
   $(".opening-page").fadeOut( 1000, function() {
       $(".opening-page").remove();
       map.addLayer(Esri_WorldImagery);// add tile layer
