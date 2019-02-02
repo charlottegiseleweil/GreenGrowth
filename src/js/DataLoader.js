@@ -9,14 +9,14 @@ class DataLoader {
             get _progress() { return this.progress; },
             set _progress(value) { this.progress = value; $('.progress-bar').css({'width': this.progress + '%'}) }
           };
+        this.next_subchapter_id = [];
+        this.previous_subchapter_id = [];
     }
-    
+
     //read csv files, meanwhile update progress bar and create all leaflet layers on pre-loading page
     async preloadDynamicFigures() {
         //preload 6_1-1
         lineplot_data = await d3.csv("data/line_plot.csv");
-        var data_points_acres= [];
-        var data_points_money=[];
 
         for(var i=0;i<lineplot_data.length;i++){
             data_points_acres.push({x: parseInt(lineplot_data[i]['yr'],10) ,y:lineplot_data[i]['Total_Acres']/1000000})
@@ -27,6 +27,7 @@ class DataLoader {
 
         //preload case_6_1-2
         choropleth_map_county = await shp("data/county/counties");
+        this.progress_bar._progress += 20;
         var data = await $.getJSON('data/mitigation_bank.json');
         case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
 
@@ -35,8 +36,8 @@ class DataLoader {
         //preload case_6_1-3
         case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
         case_6_1_choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,3);
-
         this.progress_bar._progress += 20;
+
 
         //preload case 7_2-1
         case_7_2_fig1_layer = L.geoJson(data, {
@@ -46,8 +47,8 @@ class DataLoader {
             }
         });
 
-        this.progress_bar._progress += 20;
 
+        this.progress_bar._progress += 20;
         //preload case_7_4-1
         var geojson = await shp("data/forest/forest.offset.projects.updated2017");
         case_7_4_fig1_layer = L.geoJson(geojson, {
@@ -65,7 +66,7 @@ class DataLoader {
             }
         })
 
-        this.progress_bar._progress += 20;
+
 
         case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");
         geojson = await shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w");
@@ -93,7 +94,7 @@ class DataLoader {
 
         for(var i=0;i<case_studies.length;i++){
           if (!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE'){
-      
+
             //instantiate a subchapter and push it to the list
             //fetch and populate with the actual data
             if (ch_id != case_studies[i]["ch_no"]){
@@ -103,7 +104,7 @@ class DataLoader {
               current_chapter = new Chapter(case_studies[i]);
               ch_count++;
             }
-      
+
             let new_subchapter = new Subchapter(case_studies[i],current_chapter)
             this.subchapters[new_subchapter.id]= new_subchapter;
             current_chapter.add_subchapter(new_subchapter);
@@ -111,28 +112,30 @@ class DataLoader {
                 this.active_subchapter = new_subchapter;
           }
         }
-        this.chapters.push(current_chapter);  
-      
+        this.chapters.push(current_chapter);
+
         // read csv file containing figure information
         var figures = await d3.csv('./data/figures.csv');
         for(var i=0;i<figures.length;i++){
           if (figures[i]['static']=='TRUE'){
-            for(var j=0; j<this.subchapters.length;j++){
+            for(var j in this.subchapters){
               if(figures[i]["case_no"].replace('.','-') == this.subchapters[j]["id"]){
                 this.subchapters[j]["has_static_fig"] = true;
                 this.subchapters[j]["static_fig_title"] = figures[i]['name']
               }
-              else{
-                this.subchapters[j]["has_static_fig"] = false;
-              }
             }
-      
+
           }
         }
-      
+
+        for (var i = 0;i< Object.keys(this.subchapters).length-1; i++){
+          this.next_subchapter_id[Object.keys(this.subchapters)[i]] = Object.keys(this.subchapters)[i+1];
+          this.previous_subchapter_id[Object.keys(this.subchapters)[i+1]] = Object.keys(this.subchapters)[i];
+        }
+
         console.log(this.subchapters)
         console.log(this.chapters)
-      
+
       }
 }
 
@@ -156,6 +159,8 @@ var progress_bar = 0;
 var case_8_1_fig1_layer1;
 var case_8_1_fig1_layer2;
 var case_8_1_fig1_layer3;
+var data_points_acres= [];
+var data_points_money=[];
 
 //marker options
 var geojsonMarkerOptions = {

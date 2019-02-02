@@ -1,24 +1,22 @@
 
 //build scrollable right menu containing content of each case
 function buildRightMenu(){
-    subchapters = data_loader.subchapters;  
+    subchapters = data_loader.subchapters;
   //iterate over subchapters to add to right menu
   for (var i in subchapters){
         //Subchapter
         $('#right-menu-body').append("<p id=right-subchapter-"+subchapters[i].id+" class=right-subchapter></p>")
         //Subchapter title
         $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body>"+subchapters[i].id+": "+subchapters[i]["title"]+"</h5>")
-        //Subchapter summary and static figure if available
-        console.log(subchapters.has_static_fig)
-        if (subchapters[i].has_static_fig){ //
-            $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary>" +'<img class="subchapter-img" src="./static/figure_and_images/'+ subchapters[i].id + '.jpg" alt="subchapter-image">'+subchapters[i].summary+'</p>');
+        //Subchapter summary and (ambiance) images if available
+        if (subchapters[i].has_image){ //
+            $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary+ class=text-body>"+ '<img class="subchapter-img" src="./static/figure_and_images/'+ subchapters[i].id + '.jpg" alt="subchapter-image">'+subchapters[i].summary+ "</p>")
         }
         else {
             $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary+ class=text-body>"+subchapters[i].summary+ "</p>")
         }
-        //adds figures in right menu (static and dynamic)
+        //adds figures of right menu (static and dynamic)
         add_right_menu_figure(subchapters[i]);
-        //console.log(subchapters[i])
     }
     $(".right-subchapter").hide();
     $("#right-subchapter-"+data_loader.active_subchapter.id).show();
@@ -31,23 +29,21 @@ function buildRightMenu(){
 function add_right_menu_figure(subchapter){
   //add static figure
   if (subchapter.has_static_fig){
-    //add div for figure
-    $('#'+subchapter.id+'-summary').after('<div id="figure-'+subchapter.id+' style="float:right; margin: 0 0 0.5vh 1vw;"></div>');
     //load the figure
     fig_file = './static/figure_and_images/'+subchapter.id.toString().replace('-','_')+'-1.png';
-    $('#'+subchapter.id+'-summary').append('<img class="img-center" src="' + fig_file + '">');
+    $('#right-subchapter-'+subchapter.id).append('<img class="img-center" src="' + fig_file + '">');
     //add figure title
-    $('#'+subchapter.id+'-summary').append('<p class="figure-text">Figure: ' + subchapter.static_fig_title+ '</p>');
+    $('#right-subchapter-'+subchapter.id).append('<p class="figure-text">Figure: ' + subchapter.static_fig_title+ '</p>');
   }
 
   //add dynamic figure (special case, subchapter 6-1)
-  else if (subchapter == '6-1'){
+  else if (subchapter.id == '6-1'){
     //div for figure (chart-container)
-    $('#'+subchapter.id+'-summary').after('<div id="chart-container" style="height: 300px;"></div>');
+    $('#right-subchapter-'+subchapter.id).append('<div id="chart-container" style="height: 300px;"></div>');
     //fill chart-container
     case_6_1_fig1();
     //add the two buttons of the figure
-    $('#chart-container').after('<div id="button-div"></div><br><br>');
+    $('#right-subchapter-'+subchapter.id).append('<div id="button-div"></div><br><br>');
     $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="case_6_1_fig2();">Enrollment per county</button>');
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
   }
@@ -105,4 +101,3 @@ function case_6_1_fig1() {
     $("#chart-container").CanvasJSChart(options);
 
 };
-
