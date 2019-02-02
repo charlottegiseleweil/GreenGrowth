@@ -49,13 +49,33 @@ var myStyle = {
 function onEachFeature(feature, layer) {
 
     layer.on({
+        mouseover: highlightFeature,
         mouseout: resetHighlight,
+        click: handleCountryClick,
     });
+}
+
+function highlightFeature(e){
+  e.target.setStyle({
+      weight: 0.5,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+  });
+}
+
+function activeHighlight(e){
+  e.target.setStyle({
+      weight: 0.5,
+      color: 'red',
+      dashArray: '',
+      fillOpacity: 0.25
+  });
 }
 
 
 function resetHighlight(e) {
-    if(e.target.feature.properties.name == 'South Africa'&&main_page.data_loader.active_subchapter=='6-3'){
+    if(e.target.feature.properties.name == 'South Africa'&&data_loader.active_subchapter=='6-3'){
       e.target.setStyle({fillOpacity: 0});
     }
     else{

@@ -11,6 +11,7 @@ class DataLoader {
           };
         this.next_subchapter_id = [];
         this.previous_subchapter_id = [];
+        this.active_country = 'world';
     }
 
     //read csv files, meanwhile update progress bar and create all leaflet layers on pre-loading page
@@ -137,6 +138,63 @@ class DataLoader {
         console.log(this.chapters)
 
       }
+
+async prepareDataframesAlt(){
+    this.chapters = [];
+    this.subchapters = [];
+    this.next_subchapter_id = [];
+    this.previous_subchapter_id = [];
+    // read csv file containing cases information
+    var case_studies = await d3.csv("./data/case_studies.csv");
+    //iterate over each case studie
+    let ch_id=-1
+    let current_chapter = null;
+
+    for(var i=0;i<case_studies.length;i++){
+      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
+          &&(data_loader.active_country=='world' || data_loader.active_country ==case_studies[i]["country"])){
+
+        //fetch and populate with the actual data
+        if (ch_id != case_studies[i]["ch_no"]){
+          if (current_chapter!=null)
+              this.chapters[ch_id]=current_chapter;
+          ch_id = case_studies[i]["ch_no"];
+          current_chapter = new Chapter(case_studies[i]);
+        }
+
+        let new_subchapter = new Subchapter(case_studies[i],current_chapter)
+        this.subchapters[new_subchapter.id]= new_subchapter;
+        current_chapter.add_subchapter(new_subchapter);
+      }
+    }
+    //if ((ch_id != case_studies[i]["ch_no"])&&(current_chapter!=null))
+      //    this.chapters[ch_id]=current_chapter;
+    this.active_subchapter = this.subchapters[Object.keys(this.subchapters)[0]]
+    this.chapters.push(current_chapter);
+
+    // read csv file containing figure information
+    var figures = await d3.csv('./data/figures.csv');
+    for(var i=0;i<figures.length;i++){
+      if (figures[i]['static']=='TRUE'){
+        for(var j in this.subchapters){
+          if(figures[i]["case_no"].replace('.','-') == this.subchapters[j]["id"]){
+            this.subchapters[j]["has_static_fig"] = true;
+            this.subchapters[j]["static_fig_title"] = figures[i]['name']
+          }
+        }
+
+      }
+    }
+
+    for (var i = 0;i< Object.keys(this.subchapters).length-1; i++){
+      this.next_subchapter_id[Object.keys(this.subchapters)[i]] = Object.keys(this.subchapters)[i+1];
+      this.previous_subchapter_id[Object.keys(this.subchapters)[i+1]] = Object.keys(this.subchapters)[i];
+    }
+
+    console.log(this.subchapters)
+    console.log(this.chapters)
+
+  }
 }
 
 //used as data selecter
