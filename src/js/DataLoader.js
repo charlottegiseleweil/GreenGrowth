@@ -115,7 +115,7 @@ async prepareDataframes(){
           current_chapter = new Chapter(case_studies[i]);
         }
         country = this.countries[case_studies[i]["country"]]
-        let new_subchapter = new Subchapter(case_studies[i],current_chapter, country)
+        let new_subchapter = new Subchapter(i,case_studies[i],current_chapter, country)
         this.subchapters[new_subchapter.id]= new_subchapter;
         current_chapter.add_subchapter(new_subchapter);
       }
