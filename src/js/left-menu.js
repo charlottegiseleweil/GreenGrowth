@@ -30,11 +30,19 @@ function buildLeftMenu(){
         }
       );
     }
-    $(".left-menu-sub").hide()
   }
 
   $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
 
+  //[left-menu] set the color on active chapter button
+  $('#left-chapter-'+data_loader.active_subchapter.id.split('-')[0]).css('background-color', 'hsl(129, 67%, 64%)')
+
+  //[left-menu] display submenu of active chapter (and not others)
+  $(".left-menu-sub").hide()
+  $("#left-menu-sub-"+data_loader.active_subchapter.id.split('-')[0]).show()
+
+  //[left-menu] set the color on active subchapter button
+  $('#left-subchapter-'+data_loader.active_subchapter.id).css('background-color', 'hsl(129, 67%, 64%)')
 
 
 
@@ -51,8 +59,8 @@ function subchapterClick(chapter_id,subchapter_sub_id){
   else subchapter_id = chapter_id + '-' + subchapter_sub_id
 
   data_loader.active_subchapter = data_loader.subchapters[subchapter_id];
-  //console.log(chapter_id)
-  //console.log(subchapter_id)
+  console.log(chapter_id)
+  console.log(subchapter_id)
 
   //[right-menu] hide all subchapters (text) except active one
   $(".right-subchapter").hide()
@@ -69,7 +77,7 @@ function subchapterClick(chapter_id,subchapter_sub_id){
   $(".left-menu-sub").hide()
   $("#left-menu-sub-"+chapter_id).show()
 
-  //[left-menu] set the color on clicked chapter button (and not others)
+  //[left-menu] set the color on clicked subchapter button (and not others)
   $('.left-subchapter').css('background-color', 'black')
   $('#left-subchapter-'+subchapter_id).css('background-color', 'hsl(129, 67%, 64%)')
 

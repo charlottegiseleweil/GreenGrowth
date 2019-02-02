@@ -11,7 +11,8 @@
     'China',
     'Mongolia',
     'Indonesia',
-    'Australia'
+    'Australia',
+    'Costa Rica'
  ]
 
  //filter out the countries which have no related case study
@@ -25,8 +26,8 @@
 
  // create Leaflet Map
  var map = L.map('map', {
-    center: [20.0, 0.0],
-    zoom: 3,
+    center: [40.0, 80.0],
+    zoom: 2.35,
     zoomSnap: 0.2
 });
 
@@ -52,16 +53,19 @@ function onEachFeature(feature, layer) {
         mouseover: highlightFeature,
         mouseout: resetHighlight,
         click: handleCountryClick,
+        //click: data_loader.countries[layer.feature.properties.name].click(),
     });
 }
 
 function highlightFeature(e){
-  e.target.setStyle({
-      weight: 0.5,
-      color: '#666',
-      dashArray: '',
-      fillOpacity: 0.7
-  });
+  if (e.target.feature.properties.name!=data_loader.active_country.name){
+    e.target.setStyle({
+        weight: 0.5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+  }
 }
 
 function activeHighlight(e){
@@ -75,10 +79,30 @@ function activeHighlight(e){
 
 
 function resetHighlight(e) {
-    if(e.target.feature.properties.name == 'South Africa'&&data_loader.active_subchapter=='6-3'){
-      e.target.setStyle({fillOpacity: 0});
-    }
-    else{
+  if (e.target.feature.properties.name!=data_loader.active_country.name){
+    geojson.resetStyle(e.target);
+  }
+}
+
+function zoom_to_case(subchapter){
+  lat = subchapter["loc_view"].split(',')[0];
+  long = subchapter["loc_view"].split(',')[1];
+  zoom = subchapter["loc_view"].split(',')[2]
+  map.setView([lat, long],zoom);
+}
+
+function zoom_to_country(country){
+  console.log(country)
+  lat = country["loc_view"].split(',')[0];
+  long = country["loc_view"].split(',')[1];
+  zoom = country["loc_view"].split(',')[2]
+  map.setView([lat, long],zoom);
+}
+
+function resetAllLayers(){
+  geojson.eachLayer(function(layer){
+    if (this.name==data_loader.active_country){
       geojson.resetStyle(e.target);
     }
+  });
 }
