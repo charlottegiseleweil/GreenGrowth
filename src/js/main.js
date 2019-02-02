@@ -1,4 +1,4 @@
-var data_loader = new DataLoader()
+var data_loader = new DataLoader();
 
 const load_data = async function(){
   $( 'body' ).ready(function() {
@@ -7,7 +7,7 @@ const load_data = async function(){
           $('.progress').hide();
           $('.entry-button').show();
       });
-  
+
       //load and prepare dataframes
       data_loader.prepareDataframes();
       //preload the data of the dynamic figures (slow)
@@ -32,6 +32,9 @@ function openingClick() {
               onEachFeature: onEachFeature,
               scrollWheelZoom: false}).addTo(map);
       });
+
+      //start key listener
+      startKeyListener();
 
       //build left and right menu
       buildRightMenu();

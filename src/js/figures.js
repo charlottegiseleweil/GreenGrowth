@@ -43,6 +43,7 @@ function case_6_1_fig2(scrolled=false) {
         $("#button-1").css('background-color','#39ac73');
         choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
         choropleth_map_objs['legend-2'].addTo(map);//add legend
+        /*
         $('#button-div').after('<div id="slider" style="margin: 16px"></div>')
         map.addControl(choropleth_map_objs['slider']);//add slider to map
 
@@ -56,6 +57,7 @@ function case_6_1_fig2(scrolled=false) {
         }
         setParent(htmlObject, newpos);
         choropleth_map_objs['slider'].startSlider();//starting slider
+        */
     }
 };
 
