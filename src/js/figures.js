@@ -1,14 +1,13 @@
-let previous_active_subchapter = '0-0';
+let previous_active_case = '0-0';
 
-// display dynamic figures (on map) for cases (subchapters) that have one
-function display_figure(subchapter){
+// display dynamic figures (on map) for cases (subchapter) that have one
+function display_figure(case_){
   //if (true){
     clean_layers()
-    zoom_to(subchapter)
-    switch(subchapter.id){
+    zoom_to(case_)
+    switch(case_.id){
       case '6-1':
-        if (case_6_1_button_active==1) case_6_1_fig2(scrolled=true)
-        else case_6_1_fig3(scrolled=true);
+        case_6_1_fig2()
         break
       case '6-3':
         case_6_3_fig1();
@@ -23,10 +22,10 @@ function display_figure(subchapter){
         case_8_1_fig1();
         break
       case '9-1':
-        case_9_1_fig1(scrolled=true);
+        case_9_1_fig1();
         break
     }
-    previous_active_subchapter = subchapter;
+    previous_active_case = case_;
   //}
 }
 
@@ -34,32 +33,21 @@ function display_figure(subchapter){
 
 
 
-function case_6_1_fig2(scrolled=false) {
-    case_6_1_button_active = '1'
-    if(previous_active_subchapter.id!='6-1')// if chapter 6 is active
-        $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
-    else {
-        if(!scrolled) clean_layers();// clean layers if navigating to another case
-        $("#button-1").css('background-color','#39ac73');
-        choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
-        choropleth_map_objs['legend-2'].addTo(map);//add legend
-        add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1");
-
-    }
+function case_6_1_fig2() {
+    clean_layers();
+    $("#button-1").css('background-color','#39ac73');
+    choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
+    choropleth_map_objs['legend-2'].addTo(map);//add legend
+    add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1");
 };
 
 // add choropleth of case 6.1 fig3 to map
-function case_6_1_fig3(scrolled=false) {
-    case_6_1_button_active = '2'
-    if(previous_active_subchapter.id!='6-1')
-        $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-6-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
-    else {
-        if(!scrolled) clean_layers();
-        $("#button-2").css('background-color','#39ac73');
-        choropleth_map_objs['2016geo-3'].addTo(map)
-        choropleth_map_objs['legend-3'].addTo(map);
-        add_legend_to_right_menu(choropleth_map_objs['legend-3'],"6-1");
-    }
+function case_6_1_fig3() {
+    clean_layers();
+    $("#button-2").css('background-color','#39ac73');
+    choropleth_map_objs['2016geo-3'].addTo(map)
+    choropleth_map_objs['legend-3'].addTo(map);
+    add_legend_to_right_menu(choropleth_map_objs['legend-3'],"6-1");
 };
 
 // creating choropleth layer given values for each county data as parameter
@@ -163,88 +151,80 @@ function case_8_1_fig1() {
 };
 
 // add water fund markers
-function case_9_1_fig1(scrolled=false) {
+function case_9_1_fig1() {
     data=case_9_1_fig1_data;
-    case_6_1_button_active = '1'
-    if(previous_active_subchapter.id!='9-1') $('#right-menu').stop().animate({scrollTop:$('#right-menu').scrollTop() + $('#right-subchapter-9-1').offset().top - $('#right-menu').position().top+1}, 500, 'swing');
-    else {
-        if(!scrolled) clean_layers();
-    }
+    //case_6_1_button_active = '1'
 
     case_no = 9.1;
     fig_no = 1;
-    wasActive=false;
+    //init marker lists of each phase
+    waterfund_markers['phase_'] = [];
+    waterfund_markers['phase_0'] = [];
+    waterfund_markers['phase_1'] = [];
+    waterfund_markers['phase_2'] = [];
+    waterfund_markers['phase_3'] = [];
+    waterfund_markers['phase_4'] = [];
+    waterfund_markers['phase_5'] = [];
 
-    if(!wasActive){
-            //init marker lists of each phase
-            waterfund_markers['phase_'] = [];
-            waterfund_markers['phase_0'] = [];
-            waterfund_markers['phase_1'] = [];
-            waterfund_markers['phase_2'] = [];
-            waterfund_markers['phase_3'] = [];
-            waterfund_markers['phase_4'] = [];
-            waterfund_markers['phase_5'] = [];
+    // iterate over water funds
+    for(var i=0;i< data.length;i++){
+        //create marker
+        var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
+            icon: L.divIcon({
+              html: '<i class="fa fa-tint fa-lg" aria-hidden="true" style="color:'+get_marker_color('phase_'+data[i]['Phase_Code'])+'"></i>',
+              className: 'myDivIcon'
+            })}
+        );
 
-            // iterate over water funds
-            for(var i=0;i< data.length;i++){
-                //create marker
-                var marker = L.marker([data[i]['Latitude'],data[i]['Longitude']], {
-                    icon: L.divIcon({
-                      html: '<i class="fa fa-tint fa-lg" aria-hidden="true" style="color:'+get_marker_color('phase_'+data[i]['Phase_Code'])+'"></i>',
-                      className: 'myDivIcon'
-                    })}
-                );
-
-                //set values in popup
-                if (data[i]['Phase']==('Operation'||'Maturity')){
-                    marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']
-                    +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']).on('mouseover', function (e) {
-                        this.openPopup();
-                    }).on('mouseout', function (e) {
-                        this.closePopup();
-                    });
-                }
-                else{
-                    marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                    +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
-                        this.openPopup();
-                    }).on('mouseout', function (e) {
-                        this.closePopup();
-                    });;
-                }
-                waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
-                //waterfund_objs[i]=marker
-            }
-            //create layer groups containing markers for each case
-            waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']).addTo(map);
-            waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']).addTo(map);
-            waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']).addTo(map);
-            waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']).addTo(map);
-            waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
-            waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
-            waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
-
-            var overlayMaps = {
-                "Being Explored":               waterfund_objs['phase_'] ,
-                "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
-                "Phase 1: Feasibility ":        waterfund_objs['phase_1'],
-                "Phase 2: Design":              waterfund_objs['phase_2'],
-                "Phase 3: Creation":            waterfund_objs['phase_3'],
-                "Phase 4: Operation":           waterfund_objs['phase_4'],
-                "Phase 5: Maturity":            waterfund_objs['phase_5']
-            };
-            //create layer control by adding layer groups
-            waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
-            $('.leaflet-control-layers-selector:checked')
-            add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1");
-
-        waterfund_bool=true;
+        //set values in popup
+        if (data[i]['Phase']==('Operation'||'Maturity')){
+            marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
+            +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']
+            +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']).on('mouseover', function (e) {
+                this.openPopup();
+            }).on('mouseout', function (e) {
+                this.closePopup();
+            });
+        }
+        else{
+            marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
+            +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
+                this.openPopup();
+            }).on('mouseout', function (e) {
+                this.closePopup();
+            });;
+        }
+        waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
+        //waterfund_objs[i]=marker
     }
+    //create layer groups containing markers for each case
+    waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']).addTo(map);
+    waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']).addTo(map);
+    waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']).addTo(map);
+    waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']).addTo(map);
+    waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
+    waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
+    waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
+
+    var overlayMaps = {
+        "Being Explored":               waterfund_objs['phase_'] ,
+        "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
+        "Phase 1: Feasibility ":        waterfund_objs['phase_1'],
+        "Phase 2: Design":              waterfund_objs['phase_2'],
+        "Phase 3: Creation":            waterfund_objs['phase_3'],
+        "Phase 4: Operation":           waterfund_objs['phase_4'],
+        "Phase 5: Maturity":            waterfund_objs['phase_5']
+    };
+    //create layer control by adding layer groups
+    waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
+    $('.leaflet-control-layers-selector:checked')
+    add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1");
+
+    waterfund_bool=true;
 }
 
 function clean_layers(){
-  if(previous_active_subchapter.id =='6-1'){
+  if(previous_active_case.id =='6-1'){
     $('#button-1').css('background-color', 'rgba(255, 255, 255, 0.8)');
     $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
     map.removeControl(choropleth_map_objs['legend-2']);
@@ -258,7 +238,7 @@ function clean_layers(){
   }
 
   //case_6_3_fig1
-  else if(previous_active_subchapter.id=='6-3'){
+  else if(previous_active_case.id=='6-3'){
     map.removeLayer(case_6_3_fig1_layer);
     map.removeControl(case_6_3_fig1_legend);
     geojson.eachLayer(function(layer) {
@@ -271,17 +251,17 @@ function clean_layers(){
   }
 
   //case_7_2_fig1
-  else if(previous_active_subchapter.id=='7-2'){
+  else if(previous_active_case.id=='7-2'){
     map.removeLayer(case_7_2_fig1_layer);
   }
 
   //case_7_4_fig1
-  else if(previous_active_subchapter.id=='7-4'){
+  else if(previous_active_case.id=='7-4'){
     map.removeLayer(case_7_4_fig1_layer);
   }
 
   //case_8_1_fig1
-  else if(previous_active_subchapter.id=='8-1'){
+  else if(previous_active_case.id=='8-1'){
     map.removeLayer(case_8_1_fig1_layer1);
     map.removeLayer(case_8_1_fig1_layer2);
     map.removeLayer(case_8_1_fig1_layer3);
@@ -289,7 +269,7 @@ function clean_layers(){
   }
 
   //case_9_1_fig1
-  else if(previous_active_subchapter.id=='9-1'){
+  else if(previous_active_case.id=='9-1'){
     waterfund_markers=[]
     waterfund_objs['con_layers'].remove(map);
     waterfund_objs['phase_'].clearLayers();

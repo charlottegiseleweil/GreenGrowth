@@ -3,9 +3,9 @@ class DataLoader {
     constructor(){
 
         this.geojson;
-        this.chapters = [];
-        this.subchapters = [];
-        this.active_subchapter = null;
+        this.groups = [];
+        this.cases = [];
+        this.active_case = null;
         this.countries = [];
         this.active_country = null;
         this.browse_type = 'Chapter';
@@ -89,14 +89,14 @@ class DataLoader {
 
 async prepareDataframes(){
     //reset values
-    this.chapters = [];
-    this.subchapters = [];
+    this.groups = [];
+    this.cases = [];
     // read csv file containing cases information
     var case_studies = await d3.csv("./data/case_studies.csv");
     //iterate over each case studie
     let ch_id=-1;
     let sub_ch_id = 0;
-    let current_chapter = null;
+    let current_group = null;
     let country = null;
 
     var csv_countries = await d3.csv('./data/countries.csv');
@@ -112,40 +112,38 @@ async prepareDataframes(){
 
         //fetch and populate with the actual data
         if (ch_id != case_studies[i]["ch_no"]){
-          if (current_chapter!=null)
-              this.chapters[ch_id]=current_chapter;
+          if (current_group!=null)
+              this.groups[ch_id]=current_group;
           ch_id = case_studies[i]["ch_no"];
-          current_chapter = new Chapter(case_studies[i]);
+          current_group = new Group(case_studies[i]);
         }
         country = this.countries[case_studies[i]["country"]]
-        let new_subchapter = new Subchapter(sub_ch_id,case_studies[i],current_chapter, country)
-        this.subchapters[new_subchapter.id]= new_subchapter;
-        current_chapter.add_subchapter(new_subchapter);
+        let new_case = new Case(sub_ch_id,case_studies[i],current_group, country)
+        this.cases[new_case.id]= new_case;
+        current_group.add_case(new_case);
         sub_ch_id++;
       }
     }
-    //if ((ch_id != case_studies[i]["ch_no"])&&(current_chapter!=null))
-      //    this.chapters[ch_id]=current_chapter;
-    this.active_subchapter = this.subchapters[Object.keys(this.subchapters)[0]]
-    this.chapters[ch_id]=current_chapter;
+    //if ((ch_id != case_studies[i]["ch_no"])&&(current_group!=null))
+      //    this.groups[ch_id]=current_group;
+    this.active_case = this.cases[Object.keys(this.cases)[0]]
+    this.groups[ch_id]=current_group;
 
     // read csv file containing figure information
     var figures = await d3.csv('./data/figures.csv');
     for(var i=0;i<figures.length;i++){
       if (figures[i]['static']=='TRUE'){
-        for(var j in this.subchapters){
-          if(figures[i]["case_no"].replace('.','-') == this.subchapters[j]["id"]){
-            this.subchapters[j]["has_static_fig"] = true;
-            this.subchapters[j]["static_fig_title"] = figures[i]['name']
+        for(var j in this.cases){
+          if(figures[i]["case_no"].replace('.','-') == this.cases[j]["id"]){
+            this.cases[j]["has_static_fig"] = true;
+            this.cases[j]["static_fig_title"] = figures[i]['name']
           }
         }
 
       }
     }
-
-
-    console.log(this.subchapters)
-    console.log(this.chapters)
+    console.log(this.cases)
+    console.log(this.groups)
     console.log(this.countries)
 
   }
@@ -159,7 +157,7 @@ var choropleth_fips={}
 var choropleth_map_objs = {}
 var waterfund_objs={}
 var waterfund_markers={}
-var case_6_1_button_active = '1'
+//var case_6_1_button_active;
 var lineplot_data;
 var case_6_1_fig3_data;
 var case_6_1_fig2_data;
@@ -183,3 +181,67 @@ var geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8
 };
+
+/*
+async prepareDataframesold(){
+    //reset values
+    this.groups = [];
+    this.cases = [];
+    // read csv file containing cases information
+    var case_studies = await d3.csv("./data/case_studies.csv");
+    //iterate over each case studie
+    let ch_id=-1;
+    let sub_ch_id = 0;
+    let current_group = null;
+    let country = null;
+
+    var csv_countries = await d3.csv('./data/countries.csv');
+    for(var i=0;i<csv_countries.length;i++){
+      this.countries[csv_countries[i]["name"]] = new Country(csv_countries[i])
+    }
+    if (this.active_country == null)
+      this.active_country = this.countries['World'];
+
+    for(var i=0;i<case_studies.length;i++){
+      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
+          &&(data_loader.active_country.name=='World' || data_loader.active_country.name ==case_studies[i]["country"])){
+
+        //fetch and populate with the actual data
+        if (ch_id != case_studies[i]["ch_no"]){
+          if (current_group!=null)
+              this.groups[ch_id]=current_group;
+          ch_id = case_studies[i]["ch_no"];
+          current_group = new Group(case_studies[i]);
+        }
+        country = this.countries[case_studies[i]["country"]]
+        let new_case = new case(sub_ch_id,case_studies[i],current_group, country)
+        this.cases[new_case.id]= new_case;
+        current_group.add_case(new_case);
+        sub_ch_id++;
+      }
+    }
+    //if ((ch_id != case_studies[i]["ch_no"])&&(current_group!=null))
+      //    this.groups[ch_id]=current_group;
+    this.active_case = this.cases[Object.keys(this.cases)[0]]
+    this.groups[ch_id]=current_group;
+
+    // read csv file containing figure information
+    var figures = await d3.csv('./data/figures.csv');
+    for(var i=0;i<figures.length;i++){
+      if (figures[i]['static']=='TRUE'){
+        for(var j in this.cases){
+          if(figures[i]["case_no"].replace('.','-') == this.cases[j]["id"]){
+            this.cases[j]["has_static_fig"] = true;
+            this.cases[j]["static_fig_title"] = figures[i]['name']
+          }
+        }
+
+      }
+    }
+    console.log(this.cases)
+    console.log(this.groups)
+    console.log(this.countries)
+
+  }
+}
+*/

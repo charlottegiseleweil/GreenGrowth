@@ -10,7 +10,7 @@ function buildBottomMenu(){
 
 function changeBrowseType(type){
   data_loader.browse_type=type;
-  //[left-menu] set the color on clicked chapter button (and not others)
+  //[left-menu] set the color on clicked browse type button (and not others)
   $('.bottom-menu-element').css('background-color', 'black')
   $('#bottom-menu-'+data_loader.browse_type).css('background-color', 'hsl(129, 67%, 64%)')
 

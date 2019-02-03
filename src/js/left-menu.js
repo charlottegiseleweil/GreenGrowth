@@ -4,91 +4,91 @@ function buildLeftMenu(){
   //clear left menu, in case it's being overwritten
   $('#left-menu').html("");
   //add left-menu title
-  chapters = data_loader.chapters;
-  subchapters = data_loader.subchapters;
-  //add chapter number to (main) left-menu
-  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
-  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
-  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
+  groups = data_loader.groups;
+  cases = data_loader.cases;
+  //add group number to (main) left-menu
+  $('#left-menu').append("<span id=left-group-home class='left-group-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
+  $('#left-menu').append("<span id=left-group-question class='left-group-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
+  $('#left-menu').append("<span id=left-group-question class='left-group-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
 
 
-  add_tooltip("#left-menu #left-chapter-home");
-  add_tooltip("#left-menu #left-chapter-question");
-  add_tooltip("#left-menu #left-chapter-home");
+  add_tooltip("#left-menu #left-group-home");
+  add_tooltip("#left-menu #left-group-question");
+  add_tooltip("#left-menu #left-group-home");
 
-  //$('#left-menu').append("<span id=left-chapter-0 class='left-chapter' title='Overview' onclick=subchapterClick("+0+","+1+");>" +0+ "</span>");
+  //$('#left-menu').append("<span id=left-group-0 class='left-group' title='Overview' onclick=caseClick("+0+","+1+");>" +0+ "</span>");
 
-  for (var i in chapters){
-    current_chapter = chapters[i];
-    //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
-    if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");><i class='fas fa-circle'></span>");
-    else $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");>" +current_chapter.id+ "</span>");
+  for (var i in groups){
+    current_group = groups[i];
+    //add a group button, note that here onClick calls caseClick on the first case
+    if (i==0) $('#left-menu').append("<span id=left-group-"+current_group.id+" class='left-group' title='"+current_group.title+"' onclick=caseClick("+i+","+0+");><i class='fas fa-circle'></span>");
+    else $('#left-menu').append("<span id=left-group-"+current_group.id+" class='left-group' title='"+current_group.title+"' onclick=caseClick("+i+","+0+");>" +current_group.id+ "</span>");
 
-    add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
+    add_tooltip("#left-menu #left-group-"+current_group.id);
 
-    if(current_chapter.id!=0){ //special case for arrival page
-      //add submenu for the chapter
-      $('#left-chapter-'+current_chapter.id).after("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' style= top:"+$('#left-chapter-'+current_chapter.id).position().top+"px;'></div>")
-      //add subchapter buttons in submenu
-      for (var j=0;j<current_chapter.subchapters.length;j++){
-        $("#left-menu-sub-"+current_chapter.id).append("<span id=left-subchapter-"+current_chapter.subchapters[j].id+" class='left-subchapter' title='"+current_chapter.subchapters[j].title+"'onclick=subchapterClick("+i+","+current_chapter.subchapters[j].id.split('-')[1]+");>" +current_chapter.subchapters[j].id.split('-')[1]+ "</span>");
-        add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-subchapter-"+current_chapter.subchapters[j].id);
+    if(current_group.id!=0){ //special case for arrival page
+      //add submenu for the group
+      $('#left-group-'+current_group.id).after("<div id=left-menu-sub-"+current_group.id+" class='left-menu-sub' style= top:"+$('#left-group-'+current_group.id).position().top+"px;'></div>")
+      //add case buttons in submenu
+      for (var j=0;j<current_group.cases.length;j++){
+        $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick("+i+","+current_group.cases[j].id.split('-')[1]+");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
+        add_tooltip("#left-menu-sub-"+current_group.id+" #left-case-"+current_group.cases[j].id);
       }
     }
   }
 
   $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
 
-  //[left-menu] set the color on active chapter button
-  $('#left-chapter-'+data_loader.active_subchapter.id.split('-')[0]).css('background-color', 'hsl(129, 67%, 64%)')
+  //[left-menu] set the color on active group button
+  $('#left-group-'+data_loader.active_case.id.split('-')[0]).css('background-color', 'hsl(129, 67%, 64%)')
 
-  //[left-menu] display submenu of active chapter (and not others)
+  //[left-menu] display submenu of active group (and not others)
   $(".left-menu-sub").hide()
-  $("#left-menu-sub-"+data_loader.active_subchapter.id.split('-')[0]).show()
+  $("#left-menu-sub-"+data_loader.active_case.id.split('-')[0]).show()
 
-  //[left-menu] set the color on active subchapter button
-  $('#left-subchapter-'+data_loader.active_subchapter.id).css('background-color', 'hsl(129, 67%, 64%)')
+  //[left-menu] set the color on active case button
+  $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')
 
 
 
 }
 
-function subchapterClick(chapter_id,subchapter_sub_id){
+function caseClick(group_id,case_sub_id){
 
 
-  //if chapter is clicked, go to first subchapter
-  if(subchapter_sub_id==0) subchapter_id = data_loader.chapters[chapter_id].subchapters[0].id;
-  else subchapter_id = chapter_id + '-' + subchapter_sub_id
+  //if group is clicked, go to first case
+  if(case_sub_id==0) case_id = data_loader.groups[group_id].cases[0].id;
+  else case_id = group_id + '-' + case_sub_id
 
-  data_loader.active_subchapter = data_loader.subchapters[subchapter_id];
-  //console.log(chapter_id)
-  //console.log(subchapter_id)
-  //update chapter title
-  if (chapter_id==0) $('#right-subtitle').html(data_loader.active_subchapter.chapter.title)
-  else $('#right-subtitle').html(data_loader.active_subchapter.chapter.id +': '+data_loader.active_subchapter.chapter.title)
+  data_loader.active_case = data_loader.cases[case_id];
+  //console.log(group_id)
+  //console.log(case_id)
+  //update group title
+  if (group_id==0) $('#right-subtitle').html(data_loader.active_case.group.title)
+  else $('#right-subtitle').html(data_loader.active_case.group.id +': '+data_loader.active_case.group.title)
 
-  //[right-menu] hide all subchapters (text) except active one
-  $(".right-subchapter").hide()
-  $("#right-subchapter-"+subchapter_id).slideDown( "slow",  function() {
+  //[right-menu] hide all cases (text) except active one
+  $(".right-case").hide()
+  $("#right-case-"+case_id).slideDown( "slow",  function() {
     //console.log("Animation complete");
   });
 
-  //[left-menu] set the color on clicked chapter button (and not others)
-  $('.left-chapter').css('background-color', 'black')
-  $('#left-chapter-'+chapter_id).css('background-color', 'hsl(129, 67%, 64%)')
+  //[left-menu] set the color on clicked group button (and not others)
+  $('.left-group').css('background-color', 'black')
+  $('#left-group-'+group_id).css('background-color', 'hsl(129, 67%, 64%)')
 
-  //[left-menu] display submenu of active chapter (and not others)
+  //[left-menu] display submenu of active group (and not others)
   $(".left-menu-sub").hide()
-  $("#left-menu-sub-"+chapter_id).show()
+  $("#left-menu-sub-"+group_id).show()
 
-  //[left-menu] set the color on clicked subchapter button (and not others)
-  $('.left-subchapter').css('background-color', 'black')
-  $('#left-subchapter-'+subchapter_id).css('background-color', 'hsl(129, 67%, 64%)')
+  //[left-menu] set the color on clicked case button (and not others)
+  $('.left-case').css('background-color', 'black')
+  $('#left-case-'+case_id).css('background-color', 'hsl(129, 67%, 64%)')
 
   //set new active country
-  data_loader.active_country =data_loader.subchapters[subchapter_id].country;
+  data_loader.active_country =data_loader.cases[case_id].country;
   refreshLayers();
-  display_figure(subchapters[subchapter_id])
+  display_figure(cases[case_id])
 
 }
 
