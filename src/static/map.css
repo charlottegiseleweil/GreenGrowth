@@ -131,6 +131,12 @@ html, body {
   font-weight: bold;
   font-size: 2vmax;
 }
+#right-title-sub{
+  color:black;
+  font-weight: bold;
+  font-size: 1vmax;
+}
+
 #right-subtitle{
   color:black;
   font-weight: bold;

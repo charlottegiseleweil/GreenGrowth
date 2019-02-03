@@ -1,6 +1,9 @@
 
 //build scrollable right menu containing content of each case
 function buildRightMenu(){
+  //set the chapter / country title
+  if (data_loader.active_subchapter.chapter.id==0) $('#right-subtitle').html(data_loader.active_subchapter.chapter.title)
+  else $('#right-subtitle').html(data_loader.active_subchapter.chapter.id +': '+data_loader.active_subchapter.chapter.title)
   //clear right menu, in case it's being overwritten
   $('#right-menu-body').html("");
   subchapters = data_loader.subchapters;
@@ -9,7 +12,10 @@ function buildRightMenu(){
         //Subchapter
         $('#right-menu-body').append("<p id=right-subchapter-"+subchapters[i].id+" class=right-subchapter></p>")
         //Subchapter title
-        $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body><b>"+subchapters[i].id+": "+subchapters[i]["title"]+"</b></h5>")
+        if (subchapters[i].id.split('-')[0]==0) //special case for arrival page
+          $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body><b>"+subchapters[i]["title"]+"</b></h5>")
+        else
+          $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body><b>"+subchapters[i].id+": "+subchapters[i]["title"]+"</b></h5>")
         //Subchapter summary and (ambiance) images if available
         if (subchapters[i].has_image){ //
             $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary+ class=text-body>"+ '<img class="subchapter-img" src="./static/figure_and_images/'+ subchapters[i].id + '.jpg" alt="subchapter-image">'+subchapters[i].summary+ "</p>")
