@@ -9,7 +9,7 @@ function buildRightMenu(){
         //Subchapter
         $('#right-menu-body').append("<p id=right-subchapter-"+subchapters[i].id+" class=right-subchapter></p>")
         //Subchapter title
-        $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body>"+subchapters[i].id+": "+subchapters[i]["title"]+"</h5>")
+        $("#right-subchapter-"+subchapters[i].id).append("<h5 id="+subchapters[i].id+"-title class=text-body><b>"+subchapters[i].id+": "+subchapters[i]["title"]+"</b></h5>")
         //Subchapter summary and (ambiance) images if available
         if (subchapters[i].has_image){ //
             $('#right-subchapter-'+subchapters[i].id).append("<p id="+subchapters[i].id+"-summary+ class=text-body>"+ '<img class="subchapter-img" src="./static/figure_and_images/'+ subchapters[i].id + '.jpg" alt="subchapter-image">'+subchapters[i].summary+ "</p>")
