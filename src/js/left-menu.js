@@ -15,6 +15,8 @@ function buildLeftMenu(){
   add_tooltip("#left-menu #left-chapter-question");
   add_tooltip("#left-menu #left-chapter-home");
 
+  //$('#left-menu').append("<span id=left-chapter-0 class='left-chapter' title='Overview' onclick=subchapterClick("+0+","+1+");>" +0+ "</span>");
+
   for (var i in chapters){
     current_chapter = chapters[i];
     //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
@@ -22,13 +24,14 @@ function buildLeftMenu(){
 
     add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
 
-    //add submenu for the chapter
-    $('#left-chapter-'+current_chapter.id).after("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' style= top:"+$('#left-chapter-'+current_chapter.id).position().top+"px;'></div>")
-    //add subchapter buttons in submenu
-    for (var j=0;j<current_chapter.subchapters.length;j++){
-      $("#left-menu-sub-"+current_chapter.id).append("<span id=left-subchapter-"+current_chapter.subchapters[j].id+" class='left-subchapter' title='"+current_chapter.subchapters[j].title+"'onclick=subchapterClick("+i+","+current_chapter.subchapters[j].id.split('-')[1]+");>" +current_chapter.subchapters[j].id.split('-')[1]+ "</span>");
-      add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-subchapter-"+current_chapter.subchapters[j].id);
-
+    if(current_chapter.id!=0){ //special case for arrival page
+      //add submenu for the chapter
+      $('#left-chapter-'+current_chapter.id).after("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' style= top:"+$('#left-chapter-'+current_chapter.id).position().top+"px;'></div>")
+      //add subchapter buttons in submenu
+      for (var j=0;j<current_chapter.subchapters.length;j++){
+        $("#left-menu-sub-"+current_chapter.id).append("<span id=left-subchapter-"+current_chapter.subchapters[j].id+" class='left-subchapter' title='"+current_chapter.subchapters[j].title+"'onclick=subchapterClick("+i+","+current_chapter.subchapters[j].id.split('-')[1]+");>" +current_chapter.subchapters[j].id.split('-')[1]+ "</span>");
+        add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-subchapter-"+current_chapter.subchapters[j].id);
+      }
     }
   }
 
@@ -58,11 +61,13 @@ function subchapterClick(chapter_id,subchapter_sub_id){
   data_loader.active_subchapter = data_loader.subchapters[subchapter_id];
   //console.log(chapter_id)
   //console.log(subchapter_id)
+  //update chapter title
+  if (chapter_id==0) $('#right-subtitle').html(data_loader.active_subchapter.chapter.title)
+  else $('#right-subtitle').html(data_loader.active_subchapter.chapter.id +': '+data_loader.active_subchapter.chapter.title)
 
   //[right-menu] hide all subchapters (text) except active one
   $(".right-subchapter").hide()
   $("#right-subchapter-"+subchapter_id).slideDown( "slow",  function() {
-    // Animation complete.
     //console.log("Animation complete");
   });
 
