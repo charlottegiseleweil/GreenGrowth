@@ -44,6 +44,7 @@ function case_6_1_fig2(scrolled=false) {
         choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
         choropleth_map_objs['legend-2'].addTo(map);//add legend
         add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1");
+
     }
 };
 
@@ -58,7 +59,6 @@ function case_6_1_fig3(scrolled=false) {
         choropleth_map_objs['2016geo-3'].addTo(map)
         choropleth_map_objs['legend-3'].addTo(map);
         add_legend_to_right_menu(choropleth_map_objs['legend-3'],"6-1");
-
     }
 };
 
@@ -239,8 +239,6 @@ function case_9_1_fig1(scrolled=false) {
             $('.leaflet-control-layers-selector:checked')
             add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1");
 
-            //document.getElementById('water_marker_control').appendChild(waterfund_objs['con_layers'].getContainer());
-
         waterfund_bool=true;
     }
 }
@@ -373,19 +371,19 @@ function view_world(){
 
 function add_legend_to_right_menu(legend,id){
 
-    var htmlObject = legend.getContainer();//get slider container
+        var htmlObject = legend.getContainer();//get slider container
 
-    var newpos = document.getElementById(id+'-summary+');//set time slider
-    var legend_height = htmlObject.clientHeight;
-    console.log("height",legend_height);
-    function setParent(el, newParent)
-    {
-    newParent.appendChild(el);
-    el.style.float='None';
-    el.style.marginLeft="30%";
-    el.style.width = "40%";
-    el.style.fontSize = "0.9vw";
-    el.style.backgroundColor="rgb(230, 224, 224)";
+        var newpos = document.getElementById(id+'-summary+');//set time slider
+        var legend_height = htmlObject.clientHeight;
+        console.log("height",legend_height);
+        function setParent(el, newParent)
+        {
+        newParent.appendChild(el);
+        el.style.float='None';
+        el.style.marginLeft="30%";
+        el.style.width = "40%";
+        el.style.fontSize = "0.9vw";
+        el.style.backgroundColor="rgb(230, 224, 224)";
+        }
+        setParent(htmlObject, newpos);
     }
-    setParent(htmlObject, newpos);
-}
