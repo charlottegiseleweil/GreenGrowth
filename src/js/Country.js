@@ -4,6 +4,7 @@ class Country{
         this.name = country["name"];
         this.summary = country['description'];
         this.loc_view = country['location_view'];
+        this.country_code = country['country_code']
     }
 
     async click() {

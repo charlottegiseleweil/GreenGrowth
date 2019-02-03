@@ -1,8 +1,8 @@
 class Group{
 
-    constructor(case_study){
-        this.id =case_study["ch_no"];
-        this.title=case_study["ch_title"];
+    constructor(id, title){
+        this.id =id;
+        this.title=title;
         this.cases = []
     }
 

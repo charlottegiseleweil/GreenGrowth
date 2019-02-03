@@ -1,4 +1,5 @@
 const active_button_color = "hsl(129, 67%, 64%)";
+let case_id_display;
 
 function buildLeftMenu(){
   //clear left menu, in case it's being overwritten
@@ -21,8 +22,8 @@ function buildLeftMenu(){
   for (var i in groups){
     current_group = groups[i];
     //add a group button, note that here onClick calls caseClick on the first case
-    if (i==0) $('#left-menu').append("<span id=left-group-"+current_group.id+" class='left-group' title='"+current_group.title+"' onclick=caseClick("+i+","+0+");><i class='fas fa-circle'></span>");
-    else $('#left-menu').append("<span id=left-group-"+current_group.id+" class='left-group' title='"+current_group.title+"' onclick=caseClick("+i+","+0+");>" +current_group.id+ "</span>");
+    if (i==0) $('#left-menu').append("<span id=left-group-"+current_group.id+" class='left-group' title='"+current_group.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
+    else $('#left-menu').append("<span id=left-group-"+current_group.id+" class='left-group' title='"+current_group.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_group.id+ "</span>");
 
     add_tooltip("#left-menu #left-group-"+current_group.id);
 
@@ -31,7 +32,13 @@ function buildLeftMenu(){
       $('#left-group-'+current_group.id).after("<div id=left-menu-sub-"+current_group.id+" class='left-menu-sub' style= top:"+$('#left-group-'+current_group.id).position().top+"px;'></div>")
       //add case buttons in submenu
       for (var j=0;j<current_group.cases.length;j++){
-        $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick("+i+","+current_group.cases[j].id.split('-')[1]+");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
+        if(data_loader.browse_type=='Chapter')
+          $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case left-chapter' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
+        else if(data_loader.browse_type =='Country')
+          case_id_display = j+1;
+          //$("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
+          $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case left-country' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>"+case_id_display+"</span>");
+
         add_tooltip("#left-menu-sub-"+current_group.id+" #left-case-"+current_group.cases[j].id);
       }
     }
@@ -53,12 +60,12 @@ function buildLeftMenu(){
 
 }
 
-function caseClick(group_id,case_sub_id){
+function caseClick(group_id,case_id){
 
 
   //if group is clicked, go to first case
-  if(case_sub_id==0) case_id = data_loader.groups[group_id].cases[0].id;
-  else case_id = group_id + '-' + case_sub_id
+  if(case_id==0) case_id = data_loader.groups[group_id].cases[0].id;
+  //else case_id = group_id + '-' + case_sub_id
 
   data_loader.active_case = data_loader.cases[case_id];
   //console.log(group_id)
