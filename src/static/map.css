@@ -173,6 +173,33 @@ html, body {
     line-height: 3vh;
   }
 
+.mechanism-button {
+  margin-top: 0 !important; 
+  background-color: black !important;
+}
+
+.mechanism-menu {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.navbar-nav > .active > a {
+  color: aqua;
+  background-color: chartreuse;    
+}
+.nav-item > a:hover {
+  color: aqua;
+}
+
+.mechanism-img {
+  width:45%;
+  height: auto;
+  border-radius: 10px;
+  display:block;
+  margin:auto;
+}
+
 .left-menu-sub{
   display: block;
   position:absolute;

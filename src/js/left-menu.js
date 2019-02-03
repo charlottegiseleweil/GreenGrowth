@@ -7,9 +7,11 @@ function buildLeftMenu(){
   chapters = data_loader.chapters;
   subchapters = data_loader.subchapters;
   //add chapter number to (main) left-menu
-  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
-  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
-  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
+  $('#left-menu').append("<span id='left-chapter-home' class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
+  $('#left-menu').append("<span id='left-chapter-question' class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
+  $('#left-menu').append("<span id='left-chapter-question' class='left-chapter-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
+  $('#left-menu').append("<span id='left-chapter-question' class='left-chapter-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-cog'></i></span><hr>");
+
   
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
@@ -43,8 +45,6 @@ function buildLeftMenu(){
 
   //[left-menu] set the color on active subchapter button
   $('#left-subchapter-'+data_loader.active_subchapter.id).css('background-color', 'hsl(129, 67%, 64%)')
-
-
 
 }
 
@@ -110,11 +110,18 @@ $(path).tooltip(
 );
 }
 
-
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
+  $("#myNav").load("static/mechanism.html");
+  console.log("Can")
+
+
 }
 
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
+}
+
+function changeImage(e) {
+  $(".mechanism-img").attr("src","/static/mechanisms/"+e.name+".png");
 }
