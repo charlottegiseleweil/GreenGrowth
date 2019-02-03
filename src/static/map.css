@@ -42,6 +42,10 @@ html, body {
     z-index: 1;
 }
 
+.leaflet-control-layers{
+    margin-top: 1vh !important; 
+}
+
 #title-panel {
 
     position:absolute;
@@ -49,9 +53,9 @@ html, body {
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 15vh;
+    height: 16vh;
     border-radius: 20px;   
-    padding: 20px; 
+    padding: 20px;
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
     background-color: rgba(255, 255, 255, 0.7);
@@ -111,16 +115,16 @@ html, body {
 #right-title{
   color:hsl(100, 84%, 24%, 1);
   font-weight: bold;
-  font-size: 2vw;  
+  font-size: 2vmax;  
 }
 #right-subtitle{
   color:hsl(72, 84%, 24%, 1);
   font-weight: bold;
-  font-size: 1vw;  
+  font-size: 1vmax;  
 }
 
 #right-book-link {
-  font-size : 15px;
+  font-size : 1.1vmax;
   text-align: right;
   display:block;
 }
@@ -268,3 +272,53 @@ p {
     width: 10vw;
     font-family: 'Maven Pro', sans-serif;
 }
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+  
+  .overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+  }
+  
+  .overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+    }
+  }
