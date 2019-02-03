@@ -95,11 +95,11 @@ html, body {
   font-size: 1vw;
 }
 
-.chapter {
+.group {
   display : none;
 }
 
-.right-subchapter {
+.right-case {
   display : block;
 }
 
@@ -179,7 +179,7 @@ html, body {
     font-family: 'Righteous', cursive;
 }
 
-.left-chapter{
+.left-group{
   height: 3vh;
   width: 3vh;
   background-color: black;
@@ -207,7 +207,7 @@ html, body {
   background-color : rgb(3, 59, 15);
 }
 
-.left-chapter-helper{
+.left-group-helper{
     height: 3vh;
     width: 3vh;
     background-color: hsl(4, 72%, 55%, 0.81);
@@ -232,7 +232,7 @@ html, body {
   padding-bottom: 1vh;
 }
 
-.left-subchapter{
+.left-case{
   height: 3vh;
   width: 3vh;
   border-radius: 50%;
@@ -296,7 +296,7 @@ p {
   cursor: pointer;
 }
 
-.subchapter-img {
+.case-img {
     float: right;
     margin: 2% 0 2% 2%;
     border-radius: 10px;
