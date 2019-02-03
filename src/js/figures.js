@@ -7,7 +7,7 @@ function display_figure(case_){
     zoom_to(case_)
     switch(case_.id){
       case '6-1':
-        case_6_1_fig2()
+        //case_6_1_fig2()
         break
       case '6-3':
         case_6_3_fig1();

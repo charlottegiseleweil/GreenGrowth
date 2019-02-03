@@ -88,46 +88,58 @@ class DataLoader {
     }
 
 async prepareDataframes(){
-    //reset values
+    //reset data
     this.groups = [];
     this.cases = [];
-    // read csv file containing cases information
-    var case_studies = await d3.csv("./data/case_studies.csv");
-    //iterate over each case studie
-    let ch_id=-1;
-    let sub_ch_id = 0;
-    let current_group = null;
-    let country = null;
 
+    //read csv file containing countries information
     var csv_countries = await d3.csv('./data/countries.csv');
     for(var i=0;i<csv_countries.length;i++){
       this.countries[csv_countries[i]["name"]] = new Country(csv_countries[i])
+      if (this.browse_type=='Country'){
+        this.groups[csv_countries[i]["country_code"]] = new Group(csv_countries[i]["country_code"],csv_countries[i]["name"])
+      }
     }
     if (this.active_country == null)
       this.active_country = this.countries['World'];
 
+    let group_id=1;
+    let case_id = -1;
+    let current_group = null;
+    let current_country = null;
+    let country = null;
+    // read csv file containing cases information
+    var case_studies = await d3.csv("./data/case_studies.csv");
+
+    //iterate over each case study
     for(var i=0;i<case_studies.length;i++){
       if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
           &&(data_loader.active_country.name=='World' || data_loader.active_country.name ==case_studies[i]["country"])){
 
-        //fetch and populate with the actual data
-        if (ch_id != case_studies[i]["ch_no"]){
-          if (current_group!=null)
-              this.groups[ch_id]=current_group;
-          ch_id = case_studies[i]["ch_no"];
-          current_group = new Group(case_studies[i]);
+        if (this.browse_type=='Chapter'){
+          //fetch and populate with the actual data
+          if (group_id != case_studies[i]["ch_no"]){
+            if (current_group!=null)
+                this.groups[group_id]=current_group;
+            group_id = case_studies[i]["ch_no"];
+            current_group = new Group(case_studies[i]["ch_no"],case_studies[i]["ch_title"]);
+          }
         }
-        country = this.countries[case_studies[i]["country"]]
-        let new_case = new Case(sub_ch_id,case_studies[i],current_group, country)
-        this.cases[new_case.id]= new_case;
+        else if (this.browse_type=='Country'){
+          current_group = this.groups[this.countries[case_studies[i]["country"]].country_code]
+        }
+        current_country=  this.countries[case_studies[i]["country"]];
+        let new_case = new Case(case_id,case_studies[i],current_group, current_country)
         current_group.add_case(new_case);
-        sub_ch_id++;
+        case_id++;
+        this.cases[new_case.id]= new_case;
+
       }
     }
-    //if ((ch_id != case_studies[i]["ch_no"])&&(current_group!=null))
-      //    this.groups[ch_id]=current_group;
+    if (this.browse_type=='Chapter')
+      this.groups[group_id]=current_group;
     this.active_case = this.cases[Object.keys(this.cases)[0]]
-    this.groups[ch_id]=current_group;
+
 
     // read csv file containing figure information
     var figures = await d3.csv('./data/figures.csv');
@@ -190,8 +202,8 @@ async prepareDataframesold(){
     // read csv file containing cases information
     var case_studies = await d3.csv("./data/case_studies.csv");
     //iterate over each case studie
-    let ch_id=-1;
-    let sub_ch_id = 0;
+    let group_id=-1;
+    let case_id = 0;
     let current_group = null;
     let country = null;
 
@@ -207,23 +219,23 @@ async prepareDataframesold(){
           &&(data_loader.active_country.name=='World' || data_loader.active_country.name ==case_studies[i]["country"])){
 
         //fetch and populate with the actual data
-        if (ch_id != case_studies[i]["ch_no"]){
+        if (group_id != case_studies[i]["ch_no"]){
           if (current_group!=null)
-              this.groups[ch_id]=current_group;
-          ch_id = case_studies[i]["ch_no"];
+              this.groups[group_id]=current_group;
+          group_id = case_studies[i]["ch_no"];
           current_group = new Group(case_studies[i]);
         }
         country = this.countries[case_studies[i]["country"]]
-        let new_case = new case(sub_ch_id,case_studies[i],current_group, country)
+        let new_case = new case(case_id,case_studies[i],current_group, country)
         this.cases[new_case.id]= new_case;
         current_group.add_case(new_case);
-        sub_ch_id++;
+        case_id++;
       }
     }
-    //if ((ch_id != case_studies[i]["ch_no"])&&(current_group!=null))
-      //    this.groups[ch_id]=current_group;
+    //if ((group_id != case_studies[i]["ch_no"])&&(current_group!=null))
+      //    this.groups[group_id]=current_group;
     this.active_case = this.cases[Object.keys(this.cases)[0]]
-    this.groups[ch_id]=current_group;
+    this.groups[group_id]=current_group;
 
     // read csv file containing figure information
     var figures = await d3.csv('./data/figures.csv');
