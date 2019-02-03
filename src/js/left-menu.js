@@ -7,11 +7,14 @@ function buildLeftMenu(){
   chapters = data_loader.chapters;
   subchapters = data_loader.subchapters;
   //add chapter number to (main) left-menu
-  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-home'></i></span>");
-  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span><hr>");
+  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
+  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
+  $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
+  
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
-
+  add_tooltip("#left-menu #left-chapter-home");
+  
   for (var i in chapters){
     current_chapter = chapters[i];
     //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
@@ -105,4 +108,13 @@ $(path).tooltip(
     position: { my: "left center", at: "right+10 center" }
   }
 );
+}
+
+
+function openNav() {
+  document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
 }
