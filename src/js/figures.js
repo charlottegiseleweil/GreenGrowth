@@ -375,7 +375,7 @@ function add_legend_to_right_menu(legend,id){
 
         var newpos = document.getElementById(id+'-summary+');//set time slider
         var legend_height = htmlObject.clientHeight;
-        console.log("height",legend_height);
+        //console.log("height",legend_height);
         function setParent(el, newParent)
         {
         newParent.appendChild(el);

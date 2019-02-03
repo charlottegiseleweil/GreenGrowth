@@ -21,7 +21,7 @@ class Country{
         else{
           //reset the style of previous active country if any
           if(data_loader.active_country!='world'){
-            resetAllLayers();
+            refreshLayers();
           }
 
           //set new active country
@@ -42,36 +42,33 @@ class Country{
 
 }
 
-async function handleCountryClick(e) {
+async function handleCountryClick(layer) {
+    if(Object.keys(layer).includes('target'))
+      layer = layer.target;
+
     //clean dynamic figure on map (if any)
     clean_layers();
     //country clicked was active, go back back to default view
-    if (data_loader.active_country.name == e.target.feature.properties.name){
-      data_loader.active_country = data_loader.countries['World'];
-      //reset to default style
-      highlightFeature(e);
+    if (data_loader.active_country.name == layer.feature.properties.name){
+      home_menu();
     }
     //new country was clicked
     else{
-      //reset the style of previous active country if any
-      geojson.eachLayer(function(layer){
-          geojson.resetStyle(layer);
-      });
 
       //set new active country
-      data_loader.active_country = data_loader.countries[e.target.feature.properties.name];
-
+      data_loader.active_country = data_loader.countries[layer.feature.properties.name];
+      //set to active country highlight
+      refreshLayers();
+      //zoom to country
+      zoom_to(data_loader.active_country);
+      console.log("moved to: "+data_loader.active_country.name);
+      //use all data again
+      await data_loader.prepareDataframes()
+      //rebuild left and right menu
+      buildRightMenu();
+      buildLeftMenu();
 
     }
-    //set to active country highlight
-    activeHighlight(e);
-    //zoom to country
-    zoom_to(data_loader.active_country);
-    console.log("moved to: "+data_loader.active_country.name);
-    //use all data again
-    await data_loader.prepareDataframes()
-    //rebuild left and right menu
-    buildRightMenu();
-    buildLeftMenu();
+
 
 }

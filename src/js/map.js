@@ -26,8 +26,8 @@
 
  // create Leaflet Map
  var map = L.map('map', {
-    center: [20.0, 0.0],
-    zoom: 3,
+    center: [40.0, 80.0],
+    zoom: 2.35,
     zoomSnap: 0.2
 });
 
@@ -41,14 +41,14 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
 
 
 var myStyle = {
-"color": "#ff7800",
+"color": "#005500",
 "weight": 0.5,
-"opacity": 0.65
+"opacity": 0.25
 };
 
 // reset highlightning on filtered countries on mouse hover
 function onEachFeature(feature, layer) {
-
+  //console.log(e)
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
@@ -57,9 +57,11 @@ function onEachFeature(feature, layer) {
     });
 }
 
-function highlightFeature(e){
-  if (e.target.feature.properties.name!=data_loader.active_country.name){
-    e.target.setStyle({
+function highlightFeature(layer){
+  if(Object.keys(layer).includes('target'))
+    layer = layer.target;
+  if (layer.feature.properties.name!=data_loader.active_country.name){
+    layer.setStyle({
         weight: 0.5,
         color: '#666',
         dashArray: '',
@@ -68,19 +70,23 @@ function highlightFeature(e){
   }
 }
 
-function activeHighlight(e){
-  e.target.setStyle({
+function activeHighlight(layer){
+  if(Object.keys(layer).includes('target'))
+    layer = layer.target;
+  layer.setStyle({
       weight: 0.5,
-      color: 'red',
+      color: "#00bb00",
       dashArray: '',
       fillOpacity: 0.25
   });
 }
 
 
-function resetHighlight(e) {
-  if (e.target.feature.properties.name!=data_loader.active_country.name){
-    geojson.resetStyle(e.target);
+function resetHighlight(layer) {
+  if(Object.keys(layer).includes('target'))
+    layer = layer.target;
+  if (layer.feature.properties.name!=data_loader.active_country.name){
+    geojson.resetStyle(layer);
   }
 }
 
@@ -92,10 +98,13 @@ function zoom_to(object){
 }
 
 
-function resetAllLayers(){
+function refreshLayers(){
   geojson.eachLayer(function(layer){
-    if (this.name==data_loader.active_country){
-      geojson.resetStyle(e.target);
+    if (layer.feature.properties.name==data_loader.active_country.name){
+      activeHighlight(layer);
+    }
+    else{
+      resetHighlight(layer);
     }
   });
 }

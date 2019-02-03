@@ -92,7 +92,8 @@ async prepareDataframes(){
     // read csv file containing cases information
     var case_studies = await d3.csv("./data/case_studies.csv");
     //iterate over each case studie
-    let ch_id=-1
+    let ch_id=-1;
+    let sub_ch_id = 0;
     let current_chapter = null;
     let country = null;
 
@@ -115,9 +116,10 @@ async prepareDataframes(){
           current_chapter = new Chapter(case_studies[i]);
         }
         country = this.countries[case_studies[i]["country"]]
-        let new_subchapter = new Subchapter(i,case_studies[i],current_chapter, country)
+        let new_subchapter = new Subchapter(sub_ch_id,case_studies[i],current_chapter, country)
         this.subchapters[new_subchapter.id]= new_subchapter;
         current_chapter.add_subchapter(new_subchapter);
+        sub_ch_id++;
       }
     }
     //if ((ch_id != case_studies[i]["ch_no"])&&(current_chapter!=null))

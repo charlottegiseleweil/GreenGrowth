@@ -1,8 +1,9 @@
 class Subchapter{
 
-    constructor(index,subchapter, chapter){
+    constructor(index,subchapter, chapter, country){
         this.id  = subchapter["number"].replace(".","-");
         this.title = subchapter["name"];
+        this.country = country;
         this.summary = subchapter['summary'];
         this.loc_view = subchapter['location_view'];
         this.chapter = chapter;
