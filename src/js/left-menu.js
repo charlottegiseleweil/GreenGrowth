@@ -10,11 +10,11 @@ function buildLeftMenu(){
   $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
-  
+
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
   add_tooltip("#left-menu #left-chapter-home");
-  
+
   for (var i in chapters){
     current_chapter = chapters[i];
     //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
@@ -56,8 +56,8 @@ function subchapterClick(chapter_id,subchapter_sub_id){
   else subchapter_id = chapter_id + '-' + subchapter_sub_id
 
   data_loader.active_subchapter = data_loader.subchapters[subchapter_id];
-  console.log(chapter_id)
-  console.log(subchapter_id)
+  //console.log(chapter_id)
+  //console.log(subchapter_id)
 
   //[right-menu] hide all subchapters (text) except active one
   $(".right-subchapter").hide()
@@ -78,24 +78,26 @@ function subchapterClick(chapter_id,subchapter_sub_id){
   $('.left-subchapter').css('background-color', 'black')
   $('#left-subchapter-'+subchapter_id).css('background-color', 'hsl(129, 67%, 64%)')
 
+  //set new active country
+  data_loader.active_country =data_loader.subchapters[subchapter_id].country;
+  refreshLayers();
   display_figure(subchapters[subchapter_id])
 
 }
 
-function home_menu(){
-  //[right-menu] hide all subchapters (text) except active one
-  clean_layers();
-  $(".right-subchapter").hide()
-  $("#right-subchapter-"+data_loader.chapters[0]).slideDown( "slow",  function() {
-    // Animation complete.
-    console.log("Animation complete");
-  });
-
-  $(".left-menu-sub").hide()
-  $('.left-chapter').css('background-color', 'black')
-  $('.left-subchapter').css('background-color', 'black')
-  $("#right-subchapter-2-1").show();
-  view_world();
+async function home_menu(){
+  //set world as active country
+  data_loader.active_country = data_loader.countries['World'];
+  //resets layers
+  refreshLayers()
+  //zoom to world
+  zoom_to(data_loader.active_country);
+  console.log("moved to: "+data_loader.active_country.name);
+  //use all data again
+  await data_loader.prepareDataframes()
+  //rebuild left and right menu
+  buildRightMenu();
+  buildLeftMenu();
 }
 
 function tutorial(){
