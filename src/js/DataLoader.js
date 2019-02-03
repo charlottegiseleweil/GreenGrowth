@@ -1,13 +1,14 @@
 class DataLoader {
 
     constructor(){
+
         this.geojson;
         this.chapters = [];
         this.subchapters = [];
         this.active_subchapter = null;
         this.countries = [];
         this.active_country = null;
-        //this.other_texts = [];
+        this.browse_type = 'Chapter';
         this.progress_bar = {
             progress: 0,
             get _progress() { return this.progress; },
@@ -90,7 +91,6 @@ async prepareDataframes(){
     //reset values
     this.chapters = [];
     this.subchapters = [];
-    //this.other_texts = [];
     // read csv file containing cases information
     var case_studies = await d3.csv("./data/case_studies.csv");
     //iterate over each case studie
@@ -99,12 +99,6 @@ async prepareDataframes(){
     let current_chapter = null;
     let country = null;
 
-    /*
-    var descriptions = await d3.csv('./data/summaries.csv');
-    for(var i=0;i<descriptions.length;i++){
-      this.other_texts[descriptions[i]["name"]] = descriptions[i]["summary"]
-    }
-    */
     var csv_countries = await d3.csv('./data/countries.csv');
     for(var i=0;i<csv_countries.length;i++){
       this.countries[csv_countries[i]["name"]] = new Country(csv_countries[i])

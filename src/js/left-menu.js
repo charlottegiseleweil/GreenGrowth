@@ -11,6 +11,7 @@ function buildLeftMenu(){
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
 
+
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
   add_tooltip("#left-menu #left-chapter-home");
@@ -20,7 +21,8 @@ function buildLeftMenu(){
   for (var i in chapters){
     current_chapter = chapters[i];
     //add a chapter button, note that here onClick calls subchapterClick on the first subchapter
-    $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");>" +current_chapter.id+ "</span>");
+    if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");><i class='fas fa-circle'></span>");
+    else $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=subchapterClick("+i+","+0+");>" +current_chapter.id+ "</span>");
 
     add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
 
@@ -116,7 +118,6 @@ $(path).tooltip(
   }
 );
 }
-
 
 function openNav() {
   document.getElementById("myNav").style.width = "100%";

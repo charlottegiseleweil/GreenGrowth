@@ -41,7 +41,7 @@ function open_page() {
       //build left and right menu
       buildRightMenu();
       buildLeftMenu();
-
+      buildBottomMenu();
       //create user guide
       intro = introJs();
 
