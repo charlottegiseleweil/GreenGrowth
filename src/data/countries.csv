@@ -1,4 +1,5 @@
 name,location_view,description,country_code
+United States,"52.09024,-85.712891,3.8",,US
 Australia,"-20,150,4.2",,AU
 Brazil,"-14,-42,4.2",,BR
 China,"38,125,4.1",,CN
@@ -11,6 +12,5 @@ Myanmar,"22,111,4.5",,MM
 Indonesia,"0,137,4.2",,ID
 South Africa,"-20.559483,38.937506,4.6",,ZA
 United Kingdom,"55.378052,11.435973,4.5",,UK
-United States,"52.09024,-85.712891,3.8",,US
-World,"40,80,2.35",,W
 Unknown,"40,80,2.35",,U
+World,"40,80,2.35",,W

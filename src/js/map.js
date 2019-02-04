@@ -60,7 +60,7 @@ function onEachFeature(feature, layer) {
 function highlightFeature(layer){
   if(Object.keys(layer).includes('target'))
     layer = layer.target;
-  if (layer.feature.properties.name!=data_loader.active_country.name){
+  if (data_loader.browse_type=='Country'&&layer.feature.properties.name!=data_loader.active_country.name){
     layer.setStyle({
         weight: 0.5,
         color: '#666',

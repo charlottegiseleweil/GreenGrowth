@@ -33,12 +33,12 @@ function buildLeftMenu(){
       //add case buttons in submenu
       for (var j=0;j<current_group.cases.length;j++){
         if(data_loader.browse_type=='Chapter')
-          $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case left-chapter' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
-        else if(data_loader.browse_type =='Country')
+          $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
+        else if(data_loader.browse_type =='Country'){
           case_id_display = j+1;
           //$("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
-          $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case left-country' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>"+case_id_display+"</span>");
-
+          $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>"+case_id_display+"</span>");
+        }
         add_tooltip("#left-menu-sub-"+current_group.id+" #left-case-"+current_group.cases[j].id);
       }
     }
@@ -47,11 +47,11 @@ function buildLeftMenu(){
   $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
 
   //[left-menu] set the color on active group button
-  $('#left-group-'+data_loader.active_case.id.split('-')[0]).css('background-color', 'hsl(129, 67%, 64%)')
+  $('#left-group-'+data_loader.active_case.group.id).css('background-color', 'hsl(129, 67%, 64%)')
 
   //[left-menu] display submenu of active group (and not others)
   $(".left-menu-sub").hide()
-  $("#left-menu-sub-"+data_loader.active_case.id.split('-')[0]).show()
+  $("#left-menu-sub-"+data_loader.active_case.group.id).show()
 
   //[left-menu] set the color on active case button
   $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')
@@ -61,9 +61,7 @@ function buildLeftMenu(){
 }
 
 function caseClick(group_id,case_id){
-
-
-  //if group is clicked, go to first case
+  //if group is clicked, go to first case, except for intro
   if(case_id==0) case_id = data_loader.groups[group_id].cases[0].id;
   //else case_id = group_id + '-' + case_sub_id
 
@@ -71,7 +69,7 @@ function caseClick(group_id,case_id){
   //console.log(group_id)
   //console.log(case_id)
   //update group title
-  if (group_id==0) $('#right-subtitle').html(data_loader.active_case.group.title)
+  if (group_id==0||data_loader.browse_type=='Country') $('#right-subtitle').html(data_loader.active_case.group.title)
   else $('#right-subtitle').html(data_loader.active_case.group.id +': '+data_loader.active_case.group.title)
 
   //[right-menu] hide all cases (text) except active one
@@ -92,6 +90,7 @@ function caseClick(group_id,case_id){
   $('.left-case').css('background-color', 'black')
   $('#left-case-'+case_id).css('background-color', 'hsl(129, 67%, 64%)')
 
+
   //set new active country
   data_loader.active_country =data_loader.cases[case_id].country;
   refreshLayers();
@@ -102,6 +101,8 @@ function caseClick(group_id,case_id){
 async function home_menu(){
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
+  //set chapter as browse type
+  data_loader.browse_type = 'Chapter'
   //resets layers
   refreshLayers()
   //zoom to world

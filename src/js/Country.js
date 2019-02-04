@@ -7,43 +7,10 @@ class Country{
         this.country_code = country['country_code']
     }
 
-    async click() {
-      console.log(this.name)
-        //clean dynamic figure on map (if any)
-        clean_layers();
-        //country clicked was active, go back back to default view
-        if (this.name == data_loader.active_country){
-          map.setView([20.0, 0.0], 2.3);
-          data_loader.active_country = 'world';
-          //reset to default style
-          highlightFeature(e);
-        }
-        //new country was clicked
-        else{
-          //reset the style of previous active country if any
-          if(data_loader.active_country!='world'){
-            refreshLayers();
-          }
-
-          //set new active country
-          data_loader.active_country =this;
-          //zoom to country
-          zoom_to(data_loader.active_country);
-
-
-          console.log(data_loader.active_country);
-        }
-        //adapt the content
-        await data_loader.prepareDataframes();
-        //rebuild left and right menu
-        buildRightMenu();
-        buildLeftMenu();
-
-    }
-
 }
 
 async function handleCountryClick(layer) {
+  if(data_loader.browse_type=='Country'){
     if(Object.keys(layer).includes('target'))
       layer = layer.target;
 
@@ -51,7 +18,11 @@ async function handleCountryClick(layer) {
     clean_layers();
     //country clicked was active, go back back to default view
     if (data_loader.active_country.name == layer.feature.properties.name){
-      home_menu();
+      //resets layers
+      refreshLayers()
+      //go back to intro
+      caseClick(Object.keys(data_loader.groups)[0],Object.keys(data_loader.cases)[0]);
+
     }
     //new country was clicked
     else{
@@ -60,16 +31,13 @@ async function handleCountryClick(layer) {
       data_loader.active_country = data_loader.countries[layer.feature.properties.name];
       //set to active country highlight
       refreshLayers();
+      console.log("moved to: "+data_loader.active_country.name);
+      //set active case
+      data_loader.active_case=data_loader.groups[data_loader.active_country.country_code].cases[0]
+      caseClick(data_loader.active_case.group.id,data_loader.active_case.id);
       //zoom to country
       zoom_to(data_loader.active_country);
-      console.log("moved to: "+data_loader.active_country.name);
-      //use all data again
-      await data_loader.prepareDataframes()
-      //rebuild left and right menu
-      buildRightMenu();
-      buildLeftMenu();
 
     }
-
-
+  }
 }
