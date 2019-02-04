@@ -10,12 +10,12 @@ class Country{
 }
 
 async function handleCountryClick(layer) {
+  //clean dynamic figure on map (if any)
+  clean_layers();
   if(data_loader.browse_type=='Country'){
     if(Object.keys(layer).includes('target'))
       layer = layer.target;
 
-    //clean dynamic figure on map (if any)
-    clean_layers();
     //country clicked was active, go back back to default view
     if (data_loader.active_country.name == layer.feature.properties.name){
       //resets layers
