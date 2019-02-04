@@ -10,8 +10,8 @@ function buildLeftMenu(){
   //add group number to (main) left-menu
   $('#left-menu').append("<span id=left-group-home class='left-group-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
   $('#left-menu').append("<span id=left-group-question class='left-group-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
-  $('#left-menu').append("<span id=left-group-question class='left-group-helper' title='About Us' onclick=openNav();><i class='fas fa-address-card'></i></span><hr>");
-
+  $('#left-menu').append("<span id=left-group-question class='left-group-helper' title='About Us' onclick=openAbout();><i class='fas fa-address-card'></i></span><hr>");
+  $('#left-menu').append("<span id='left-group-question' class='left-group-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-info'></i></span><hr>");
 
   add_tooltip("#left-menu #left-group-home");
   add_tooltip("#left-menu #left-group-question");
@@ -99,6 +99,8 @@ function caseClick(group_id,case_id){
 }
 
 async function home_menu(){
+  //clean the map of dynamic figues
+  clean_layers();
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
   //set chapter as browse type
@@ -120,17 +122,50 @@ intro.start();
 }
 
 function add_tooltip(path){
-$(path).tooltip(
-  {
-    position: { my: "left center", at: "right+10 center" }
-  }
-);
+  $(path).tooltip(
+    {
+      position: { my: "left center", at: "right+10 center" }
+    }
+  );
+}
+
+function openAbout() {
+  document.getElementById("myNav").style.width = "100%";
 }
 
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
+  if(data_loader.browse_type=='Mechanism'){
+    $("#myNav").load("static/mechanism.html");
+
+  }
+  else if(data_loader.browse_type=='Chapter'){
+    $("#myNav").load("static/chapter.html", function() {
+      $("#nav-title").html('Chapters');
+      for(var i=1; i<Object.keys(data_loader.groups).length; i++){
+        current_group=data_loader.groups[Object.keys(data_loader.groups)[i]];
+        $("#chapter-nav-list").append('<li id="nav-item-'+current_group.id+'" class="nav-item"></li>');
+        $("#nav-item-"+current_group.id).append('<a class="nav-link active" href="javascript:void(0)" onclick="changeImage(this)" name="'+current_group.id+'">'+current_group.id+': '+current_group.title+'</a>')
+      }
+    });
+  }
+
+  else if(data_loader.browse_type=='Country'){
+    $("#myNav").load("static/chapter.html", function() {
+      $("#nav-title").html('Countries');
+      for(var i=1; i<Object.keys(data_loader.groups).length; i++){
+        current_group=data_loader.groups[Object.keys(data_loader.groups)[i]];
+        $("#chapter-nav-list").append('<li id="nav-item-'+current_group.id+'" class="nav-item"></li>');
+        $("#nav-item-"+current_group.id).append('<a class="nav-link active" href="javascript:void(0)" onclick="changeImage(this)" name="'+current_group.id+'">'+current_group.title+'</a>')
+      }
+    });
+  }
 }
 
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
+}
+
+function changeImage(e) {
+  $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
 }

@@ -182,9 +182,9 @@ async prepareDataframes(){
 
       }
     }
-    console.log(this.cases)
-    console.log(this.groups)
-    console.log(this.countries)
+    //console.log(this.cases)
+    //console.log(this.groups)
+    //console.log(this.countries)
 
   }
 }
