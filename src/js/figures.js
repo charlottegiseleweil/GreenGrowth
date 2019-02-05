@@ -82,7 +82,7 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
     if (year_list.length>1){
         var layerGroup = L.layerGroup(layers);
         //initiate slider, follow = 1 means, show one feature at a time
-        choropleth_map_objs['slider'] = L.control.sliderControl({position: "topleft",layer:layerGroup, follow: 1});
+        //choropleth_map_objs['slider'] = L.control.sliderControl({position: "topleft",layer:layerGroup, follow: 1});
     }
 }
 
@@ -229,7 +229,7 @@ function clean_layers(){
     $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
     map.removeControl(choropleth_map_objs['legend-2']);
     map.removeControl(choropleth_map_objs['legend-3']);
-    map.removeControl(choropleth_map_objs['slider']);
+    //map.removeControl(choropleth_map_objs['slider']);
 
     Object.keys(choropleth_map_objs).forEach(function(key) {
         map.removeLayer(choropleth_map_objs[key]);

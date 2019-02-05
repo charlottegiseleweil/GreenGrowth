@@ -83,7 +83,7 @@ html, body {
     z-index: 100;
     width: 33vw;
     height: 65vh;
-    margin-top: 20px;
+    margin-top: 2vh;
     background-color: rgba(255, 255, 255, 0.9);
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
@@ -169,19 +169,33 @@ html, body {
 }
 
 #bottom-menu {
-    position:absolute;
-    bottom:0;
-    height: 4vh;
-    z-index: 100;
-    text-align:center;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 2vh 2vh 0 0;
-    font-family: 'Righteous', cursive;
+  position: absolute;
+  bottom: 0;
+  top: 20vh;
+  right: 3vw;
+  height: 4vh;
+  z-index: 100;
+  text-align: center;
+  border-radius: 20%;
+  font-family: 'Righteous', cursive;
 }
 
+#mechanism-menu {
+  position: absolute;
+  z-index: 100;
+  text-align: center;
+  border-radius: 20%;
+  font-family: 'Righteous', cursive;
+  float: left;
+  margin-top: 2vw;
+  margin-left: 1vw;
+}
+#mechanism-img-div{
+  margin-left:1vw;
+}
 .left-group{
-  height: 3vh;
-  width: 3vh;
+  height: 3vmin;
+  width: 3vmin;
   background-color: black;
   border-radius: 50%;
   display: inline-block;
@@ -194,17 +208,34 @@ html, body {
 
 .bottom-menu-element{
   height: 3vh;
-  width: 12vh;
+  width: 9vw;
   background-color: black;
-  border-radius: 20%;
+  border-radius: 10px;
   display: inline-block;
   color: white;
-  margin-right: 1vh;
+  margin-right: 0.5vh;
   margin-top: 0.5vh;
-  margin-left: 1vh;
+  margin-left: 0.5vw;
   font-size: 1.5vh;
   line-height: 3vh;
-  background-color : rgb(3, 59, 15);
+  background-color: rgb(3, 59, 15);
+}
+span {
+  display: inline-flex;
+  align-items: center;
+}
+.mechanism-menu-element{
+  height: 6vh;
+  width: 8vw;
+  border-radius: 10px;
+  color: white;
+  display: block;  
+  margin-right: 0.5vh;
+  margin-top: 0.5vh;
+  margin-left: 0.5vw;
+  font-size: 1.5vh;
+  line-height: 2vh;
+  background-color:hsl(4, 72%, 55%, 0.81);
 }
 
 .left-group-helper{
@@ -224,11 +255,6 @@ html, body {
     background-color: black !important;
   }
 
-  .mechanism-menu {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 
   .navbar-nav > .active > a {
     color: aqua;
@@ -239,11 +265,15 @@ html, body {
   }
 
   .mechanism-img {
-    width:45%;
+    width: 17vw;
     height: auto;
     border-radius: 10px;
-    display:block;
-    margin:auto;
+    display: block;
+    background-color: black;
+    margin: auto;
+    float: right;
+    margin-right: 3vw;
+    margin-top: 2vw;
   }
 
 .left-menu-sub{
@@ -255,13 +285,14 @@ html, body {
   border-radius: 2vh 2vh 2vh 2vh;
   font-family: 'Righteous', cursive;
   width: 4vh;
-  left:4vh;
+  top:24vh;
+  left:63.5vw;
   padding-bottom: 1vh;
 }
 
 .left-case{
-  height: 3vh;
-  width: 3vh;
+  height: 3vmin;
+  width: 3vmin;
   border-radius: 50%;
   display: inline-block;
   color: white;
@@ -285,6 +316,13 @@ p {
   font-size: 1.5vh;
 }
 
+.left-menu-cases-name {
+  -webkit-transform: rotate(-90deg); /* Safari 3-8 */
+  transform: rotate(-90deg);
+  margin-top: 3vh;
+  color:rgb(3, 59, 15);
+  font-size: 1.5vh;
+}
 
 .legend {
     line-height: 18px;

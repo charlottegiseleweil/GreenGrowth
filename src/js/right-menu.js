@@ -2,10 +2,15 @@
 //build scrollable right menu containing content of each case
 function buildRightMenu(){
   //set the group / country title
-  if (data_loader.active_case.group.id==0) $('#right-subtitle').html(data_loader.active_case.group.title)
-  else $('#right-subtitle').html(data_loader.active_case.group.id +': '+data_loader.active_case.group.title)
+  if (data_loader.active_case.group.id==0)
+    $('#right-subtitle').html(data_loader.active_case.group.title)
+  else 
+    $('#right-subtitle').html(data_loader.active_case.group.id +': '+data_loader.active_case.group.title)
   //clear right menu, in case it's being overwritten
   $('#right-menu-body').html("");
+  $('#mechanism-menu').hide();               
+
+
   cases = data_loader.cases;
   //iterate over cases to add to right menu
   for (var i in cases){
@@ -28,6 +33,14 @@ function buildRightMenu(){
     }
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();
+    if (data_loader.browse_type=='Mechanism'){
+        $('#right-menu-body').hide();        
+        //$('#mechanism-img-div').html("");  
+        $('#mechanism-menu').show();                 
+    }
+    else
+      $('#mechanism-img-div').hide();                
+  
     /*
     $('#right-menu-body').append('<div style="padding:1%; text-align:justify;"><p><h3>Credits</h3>The case studies survey a range of policy and finance mechanisms that channel economic resources and other benefits towards securing and enhancing natural capital. These mechanisms typically also aim to increase equity and well-being, both through poverty alleviation and in access to ecosystem goods and services. Illustrative examples have been contributed by a range of experts who come from the natural and social sciences, government, private companies, financial institutions, and civil society organizations. These case studies were compiled by Lisa Mandle, James Salzman and Gretchen C. Daily and illustrated by Charlotte Weil. This application is developed by <b>Can Yilmaz Altinigne</b>, <b>Cyril van Schreven</b> and <b>Günes Yurdakul</b>.</p></div>')
     */

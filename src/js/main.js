@@ -21,7 +21,7 @@ load_data();
 //opening click after data loaded
 function open_page() {
   $(".opening-page").fadeOut( 1000, function() {
-      map.keyboard.disable();
+//      map.keyboard.disable();
       $(".opening-page").remove();
       map.addLayer(Esri_WorldImagery);// add tile layer
       $(".mapbox").css({'display': 'block'});
@@ -67,4 +67,6 @@ function open_page() {
     //intro.start();//start user-guide
 
   });
+  buildMechanismMenu();
+      
 }

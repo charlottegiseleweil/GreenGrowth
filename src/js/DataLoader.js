@@ -5,6 +5,7 @@ class DataLoader {
         this.geojson;
         this.groups = [];
         this.cases = [];
+        this.mechanism_chapters = ['6'];
         this.active_case = null;
         this.countries = [];
         this.active_country = null;
@@ -165,8 +166,26 @@ async prepareDataframes(){
     }
 
     else if(data_loader.browse_type=='Mechanism'){
-
-      /////
+        //iterate over each case study
+        for(var i=0;i<case_studies.length;i++){
+            if (data_loader.mechanism_chapters.includes(case_studies[i]["ch_no"])){
+  
+              //fetch and populate with the actual data
+              if (group_id != case_studies[i]["ch_no"]){
+                if (current_group!=null)
+                    this.groups[group_id]=current_group;
+                group_id = case_studies[i]["ch_no"];
+                current_group = new Group(case_studies[i]["ch_no"],case_studies[i]["ch_title"]);
+              }
+              current_country=  this.countries[case_studies[i]["country"]];
+              let new_case = new Case(case_id,case_studies[i],current_group, current_country)
+              current_group.add_case(new_case);
+              this.cases[new_case.id]= new_case;
+              case_id++;
+            }
+          }
+          this.groups[group_id]=current_group;
+          this.active_case = this.cases[Object.keys(this.cases)[0]]
     }
 
     // read csv file containing figure information
