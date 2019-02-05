@@ -12,6 +12,7 @@ class Country{
 async function handleCountryClick(layer) {
   //clean dynamic figure on map (if any)
   clean_layers();
+  if(data_loader.browse_type," handleCountryClick");
   if(data_loader.browse_type=='Country'){
     if(Object.keys(layer).includes('target'))
       layer = layer.target;
@@ -26,7 +27,6 @@ async function handleCountryClick(layer) {
     }
     //new country was clicked
     else{
-
       //set new active country
       data_loader.active_country = data_loader.countries[layer.feature.properties.name];
       //set to active country highlight
