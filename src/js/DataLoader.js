@@ -6,6 +6,7 @@ class DataLoader {
         this.groups = [];
         this.cases = [];
         this.mechanism_chapters = ['6'];
+        this.mechanism_types = {'Government Subsidies':['6'],'Regulatory-driven Mitigation':['7'],'Voluntary Conservation':['8'],'Water Funds':['9'],'Eco-Certification':['10'],'Impact Investing':['10']};        
         this.active_case = null;
         this.countries = [];
         this.active_country = null;
@@ -36,7 +37,7 @@ class DataLoader {
         var data = await $.getJSON('data/mitigation_bank.json');
         case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
 
-        case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2014','2015','2016'],[0, 0, 1, 5, 10],true,2);
+        case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2016'],[0, 0, 1, 5, 10],true,2);
 
         //preload case_6_1-3
         case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");

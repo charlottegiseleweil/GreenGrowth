@@ -1,5 +1,4 @@
 let browse_types = ['Chapter','Mechanism','Country'];
-let mechanism_types = {'Government Subsidies':['6'],'Regulatory-driven Mitigation':['7'],'Voluntary Conservation':['8'],'Water Funds':['9'],'Eco-Certification':['10'],'Impact Investing':['10']};
 var mechanism_chapters=[];
 function buildBottomMenu(){
   for(i in browse_types){
@@ -11,7 +10,7 @@ function buildBottomMenu(){
 
 function buildMechanismMenu(){
   var flag=true;
-  for(mechanism in mechanism_types){
+  for(mechanism in data_loader.mechanism_types){
     console.log(mechanism,"mech");    
     $('#mechanism-menu').append("<span id='mechanism-menu-"+mechanism.split(" ").join("-")+"' class='mechanism-menu-element' onclick='changeMechanismType(\""+mechanism+"\");'>"+mechanism+"</span>");
     if(flag){
