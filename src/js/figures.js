@@ -36,7 +36,7 @@ function display_figure(case_){
 function case_6_1_fig2() {
     clean_layers();
     $("#button-1").css('background-color','#39ac73');
-    choropleth_map_objs['2014geo-2'].addTo(map)//add choropleth layer
+    choropleth_map_objs['2016geo-2'].addTo(map)//add choropleth layer
     choropleth_map_objs['legend-2'].addTo(map);//add legend
     add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1");
 };

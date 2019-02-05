@@ -21,15 +21,27 @@ function buildLeftMenu(){
 }
 
 function caseClick(group_id,case_id){
+  console.log("INTRO cid",case_id,"gid",group_id,data_loader.cases);
+  
   if(data_loader.browse_type=="Mechanism")
     {
+      if(group_id==0){
+        changeBrowseType("Mechanism");    
+        console.log()
+        changeMechanismType(Object.keys(data_loader.mechanism_types)[0]);
+        return;
+      }
       console.log("case click");
       $('#mechanism-img-div').hide();                
       $('#mechanism-menu').hide();   
-      $('#right-menu-body').show();   
+      $('#right-menu-body').show();
     }
-  //if group is clicked, go to first case, except for intro
-  if(case_id==0) case_id = data_loader.groups[group_id].cases[0].id;
+
+      //if group is clicked, go to first case, except for intro
+    if(case_id==0) 
+    {
+      case_id = data_loader.groups[group_id].cases[0].id;
+    }
   //else case_id = group_id + '-' + case_sub_id
 
   data_loader.active_case = data_loader.cases[case_id];
@@ -166,6 +178,11 @@ function refresh_left_menu(){
       }
       $("#left-menu-sub-"+current_group.id).append('<p class="left-menu-cases-name">CASES</p>');      
     }
+    //else{
+      //if (data_loader.browse_type=="Mechanism" ){
+        //changeBrowseType("Mechanism");
+      //}
+    //}
   }
   if (data_loader.browse_type == 'Country')
     $('#left-menu').append('<p class="left-menu-name">COUNTRY</p>');
