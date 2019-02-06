@@ -12,7 +12,12 @@ class Country{
 async function handleCountryClick(layer) {
   //clean dynamic figure on map (if any)
   clean_layers();
-  if(data_loader.browse_type," handleCountryClick");
+  //if on main page
+  if (data_loader.active_case.id =='0-1'){
+    await changeBrowseType('Country')
+  }
+
+  //if(data_loader.browse_type," handleCountryClick");
   if(data_loader.browse_type=='Country'){
     if(Object.keys(layer).includes('target'))
       layer = layer.target;
@@ -33,10 +38,13 @@ async function handleCountryClick(layer) {
       refreshLayers();
       console.log("moved to: "+data_loader.active_country.name);
       //set active case
+      console.log(data_loader.groups)
+      console.log(data_loader.active_country.country_code)
       data_loader.active_case=data_loader.groups[data_loader.active_country.country_code].cases[0]
       caseClick(data_loader.active_case.group.id,data_loader.active_case.id);
       //zoom to country
       zoom_to(data_loader.active_country);
+      console.log(data_loader.groups)
 
     }
   }

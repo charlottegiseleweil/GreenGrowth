@@ -11,15 +11,15 @@ function buildBottomMenu(){
 function buildMechanismMenu(){
   var flag=true;
   for(mechanism in data_loader.mechanism_types){
-    console.log(mechanism,"mech");    
+    console.log(mechanism,"mech");
     $('#mechanism-menu').append("<span id='mechanism-menu-"+mechanism.split(" ").join("-")+"' class='mechanism-menu-element' onclick='changeMechanismType(\""+mechanism+"\");'>"+mechanism+"</span>");
     if(flag){
-      $('#mechanism-menu-'+mechanism.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');  
-      $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/government.png' />");      
+      $('#mechanism-menu-'+mechanism.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');
+      $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/government.png' />");
       flag=false;
     }
   }
-  $('#mechanism-menu').hide();  
+  $('#mechanism-menu').hide();
 }
 
 async function changeBrowseType(type){
@@ -43,15 +43,15 @@ async function changeBrowseType(type){
   if (data_loader.browse_type=='Mechanism'){
     //openNav();
     console.log('mechanism overlay');
-    $('#right-menu-body').hide();   
+    $('#right-menu-body').hide();
     $('#mechanism-menu').show()
-    $('#mechanism-img-div').show();                
-    $('#mechanism-menu').show();       
+    $('#mechanism-img-div').show();
+    $('#mechanism-menu').show();
   }
   else{
     console.log("is null");
-    $('#mechanism-menu').hide();    
-    $('#right-menu-body').show();    
+    $('#mechanism-menu').hide();
+    $('#right-menu-body').show();
   }
 }
 
@@ -63,10 +63,10 @@ function changeMechanismType(type){
   else
     file_name = type.split(" ")[0].toLowerCase();
 
-  $('#mechanism-img-div').html("");            
+  $('#mechanism-img-div').html("");
   $('.mechanism-menu-element').css('background-color', 'hsl(4, 72%, 55%, 0.81)');
   $('#mechanism-menu-'+type.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');
   $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/"+file_name+".png' />");
-  data_loader.mechanism_chapters = mechanism_types[type];  
+  data_loader.mechanism_chapters = data_loader.mechanism_types[type];  
   changeBrowseType('Mechanism');
 }
