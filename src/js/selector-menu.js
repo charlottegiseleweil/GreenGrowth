@@ -1,5 +1,4 @@
 let browse_types = ['Chapter','Mechanism','Country'];
-var mechanism_chapters=[];
 function buildBottomMenu(){
   for(i in browse_types){
     let type = browse_types[i];
@@ -67,6 +66,5 @@ function changeMechanismType(type){
   $('.mechanism-menu-element').css('background-color', 'hsl(4, 72%, 55%, 0.81)');
   $('#mechanism-menu-'+type.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');
   $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/"+file_name+".png' />");
-  data_loader.mechanism_chapters = data_loader.mechanism_types[type];  
   changeBrowseType('Mechanism');
 }

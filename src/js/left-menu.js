@@ -22,23 +22,23 @@ function buildLeftMenu(){
 
 function caseClick(group_id,case_id){
   console.log("INTRO cid",case_id,"gid",group_id,data_loader.cases);
-  
+
   if(data_loader.browse_type=="Mechanism")
     {
       if(group_id==0){
-        changeBrowseType("Mechanism");    
+        //changeBrowseType("Mechanism");
         console.log()
         changeMechanismType(Object.keys(data_loader.mechanism_types)[0]);
         return;
       }
       console.log("case click");
-      $('#mechanism-img-div').hide();                
-      $('#mechanism-menu').hide();   
+      $('#mechanism-img-div').hide();
+      $('#mechanism-menu').hide();
       $('#right-menu-body').show();
     }
 
       //if group is clicked, go to first case, except for intro
-    if(case_id==0) 
+    if(case_id==0)
     {
       case_id = data_loader.groups[group_id].cases[0].id;
     }
@@ -48,7 +48,7 @@ function caseClick(group_id,case_id){
   //console.log(group_id)
   //console.log(case_id)
   //update group title
-  if (group_id==0||data_loader.browse_type=='Country') $('#right-subtitle').html(data_loader.active_case.group.title)
+  if (group_id==0||data_loader.browse_type=='Country'||data_loader.browse_type=='Mechanism') $('#right-subtitle').html(data_loader.active_case.group.title)
   else $('#right-subtitle').html(data_loader.active_case.group.id +': '+data_loader.active_case.group.title)
 
   //[right-menu] hide all cases (text) except active one
@@ -87,7 +87,7 @@ async function home_menu(){
   data_loader.browse_type = 'Chapter'
   //resets layers
   buildLeftMenu();
-    //zoom to world
+  //zoom to world
   zoom_to(data_loader.active_country);
   console.log("moved to: "+data_loader.active_country.name);
   //use all data again
@@ -95,6 +95,7 @@ async function home_menu(){
   //rebuild left and right menu
   buildRightMenu();
   buildLeftMenu();
+  changeBrowseType(data_loader.browse_type);
 }
 
 function tutorial(){
@@ -141,7 +142,7 @@ function openNav() {
       }
     });
   }
-  
+
 }
 
 function closeNav() {
@@ -167,16 +168,16 @@ function refresh_left_menu(){
       $('#left-group-'+current_group.id).after("<div id=left-menu-sub-"+current_group.id+" class='left-menu-sub'></div>")
       //add case buttons in submenu
       for (var j=0;j<current_group.cases.length;j++){
-        if(data_loader.browse_type=='Chapter'||data_loader.browse_type=='Mechanism')
+        if(data_loader.browse_type=='Chapter')
           $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
-        else if(data_loader.browse_type =='Country'){
+        else if(data_loader.browse_type =='Country'||data_loader.browse_type =='Mechanism'){
           case_id_display = j+1;
           //$("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
           $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>"+case_id_display+"</span>");
         }
         add_tooltip("#left-menu-sub-"+current_group.id+" #left-case-"+current_group.cases[j].id);
       }
-      $("#left-menu-sub-"+current_group.id).append('<p class="left-menu-cases-name">CASES</p>');      
+      $("#left-menu-sub-"+current_group.id).append('<p class="left-menu-cases-name">CASES</p>');
     }
     //else{
       //if (data_loader.browse_type=="Mechanism" ){
@@ -188,7 +189,7 @@ function refresh_left_menu(){
     $('#left-menu').append('<p class="left-menu-name">COUNTRY</p>');
   else
     $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
-    
+
   //[left-menu] set the color on active group button
   $('#left-group-'+data_loader.active_case.group.id).css('background-color', 'hsl(129, 67%, 64%)')
 
@@ -197,5 +198,5 @@ function refresh_left_menu(){
   $("#left-menu-sub-"+data_loader.active_case.group.id).show()
 
   //[left-menu] set the color on active case button
-  $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')  
+  $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')
 }
