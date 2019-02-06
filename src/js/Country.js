@@ -16,7 +16,6 @@ async function handleCountryClick(layer) {
   if (data_loader.active_case.id =='0-1'){
     await changeBrowseType('Country')
   }
-
   //if(data_loader.browse_type," handleCountryClick");
   if(data_loader.browse_type=='Country'){
     if(Object.keys(layer).includes('target'))
