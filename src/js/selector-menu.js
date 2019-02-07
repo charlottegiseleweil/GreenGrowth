@@ -38,8 +38,7 @@ async function changeBrowseType(type){
   zoom_to(data_loader.active_country);
   //rebuild dataframes
   await data_loader.prepareDataframes();
-  buildRightMenu();
-  buildLeftMenu();
+
   if (data_loader.browse_type=='Mechanism'){
     //openNav();
     //console.log('mechanism overlay');
@@ -47,13 +46,16 @@ async function changeBrowseType(type){
     $('#mechanism-menu').show()
     $('#mechanism-img-div').show();
     //go to first mechanism
-    changeMechanismType(Object.keys(data_loader.mechanisms)[0])
-  }
+    caseClick(Object.keys(data_loader.groups)[0], 0) 
+   }
   else{
     //console.log("is null");
     $('#mechanism-menu').hide();
+    $('#mechanism-img-div').hide();    
     $('#right-menu-body').show();
   }
+  buildRightMenu();
+  buildLeftMenu();
 }
 
 function changeMechanismType(type){

@@ -43,13 +43,13 @@ function buildRightMenu(){
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();
     if (data_loader.browse_type=='Mechanism'){
-        $('#right-menu-body').hide();        
-        //$('#mechanism-img-div').html("");  
-        $('#mechanism-menu').show();                 
+        $('#right-menu-body').hide();
+        //$('#mechanism-img-div').html("");
+        $('#mechanism-menu').show();              
     }
     else
-      $('#mechanism-img-div').hide();                
-  
+        $('#mechanism-img-div').hide();
+    
     /*
     $('#right-menu-body').append('<div style="padding:1%; text-align:justify;"><p><h3>Credits</h3>The case studies survey a range of policy and finance mechanisms that channel economic resources and other benefits towards securing and enhancing natural capital. These mechanisms typically also aim to increase equity and well-being, both through poverty alleviation and in access to ecosystem goods and services. Illustrative examples have been contributed by a range of experts who come from the natural and social sciences, government, private companies, financial institutions, and civil society organizations. These case studies were compiled by Lisa Mandle, James Salzman and Gretchen C. Daily and illustrated by Charlotte Weil. This application is developed by <b>Can Yilmaz Altinigne</b>, <b>Cyril van Schreven</b> and <b>Günes Yurdakul</b>.</p></div>')
     */
@@ -70,6 +70,8 @@ function add_right_menu_figure(case_){
   else if (case_.id == '6-1'){
     //div for figure (chart-container)
     $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
+    $('#right-case-'+case_.id).append('<p class="figure-text">Figure: CRP Enrollments and Payments </p>');
+    
     //fill chart-container
     case_6_1_fig1();
     //add the two buttons of the figure

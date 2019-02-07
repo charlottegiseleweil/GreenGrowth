@@ -57,13 +57,17 @@ function open_page() {
           },
           {
               element: '#left-menu',
-              intro: 'You can see the current chapter and subchapter here. You can click the chapter you want to see.',
+              intro: 'Here you can: <br> -Refresh the visualization <br> -Start the tutorial <br> -Read about us and the book <br>-See the chapters (or mechanisms / countries), and click them',
               position: 'right'
           },
           {
               element: '#right-menu',
-              intro: 'You can use your mouse or up and down array keys to navigate between chapters. You can use buttons, time sliders and checkboxes to see dynamic figures in specific chapters.',
+              intro: 'You can use the left and right arrow keys to navigate between cases. When visualizing a case that contains a dynamic figure, you can use the buttons, sliders and checkboxes available.',
               position: 'left'
+          },
+          {
+              element: '#bottom-menu',
+              intro: 'You can select to explore cases by Chapter, Mechanism or Country. <br> When browsing by country it is possible to simply select them on the map. <br> Enjoy exploring!',              position: 'left'
           }
           ],
           showStepNumbers:false
