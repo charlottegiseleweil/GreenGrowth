@@ -38,7 +38,7 @@ async function handleCountryClick(layer) {
       console.log("moved to: "+data_loader.active_country.name);
       //set active case
       data_loader.active_case=data_loader.groups[data_loader.active_country.country_code].cases[0]
-      caseClick(data_loader.active_case.group.id,data_loader.active_case.id);
+      await caseClick(data_loader.active_case.group.id,data_loader.active_case.id);
       //zoom to country
       zoom_to(data_loader.active_country);
       console.log(data_loader.groups)

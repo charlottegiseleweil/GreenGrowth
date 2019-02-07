@@ -91,6 +91,7 @@ async function home_menu(){
   buildRightMenu();
   buildLeftMenu();
   changeBrowseType(data_loader.browse_type);
+  //$("#left-group-home").tooltip.hide();
 }
 
 function tutorial(){
