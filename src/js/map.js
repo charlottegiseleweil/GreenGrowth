@@ -25,6 +25,7 @@
  };
  // create Leaflet Map
  var map = L.map('map', {
+    keyboard: false,
     center: [40.0, 80.0],
     zoom: 2.35,
     zoomSnap: 0.2

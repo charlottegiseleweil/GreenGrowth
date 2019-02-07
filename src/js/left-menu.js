@@ -75,22 +75,23 @@ function caseClick(group_id,case_id){
 async function home_menu(){
 
   //clean the map of dynamic figues
-  clean_layers();
+  await clean_layers();
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
   //set chapter as browse type
   data_loader.browse_type = 'Chapter'
   //resets layers
-  buildLeftMenu();
+  await buildLeftMenu();
   //zoom to world
   zoom_to(data_loader.active_country);
   console.log("moved to: "+data_loader.active_country.name);
   //use all data again
   await data_loader.prepareDataframes()
   //rebuild left and right menu
-  buildRightMenu();
-  buildLeftMenu();
-  changeBrowseType(data_loader.browse_type);
+  await buildRightMenu();
+  await buildLeftMenu();
+  await changeBrowseType(data_loader.browse_type);
+  $(".tooltip").hide();  
 }
 
 function tutorial(){
@@ -179,11 +180,7 @@ function refresh_left_menu(){
       }
       $("#left-menu-sub-"+current_group.id).append('<p class="left-menu-cases-name">CASES</p>');
     }
-    //else{
-      //if (data_loader.browse_type=="Mechanism" ){
-        //changeBrowseType("Mechanism");
-      //}
-    //}
+
   }
   //if (data_loader.browse_type == 'Country')
   //  $('#left-menu').append('<p class="left-menu-name">COUNTRY</p>');
