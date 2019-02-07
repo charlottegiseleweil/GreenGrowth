@@ -5,7 +5,6 @@ class DataLoader {
         this.geojson;
         this.groups = [];
         this.cases = [];
-        this.mechanism_types = {'Government Subsidies':['6'],'Regulatory-driven Mitigation':['7'],'Voluntary Conservation':['8'],'Water Funds':['9'],'Eco-Certification':['10'],'Impact Investing':['10']};
         this.active_case = null;
         this.countries = [];
         this.mechanisms = [];
@@ -182,12 +181,22 @@ async prepareDataframes(){
     }
 
     else if(data_loader.browse_type=='Mechanism'){
+        //add the intro page as first case
         //iterate over each case study
         for(var k=0;k<Object.keys(this.mechanisms).length;k++){
+          current_mechanism = null;
           for(var i=0;i<case_studies.length;i++){
             if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
                 &&(case_studies[i]["mechanism"]==this.mechanisms[Object.keys(this.mechanisms)[k]].name)){
               current_group = this.groups[this.mechanisms[case_studies[i]["mechanism"]].code]
+              //add intro as first case to each mechanism group
+              if (current_mechanism==null){
+                let mech_intro_case = new Case(case_id,other_elems[0],current_group, this.countries['World'])
+                mech_intro_case.id = this.mechanisms[case_studies[i]["mechanism"]].code+'-'+0;
+                current_group.add_case(mech_intro_case);
+                this.cases[this.mechanisms[case_studies[i]["mechanism"]].code+'-'+0] = mech_intro_case
+                case_id++;
+              }
               current_country=  this.countries[case_studies[i]["country"]];
               current_mechanism=  this.mechanisms[case_studies[i]["mechanism"]];
               let new_case = new Case(case_id,case_studies[i],current_group, current_country,current_mechanism)

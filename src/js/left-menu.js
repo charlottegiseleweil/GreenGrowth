@@ -21,32 +21,27 @@ function buildLeftMenu(){
 }
 
 function caseClick(group_id,case_id){
-  console.log("INTRO cid",case_id,"gid",group_id,data_loader.cases);
 
+  //if group is clicked, go to first case, except for intro
+  if(case_id==0) case_id = data_loader.groups[group_id].cases[0].id;
+  //console.log("INTRO cid",case_id,"gid",group_id,data_loader.cases);
   if(data_loader.browse_type=="Mechanism")
     {
-      if(group_id==0){
-        //changeBrowseType("Mechanism");
-        console.log()
-        changeMechanismType(Object.keys(data_loader.mechanism_types)[0]);
-        return;
-      }
-      console.log("case click");
-      $('#mechanism-img-div').hide();
-      $('#mechanism-menu').hide();
-      $('#right-menu-body').show();
-    }
 
-      //if group is clicked, go to first case, except for intro
-    if(case_id==0)
-    {
-      case_id = data_loader.groups[group_id].cases[0].id;
+      if (group_id == 0 || case_id.split('-')[1]==0){
+        changeMechanismType(data_loader.groups[group_id].title);
+      }
+      else{
+      //console.log("case click");
+        $('#mechanism-img-div').hide();
+        $('#mechanism-menu').hide();
+        $('#right-menu-body').show();
+      }
     }
   //else case_id = group_id + '-' + case_sub_id
 
   data_loader.active_case = data_loader.cases[case_id];
-  //console.log(group_id)
-  //console.log(case_id)
+
   //update group title
   if (group_id==0||data_loader.browse_type=='Country'||data_loader.browse_type=='Mechanism') $('#right-subtitle').html(data_loader.active_case.group.title)
   else $('#right-subtitle').html(data_loader.active_case.group.id +': '+data_loader.active_case.group.title)
@@ -170,10 +165,15 @@ function refresh_left_menu(){
       for (var j=0;j<current_group.cases.length;j++){
         if(data_loader.browse_type=='Chapter')
           $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
-        else if(data_loader.browse_type =='Country'||data_loader.browse_type =='Mechanism'){
+        else if(data_loader.browse_type =='Country'){
           case_id_display = j+1;
           //$("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>" +current_group.cases[j].id.split('-')[1]+ "</span>");
           $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>"+case_id_display+"</span>");
+        }
+        else if(data_loader.browse_type =='Mechanism'){
+          case_id_display = j;
+          if (j==0) $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");><i class='fas fa-circle'></span>")
+          else $("#left-menu-sub-"+current_group.id).append("<span id=left-case-"+current_group.cases[j].id+" class='left-case' title='"+current_group.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_group.cases[j].id+"\");>"+case_id_display+"</span>");
         }
         add_tooltip("#left-menu-sub-"+current_group.id+" #left-case-"+current_group.cases[j].id);
       }
@@ -185,10 +185,11 @@ function refresh_left_menu(){
       //}
     //}
   }
-  if (data_loader.browse_type == 'Country')
-    $('#left-menu').append('<p class="left-menu-name">COUNTRY</p>');
-  else
-    $('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
+  //if (data_loader.browse_type == 'Country')
+  //  $('#left-menu').append('<p class="left-menu-name">COUNTRY</p>');
+  //else
+    //$('#left-menu').append('<p class="left-menu-name">CHAPTERS</p>');
+  $('#left-menu').append('<p class="left-menu-name">'+data_loader.browse_type.toUpperCase()+'</p>');
 
   //[left-menu] set the color on active group button
   $('#left-group-'+data_loader.active_case.group.id).css('background-color', 'hsl(129, 67%, 64%)')
