@@ -78,10 +78,10 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
         choropleth_map_objs['legend-'+fig].onAdd = function (map){
           var div = L.DomUtil.create('div', 'info legend');
           if(fig=='2'){
-            categories = ['0%','0 - 1%','1 - 5%','> 10%'];
+            categories = ['0%','0 - 1%','1 - 5%','5 - 10%','> 10%'];
           }
           else if(fig=='3'){
-            categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','> 80 USD/ha'];
+            categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','40 - 50 USD/ha','> 80 USD/ha'];
           }
           colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
           lgnd = [];
