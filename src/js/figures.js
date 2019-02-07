@@ -38,7 +38,7 @@ function case_6_1_fig2() {
     $("#button-1").css('background-color','#39ac73');
     choropleth_map_objs['2016geo-2'].addTo(map)//add choropleth layer
     choropleth_map_objs['legend-2'].addTo(map);//add legend
-    add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1");
+    add_legend_to_right_menu(choropleth_map_objs['legend-2'],"6-1","Land enrolled in CRP (%)");
 };
 
 // add choropleth of case 6.1 fig3 to map
@@ -47,7 +47,7 @@ function case_6_1_fig3() {
     $("#button-2").css('background-color','#39ac73');
     choropleth_map_objs['2016geo-3'].addTo(map)
     choropleth_map_objs['legend-3'].addTo(map);
-    add_legend_to_right_menu(choropleth_map_objs['legend-3'],"6-1");
+    add_legend_to_right_menu(choropleth_map_objs['legend-3'],"6-1","Soil rental rate (USD/ha)");
 };
 
 // creating choropleth layer given values for each county data as parameter
@@ -74,9 +74,26 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
 
         choropleth_map_objs['legend-'+fig] = L.control({position: 'bottomleft'});
 
-        choropleth_map_objs['legend-'+fig].onAdd = function (map) {
-            return legend(grades)
+
+        choropleth_map_objs['legend-'+fig].onAdd = function (map){
+          var div = L.DomUtil.create('div', 'info legend');
+          if(fig=='2'){
+            categories = ['0%','0 - 1%','1 - 5%','> 10%'];
+          }
+          else if(fig=='3'){
+            categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','> 80 USD/ha'];
+          }
+          colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
+          lgnd = [];
+
+          for (var i = 0; i < categories.length; i++) {
+              div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
+          }
+
+          div.innerHTML = lgnd.join('<br>');
+          return div;
         };
+
 
     }
     if (year_list.length>1){
@@ -113,7 +130,7 @@ function case_6_3_fig1() {
           };
       //add legend
       case_6_3_fig1_legend.addTo(map);
-      add_legend_to_right_menu(case_6_3_fig1_legend,"6-3");
+      add_legend_to_right_menu(case_6_3_fig1_legend,"6-3","Invasive Alien Species (%)");
 
       imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
       case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);//add image as overlay on the map using boundaries of South Africa
@@ -145,7 +162,7 @@ function case_8_1_fig1() {
     };
 
     case_8_1_fig1_legend.addTo(map);
-    add_legend_to_right_menu(case_8_1_fig1_legend,"8-1");
+    add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
 
 
 };
@@ -218,7 +235,7 @@ function case_9_1_fig1() {
     //create layer control by adding layer groups
     waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
     $('.leaflet-control-layers-selector:checked')
-    add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1");
+    add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1","Water Funds phases");
 
     waterfund_bool=true;
 }
@@ -349,11 +366,11 @@ function view_world(){
   return
 }
 
-function add_legend_to_right_menu(legend,id){
+function add_legend_to_right_menu(legend,id, title){
 
         var htmlObject = legend.getContainer();//get slider container
-
-        var newpos = document.getElementById(id+'-summary+');//set time slider
+        //$('#right-case-'+cases[i].id)
+        var newpos = document.getElementById('right-case-'+id);//set time slider
         var legend_height = htmlObject.clientHeight;
         //console.log("height",legend_height);
         function setParent(el, newParent)
@@ -366,4 +383,6 @@ function add_legend_to_right_menu(legend,id){
         el.style.backgroundColor="rgb(230, 224, 224)";
         }
         setParent(htmlObject, newpos);
+        $('#right-case-legend').remove();
+        $('#right-case-'+id).append('<p id="right-case-legend" class="figure-text">' + title+ '</p>');
     }
