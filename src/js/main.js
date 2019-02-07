@@ -1,6 +1,10 @@
 var data_loader = new DataLoader();
 var intro;
 const load_data = async function(){
+    $('.mfp-close').on("click",function() {
+        startKeyListener();
+        console.log("Start key listener");
+      });
   $( 'body' ).ready(function() {
       // create progress bar
       $('.progress').bind('loaded',function(){
@@ -70,6 +74,11 @@ function open_page() {
   });
   buildMechanismMenu();
   setGalleryStyle();
+  $('.gallery').on("click",function(){
+    console.log("click image");
+    document.removeEventListener("keydown", keyboardInteraction);    
+});
+
 }
 
 function setGalleryStyle(){

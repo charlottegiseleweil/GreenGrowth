@@ -24,8 +24,9 @@ function buildRightMenu(){
         //case summary and (ambiance) images if available
 
         if (cases[i].num_images){ //
-            $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+'-summary+ class=text-body> <div class ="gallery'+cases[i].id+'"></div>'+cases[i].summary+'<p>');
-            $('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a href ="./static/figure_and_images/'+ cases[i].id + '/1.jpg"><img class="case-img" src="./static/figure_and_images/'+ cases[i].id + '/1.jpg" alt="case-image"></a>');
+            $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+'-summary+ class=text-body> <div class ="gallery'+cases[i].id+'" onclick="disableKeyboard();"></div>'+cases[i].summary+'<p>');
+            //$('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
+            $('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a href ="./static/figure_and_images/'+ cases[i].id + '/1.jpg"><img class="case-img"'+cases[i].id+' src="./static/figure_and_images/'+ cases[i].id + '/1.jpg" alt="case-image"></a>');        
             console.log(cases[i].num_images);
             for (var j=2;j<=parseInt(cases[i].num_images);j++){
                 $('#right-case-'+cases[i].id+' .gallery'+cases[i].id).append('<a href ="./static/figure_and_images/'+ cases[i].id +'/'+ j +'.jpg" class="case-img-hidden><img class="case-img-hidden" src="./static/figure_and_images/'+ cases[i].id + '/'+j+'.jpg" alt="case-image"></a>');
@@ -37,14 +38,7 @@ function buildRightMenu(){
         }
         //adds figures of right menu (static and dynamic)
         add_right_menu_figure(cases[i]);
-        $('.gallery'+cases[i].id).magnificPopup({
-            delegate: 'a', // child items selector, by clicking on it popup will open
-            type: 'image',
-            gallery:{
-                enabled:true
-              }
-            // other options
-          });
+        startGallery(cases[i].id);
     }
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();
@@ -137,3 +131,28 @@ function case_6_1_fig1() {
     $("#chart-container").CanvasJSChart(options);
 
 };
+
+function disableKeyboard(image_class){
+    console.log("Keyboard disabled");    
+    document.removeEventListener("keydown", keyboardInteraction);    
+    $('.mfp-close').on('click',function(){                                                      
+        startKeyListener();
+    }); 
+}
+
+    
+function startGallery(id){
+    $('.gallery'+id).magnificPopup({
+        delegate: 'a', // child items selector, by clicking on it popup will open
+        type: 'image',
+        gallery:{
+            enabled:true
+          },
+          callbacks: {
+            close: function(){
+               startKeyListener();
+            }}
+        
+        // other options
+      });
+}
