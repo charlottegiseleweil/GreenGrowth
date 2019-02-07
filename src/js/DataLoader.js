@@ -60,7 +60,7 @@ class DataLoader {
             pointToLayer: function (feature, latlng) {
                 return new L.marker(latlng, {
                     icon: L.divIcon({
-                    html: '<i class="fa fa-tree" aria-hidden="true" style="color:lightgreen"></i>',
+                    html: '<i class="fa fa-tree" aria-hidden="true" style="color:blue"></i>',
                     className: 'myDivIcon'
                     })
                 }).bindPopup('<i>'+String(feature.properties.NAME)+'</i><br>'+String(feature.properties.Area2)+' <strong>hectares.</strong>').on('mouseover', function (e) {
