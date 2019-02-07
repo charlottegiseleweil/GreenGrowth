@@ -9,9 +9,10 @@ function buildBottomMenu(){
 
 function buildMechanismMenu(){
   var flag=true;
-  for(mechanism in data_loader.mechanism_types){
-    console.log(mechanism,"mech");
-    $('#mechanism-menu').append("<span id='mechanism-menu-"+mechanism.split(" ").join("-")+"' class='mechanism-menu-element' onclick='changeMechanismType(\""+mechanism+"\");'>"+mechanism+"</span>");
+  for(mechanism in data_loader.mechanisms){
+    //console.log(mechanism,"mech");
+    let mech_code = data_loader.mechanisms[mechanism].code;
+    $('#mechanism-menu').append("<span id='mechanism-menu-"+mechanism.split(" ").join("-")+"' class='mechanism-menu-element' onclick='caseClick(\""+mech_code+"\",\""+mech_code+"-"+0+"\");'>"+mechanism+"</span>");
     if(flag){
       $('#mechanism-menu-'+mechanism.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');
       $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/government.png' />");
@@ -41,14 +42,15 @@ async function changeBrowseType(type){
   buildLeftMenu();
   if (data_loader.browse_type=='Mechanism'){
     //openNav();
-    console.log('mechanism overlay');
+    //console.log('mechanism overlay');
     $('#right-menu-body').hide();
     $('#mechanism-menu').show()
     $('#mechanism-img-div').show();
-    $('#mechanism-menu').show();
+    //go to first mechanism
+    changeMechanismType(Object.keys(data_loader.mechanisms)[0])
   }
   else{
-    console.log("is null");
+    //console.log("is null");
     $('#mechanism-menu').hide();
     $('#right-menu-body').show();
   }
@@ -61,10 +63,15 @@ function changeMechanismType(type){
   }
   else
     file_name = type.split(" ")[0].toLowerCase();
+  if(type!='Introduction'){
+    $('#mechanism-img-div').html("");
+    $('.mechanism-menu-element').css('background-color', 'hsl(4, 72%, 55%, 0.81)');
+    $('#mechanism-menu-'+type.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');
+    $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/"+file_name+".png' />");
+  }
+  $('#right-menu-body').hide();
+  $('#mechanism-menu').show()
+  $('#mechanism-img-div').show();
 
-  $('#mechanism-img-div').html("");
-  $('.mechanism-menu-element').css('background-color', 'hsl(4, 72%, 55%, 0.81)');
-  $('#mechanism-menu-'+type.split(" ").join("-")).css('background-color', 'hsl(129, 67%, 64%)');
-  $('#mechanism-img-div').append("<img class='mechanism-img' src='./static/mechanisms/"+file_name+".png' />");
-  changeBrowseType('Mechanism');
+  //changeBrowseType('Mechanism');
 }
