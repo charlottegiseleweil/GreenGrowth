@@ -8,7 +8,7 @@ class Case{
         this.summary = case_['summary'];
         this.loc_view = case_['location_view'];
         this.group = group;
-        this.has_image = case_["image"];
+        this.num_images=case_["num_images"];
         this.index=index;
         this.has_static_fig = false;
         this.static_fig_title = "none";

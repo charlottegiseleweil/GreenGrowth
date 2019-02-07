@@ -20,6 +20,7 @@ load_data();
 
 //opening click after data loaded
 function open_page() {
+
   $(".opening-page").fadeOut( 1000, function() {
 //      map.keyboard.disable();
       $(".opening-page").remove();
@@ -68,5 +69,11 @@ function open_page() {
 
   });
   buildMechanismMenu();
-      
+  setGalleryStyle();
+}
+
+function setGalleryStyle(){
+    $(document).ready(function() {
+        $('.image-link').magnificPopup({type:'image'});
+      });
 }

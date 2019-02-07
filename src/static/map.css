@@ -362,10 +362,14 @@ p {
 }
 
 .case-img {
-    float: right;
-    margin: 2% 0 2% 2%;
-    border-radius: 10px;
-    width: 40%;
+  float: right;
+  margin: 2% 0 2% 2%;
+  border-radius: 10px;
+  width: 40%;
+}
+
+.case-img-hidden {
+  display: none;
 }
 
 #water_marker_control {
