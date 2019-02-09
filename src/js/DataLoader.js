@@ -109,12 +109,14 @@ async prepareDataframes(){
     }
 
     //add intro chapter
-    var other_elems = await d3.csv("./data/other_elements.csv");
-    let intro_chapter = new Chapter(other_elems[0]["ch_no"],other_elems[0]["ch_title"]);
-    this.chapters[intro_chapter.id]= intro_chapter;
-    let intro_case = new Case(0,other_elems[0],intro_chapter, this.countries['World'])
-    this.chapters[intro_chapter.id].add_case(intro_case);
-    this.cases[intro_case.id]= intro_case;
+    if(this.active_country.name=='World'){
+      var other_elems = await d3.csv("./data/other_elements.csv");
+      let intro_chapter = new Chapter(other_elems[0]["ch_no"],other_elems[0]["ch_title"]);
+      this.chapters[intro_chapter.id]= intro_chapter;
+      let intro_case = new Case(0,other_elems[0],intro_chapter, this.countries['World'])
+      this.chapters[intro_chapter.id].add_case(intro_case);
+      this.cases[intro_case.id]= intro_case;
+    }
 
     let chapter_id=1;
     let case_id = 1;
