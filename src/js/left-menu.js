@@ -48,9 +48,8 @@ function caseClick(chapter_id,case_id){
   }
   //[right-menu] hide all cases (text) except active one
   $(".right-case").hide()
-  $("#right-case-"+case_id).slideDown( "slow",  function() {
-    //console.log("Animation complete");
-  });
+  $("#right-case-"+case_id).show();
+  //$("#right-case-"+case_id).slideDown( "slow",  function() {});
 
   //[left-menu] set the color on clicked chapter button (and not others)
   $('.left-chapter').css('background-color', 'black')
@@ -124,10 +123,9 @@ function refresh_left_menu(){
       $('#left-menu').append("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' ></div>")
       //add case buttons in submenu
       for (var j=0;j<current_chapter.cases.length;j++){
+        $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
         if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
-          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case left-case-dynamic' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
-        else
-          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
+          $("#left-case-"+current_chapter.cases[j].id).addClass("left-dot-dynamic")
         add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-case-"+current_chapter.cases[j].id);
       }
       $("#left-menu-sub-"+current_chapter.id).append('<p class="left-menu-cases-name">CASES</p>');
@@ -135,8 +133,13 @@ function refresh_left_menu(){
 
     //add a chapter button, note that here onClick calls caseClick on the first case
     if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
-    else $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_chapter.id+ "</span>");
-
+    else{
+      $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_chapter.id+ "</span>");
+      for (var j=0;j<current_chapter.cases.length;j++){
+        if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
+          $("#left-chapter-"+current_chapter.id).addClass("left-dot-dynamic")
+      }
+    }
     add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
 
   }
