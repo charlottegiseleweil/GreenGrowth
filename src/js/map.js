@@ -89,11 +89,11 @@ function resetHighlight(layer) {
   }
 }
 
-function zoom_to(object){
+function zoom_to(object, animate_){
   lat = object["loc_view"].split(',')[0];
   long = object["loc_view"].split(',')[1];
   zoom = object["loc_view"].split(',')[2]
-  map.setView([lat, long],zoom);
+  map.setView([lat, long],zoom, {animate: animate_});
 }
 
 

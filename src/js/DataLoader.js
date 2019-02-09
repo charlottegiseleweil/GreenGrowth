@@ -108,18 +108,21 @@ async prepareDataframes(){
       this.mechanisms[csv_mechanisms[i]["name"]]["code"] = csv_mechanisms[i]["code"]
     }
 
+
+
+    let case_id = 0;
+
     //add intro chapter
     if(this.active_country.name=='World'){
       var other_elems = await d3.csv("./data/other_elements.csv");
       let intro_chapter = new Chapter(other_elems[0]["ch_no"],other_elems[0]["ch_title"]);
       this.chapters[intro_chapter.id]= intro_chapter;
-      let intro_case = new Case(0,other_elems[0],intro_chapter, this.countries['World'])
+      let intro_case = new Case(case_id,other_elems[0],intro_chapter, this.countries['World'])
       this.chapters[intro_chapter.id].add_case(intro_case);
       this.cases[intro_case.id]= intro_case;
+      case_id++;
     }
-
-    let chapter_id=1;
-    let case_id = 1;
+    let chapter_id=null;
     let previous_chapter = null;
     let current_chapter = null;
     let current_country = null;
@@ -128,9 +131,6 @@ async prepareDataframes(){
     // read csv file containing cases information
     var case_studies = await d3.csv("./data/case_studies.csv");
 
-
-    console.log(data_loader.active_country)
-    console.log(case_studies[i]['country'])
     //iterate over each case study
     for(var i=0;i<case_studies.length;i++){
       if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')

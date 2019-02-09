@@ -198,7 +198,7 @@ html, body {
 #mechanism-chapters{
   color:white;
   margin-top:12vh;
-  margin-right: 5vw;   
+  margin-right: 5vw;
 }
 
 .left-chapter{
@@ -294,7 +294,6 @@ span {
     font-family: 'Righteous', cursive;
     width: 4vh;
     left:4vh;
-    top: -4vh;
     padding-bottom: 1vh;
   }
 
@@ -309,6 +308,13 @@ span {
   font-size: 1.5vh;
   line-height: 3vh;
   background-color : rgb(3, 59, 15);
+}
+
+.left-case-dynamic{
+  border-style: solid;
+  border-color: orange;
+  border-width: 0.3vh;
+  line-height: 2.4vh;
 }
 
 
@@ -466,4 +472,3 @@ p {
     right: 35px;
     }
   }
-  

@@ -4,7 +4,6 @@ let previous_active_case = '0-0';
 function display_figure(case_){
   //if (true){
     clean_layers()
-    zoom_to(case_)
     switch(case_.id){
       case '6-1':
         //case_6_1_fig2()

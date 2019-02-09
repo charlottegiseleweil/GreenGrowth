@@ -12,7 +12,7 @@ function buildLeftMenu(){
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
   $('#left-menu').append("<span id=left-chapter-about class='left-chapter-helper' title='About Us' onclick=openAbout();><i class='fas fa-address-card'></i></span><hr>");
   $('#left-menu').append("<span id='left-chapter-mechanism' class='left-chapter-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-cog'></i></span><hr>");
-  
+
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
   add_tooltip("#left-menu #left-chapter-about");
@@ -32,6 +32,7 @@ function caseClick(chapter_id,case_id){
   //set new active country
   data_loader.active_country =data_loader.cases[case_id].country;
   refreshLayers();
+  zoom_to(cases[case_id], false)
   display_figure(cases[case_id])
 
 
@@ -72,9 +73,10 @@ async function home_menu(){
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
   //resets layers
+  await refreshLayers();
   await buildLeftMenu();
   //zoom to world
-  zoom_to(data_loader.active_country);
+  zoom_to(data_loader.active_country, true);
   console.log("moved to: "+data_loader.active_country.name);
   //use all data again
   await data_loader.prepareDataframes()
@@ -122,7 +124,10 @@ function refresh_left_menu(){
       $('#left-menu').append("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' ></div>")
       //add case buttons in submenu
       for (var j=0;j<current_chapter.cases.length;j++){
-        $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
+        if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
+          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case left-case-dynamic' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
+        else
+          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
         add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-case-"+current_chapter.cases[j].id);
       }
       $("#left-menu-sub-"+current_chapter.id).append('<p class="left-menu-cases-name">CASES</p>');
