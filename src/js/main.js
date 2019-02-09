@@ -1,6 +1,10 @@
 var data_loader = new DataLoader();
 var intro;
 const load_data = async function(){
+    $('.mfp-close').on("click",function() {
+        startKeyListener();
+        console.log("Start key listener");
+      });
   $( 'body' ).ready(function() {
       // create progress bar
       $('.progress').bind('loaded',function(){
@@ -20,6 +24,7 @@ load_data();
 
 //opening click after data loaded
 function open_page() {
+
   $(".opening-page").fadeOut( 1000, function() {
 //      map.keyboard.disable();
       $(".opening-page").remove();
@@ -62,8 +67,7 @@ function open_page() {
           },
           {
               element: '#bottom-menu',
-              intro: 'You can select to explore cases by Chapter, Mechanism or Country. <br> When browsing by country it is possible to simply select them on the map. <br> Enjoy exploring!',
-              position: 'left'
+              intro: 'You can select to explore cases by Chapter, Mechanism or Country. <br> When browsing by country it is possible to simply select them on the map. <br> Enjoy exploring!',              position: 'left'
           }
           ],
           showStepNumbers:false
@@ -73,5 +77,16 @@ function open_page() {
 
   });
   buildMechanismMenu();
+  setGalleryStyle();
+  $('.gallery').on("click",function(){
+    console.log("click image");
+    document.removeEventListener("keydown", keyboardInteraction);
+});
 
+}
+
+function setGalleryStyle(){
+    $(document).ready(function() {
+        $('.image-link').magnificPopup({type:'image'});
+      });
 }

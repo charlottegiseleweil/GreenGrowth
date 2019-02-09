@@ -180,6 +180,7 @@ function refresh_left_menu(){
       }
       $("#left-menu-sub-"+current_group.id).append('<p class="left-menu-cases-name">CASES</p>');
     }
+
   }
   //if (data_loader.browse_type == 'Country')
   //  $('#left-menu').append('<p class="left-menu-name">COUNTRY</p>');

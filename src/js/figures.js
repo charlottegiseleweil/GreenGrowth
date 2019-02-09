@@ -74,25 +74,23 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
 
         choropleth_map_objs['legend-'+fig] = L.control({position: 'bottomleft'});
 
-
         choropleth_map_objs['legend-'+fig].onAdd = function (map){
-          var div = L.DomUtil.create('div', 'info legend');
-          if(fig=='2'){
-            categories = ['0%','0 - 1%','1 - 5%','5 - 10%','> 10%'];
-          }
-          else if(fig=='3'){
-            categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','40 - 50 USD/ha','> 80 USD/ha'];
-          }
-          colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
-          lgnd = [];
+            var div = L.DomUtil.create('div', 'info legend');
+            if(fig=='2'){
+                categories = ['0%','0 - 1%','1 - 5%','5 - 10%','> 10%'];
+            }
+            else if(fig=='3'){
+                categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','40 - 50 USD/ha','> 80 USD/ha'];
+            }
+            colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
+            lgnd = [];
 
-          for (var i = 0; i < categories.length; i++) {
-              div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
-          }
+            for (var i = 0; i < categories.length; i++) {
+                div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
+            }
 
-          div.innerHTML = lgnd.join('<br>');
-          return div;
-        };
+            div.innerHTML = lgnd.join('<br>');
+            return div;
 
 
     }
@@ -102,7 +100,7 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
         //choropleth_map_objs['slider'] = L.control.sliderControl({position: "topleft",layer:layerGroup, follow: 1});
     }
 }
-
+}
 // add png of south africa on map
 function case_6_3_fig1() {
     var lg;
@@ -131,7 +129,11 @@ function case_6_3_fig1() {
       //add legend
       case_6_3_fig1_legend.addTo(map);
       add_legend_to_right_menu(case_6_3_fig1_legend,"6-3","Invasive Alien Species (%)");
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> master
       imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
       case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);//add image as overlay on the map using boundaries of South Africa
 
@@ -163,7 +165,11 @@ function case_8_1_fig1() {
 
     case_8_1_fig1_legend.addTo(map);
     add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> master
 
 };
 
@@ -236,7 +242,11 @@ function case_9_1_fig1() {
     waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
     $('.leaflet-control-layers-selector:checked')
     add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1","Water Funds phases");
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> master
     waterfund_bool=true;
 }
 
@@ -367,9 +377,15 @@ function view_world(){
 }
 
 function add_legend_to_right_menu(legend,id, title){
+<<<<<<< HEAD
 
         var htmlObject = legend.getContainer();//get slider container
         //$('#right-case-'+cases[i].id)
+=======
+
+        var htmlObject = legend.getContainer();//get slider container
+
+>>>>>>> master
         var newpos = document.getElementById('right-case-'+id);//set time slider
         var legend_height = htmlObject.clientHeight;
         //console.log("height",legend_height);
