@@ -10,34 +10,32 @@ class Country{
 }
 
 async function handleCountryClick(layer) {
+  if(Object.keys(layer).includes('target'))
+    layer = layer.target;
   //clean dynamic figure on map (if any)
   clean_layers();
-  //if on main page
-  if (data_loader.active_case.id =='0-1'){
-    if(Object.keys(layer).includes('target'))
-      layer = layer.target;
-
-    //country clicked was active, go back back to default view
-    if (data_loader.active_country.name == layer.feature.properties.name){
-      //resets layers
-      refreshLayers()
-      //go back to intro
-      caseClick(Object.keys(data_loader.chapters)[0],Object.keys(data_loader.cases)[0]);
-
-    }
-    //new country was clicked
-    else{
-      //set new active country
-      data_loader.active_country = data_loader.countries[layer.feature.properties.name];
-      //set to active country highlight
-      refreshLayers();
-      console.log("moved to: "+data_loader.active_country.name);
-      //set active case
-      data_loader.active_case=data_loader.chapters[data_loader.active_country.country_code].cases[0]
-      await caseClick(data_loader.active_case.chapter.id,data_loader.active_case.id);
-      //zoom to country
-      zoom_to(data_loader.active_country);
-
-    }
+  //country clicked was active, go back back to default view
+  if (data_loader.active_country.name == layer.feature.properties.name){
+    //reset to world
+    data_loader.active_country = data_loader.countries['World'];
+    //resets map layers
+    refreshLayers()
+    //highlight layer of country left (in case still hovering)
+    highlightFeature(layer);
   }
+  //new country was clicked
+  else{
+    //set new active country
+    data_loader.active_country = data_loader.countries[layer.feature.properties.name];
+    //resets map layers
+    refreshLayers()
+  }
+  //zoom to country
+  zoom_to(data_loader.active_country);
+  console.log("moved to: "+data_loader.active_country.name);
+  //use all data again
+  await data_loader.prepareDataframes()
+  //rebuild left and right menu
+  buildRightMenu();
+  buildLeftMenu();
 }

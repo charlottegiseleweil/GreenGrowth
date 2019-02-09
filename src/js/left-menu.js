@@ -26,10 +26,23 @@ function caseClick(chapter_id,case_id){
 
   data_loader.active_case = data_loader.cases[case_id];
 
-  //update chapter title
-  if(data_loader.active_case.chapter.title=="Introduction")   $('#right-subtitle').html(data_loader.active_case.chapter.title)
-  else $('#right-subtitle').html(data_loader.active_case.chapter.id +': '+data_loader.active_case.chapter.title)
 
+  //set new active country
+  data_loader.active_country =data_loader.cases[case_id].country;
+  refreshLayers();
+  display_figure(cases[case_id])
+
+
+  //special handling for intro case, resets to default
+  if(data_loader.active_case.chapter.title=="Introduction") {
+      //update chapter title
+      $('#right-subtitle').html(data_loader.active_case.chapter.title)
+      //home_menu();
+  }
+  else{
+    //update chapter title
+    $('#right-subtitle').html(data_loader.active_case.chapter.id +': '+data_loader.active_case.chapter.title)
+  }
   //[right-menu] hide all cases (text) except active one
   $(".right-case").hide()
   $("#right-case-"+case_id).slideDown( "slow",  function() {
@@ -47,12 +60,6 @@ function caseClick(chapter_id,case_id){
   //[left-menu] set the color on clicked case button (and not others)
   $('.left-case').css('background-color', 'black')
   $('#left-case-'+case_id).css('background-color', 'hsl(129, 67%, 64%)')
-
-
-  //set new active country
-  data_loader.active_country =data_loader.cases[case_id].country;
-  refreshLayers();
-  display_figure(cases[case_id])
 
 }
 
@@ -114,19 +121,13 @@ function changeImage(e) {
   $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
 }
 
-
 function refresh_left_menu(){
   for (var i in chapters){
     current_chapter = chapters[i];
-    //add a chapter button, note that here onClick calls caseClick on the first case
-    if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
-    else $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_chapter.id+ "</span>");
-
-    add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
 
     if(current_chapter.id!=0){ //special case for arrival page
       //add submenu for the chapter
-      $('#left-chapter-'+previous_chapter.id).after("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub'></div>")
+      $('#left-menu').append("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' ></div>")
       //add case buttons in submenu
       for (var j=0;j<current_chapter.cases.length;j++){
         $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
@@ -134,7 +135,13 @@ function refresh_left_menu(){
       }
       $("#left-menu-sub-"+current_chapter.id).append('<p class="left-menu-cases-name">CASES</p>');
     }
-    previous_chapter = current_chapter;
+
+    //add a chapter button, note that here onClick calls caseClick on the first case
+    if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
+    else $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_chapter.id+ "</span>");
+
+    add_tooltip("#left-menu #left-chapter-"+current_chapter.id);
+
   }
 
   $('#left-menu').append('<p class="left-menu-name">'+"CHAPTERS"+'</p>');

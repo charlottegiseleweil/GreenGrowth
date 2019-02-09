@@ -127,10 +127,12 @@ async prepareDataframes(){
     var case_studies = await d3.csv("./data/case_studies.csv");
 
 
-
+    console.log(data_loader.active_country)
+    console.log(case_studies[i]['country'])
     //iterate over each case study
     for(var i=0;i<case_studies.length;i++){
-      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')){
+      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
+        &&(this.active_country.name=='World'||this.active_country.name==case_studies[i]['country'])){
 
         //fetch and populate with the actual data
         if (chapter_id != case_studies[i]["ch_no"]){
