@@ -95,7 +95,7 @@ html, body {
   font-size: 1vw;
 }
 
-.group {
+.chapter {
   display : none;
 }
 
@@ -158,6 +158,7 @@ html, body {
 
 
 #left-menu {
+    display: block;
     position:absolute;
     top:10vh;
     width: 4vh;
@@ -193,7 +194,7 @@ html, body {
 #mechanism-img-div{
   margin-left:1vw;
 }
-.left-group{
+.left-chapter{
   height: 3vmin;
   width: 3vmin;
   background-color: black;
@@ -229,7 +230,7 @@ span {
   width: 8vw;
   border-radius: 10px;
   color: white;
-  display: block;  
+  display: block;
   margin-right: 0.5vh;
   margin-top: 0.5vh;
   margin-left: 0.5vw;
@@ -238,7 +239,7 @@ span {
   background-color:hsl(4, 72%, 55%, 0.81);
 }
 
-.left-group-helper{
+.left-chapter-helper{
     height: 3vh;
     width: 3vh;
     background-color: hsl(4, 72%, 55%, 0.81);
@@ -276,19 +277,19 @@ span {
     margin-top: 2vw;
   }
 
-.left-menu-sub{
-  display: block;
-  position:absolute;
-  z-index: 100;
-  text-align:center;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 2vh 2vh 2vh 2vh;
-  font-family: 'Righteous', cursive;
-  width: 4vh;
-  top:24vh;
-  left:63.5vw;
-  padding-bottom: 1vh;
-}
+  .left-menu-sub{
+    display: block;
+    position:absolute;
+    z-index: 100;
+    text-align:center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 2vh 2vh 2vh 2vh;
+    font-family: 'Righteous', cursive;
+    width: 4vh;
+    left:4vh;
+    padding-bottom: 1vh;
+  }
+
 
 .left-case{
   height: 3vmin;
@@ -344,7 +345,7 @@ p {
 
 .case-6-1-button{
   width: 15vw;
-  background-color:rgba(156, 156, 156, 0.753); 
+  background-color:rgba(156, 156, 156, 0.753);
   cursor: pointer;
   border-radius: 2vh 2vh 2vh 2vh;
 }
@@ -366,9 +367,9 @@ p {
   float: right;
   top: 1vh;
   margin-left:1vw;
-  margin-top:1vh; 
+  margin-top:1vh;
   border-radius: 10px;
-  -webkit-filter: brightness(100%);  
+  -webkit-filter: brightness(100%);
   width: 14vw;
 }
 

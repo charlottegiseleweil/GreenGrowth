@@ -14,10 +14,6 @@ async function handleCountryClick(layer) {
   clean_layers();
   //if on main page
   if (data_loader.active_case.id =='0-1'){
-    await changeBrowseType('Country')
-  }
-  //if(data_loader.browse_type," handleCountryClick");
-  if(data_loader.browse_type=='Country'){
     if(Object.keys(layer).includes('target'))
       layer = layer.target;
 
@@ -26,7 +22,7 @@ async function handleCountryClick(layer) {
       //resets layers
       refreshLayers()
       //go back to intro
-      caseClick(Object.keys(data_loader.groups)[0],Object.keys(data_loader.cases)[0]);
+      caseClick(Object.keys(data_loader.chapters)[0],Object.keys(data_loader.cases)[0]);
 
     }
     //new country was clicked
@@ -37,11 +33,10 @@ async function handleCountryClick(layer) {
       refreshLayers();
       console.log("moved to: "+data_loader.active_country.name);
       //set active case
-      data_loader.active_case=data_loader.groups[data_loader.active_country.country_code].cases[0]
-      await caseClick(data_loader.active_case.group.id,data_loader.active_case.id);
+      data_loader.active_case=data_loader.chapters[data_loader.active_country.country_code].cases[0]
+      await caseClick(data_loader.active_case.chapter.id,data_loader.active_case.id);
       //zoom to country
       zoom_to(data_loader.active_country);
-      console.log(data_loader.groups)
 
     }
   }
