@@ -129,11 +129,6 @@ function case_6_3_fig1() {
       //add legend
       case_6_3_fig1_legend.addTo(map);
       add_legend_to_right_menu(case_6_3_fig1_legend,"6-3","Invasive Alien Species (%)");
-<<<<<<< HEAD
-
-=======
-
->>>>>>> master
       imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
       case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);//add image as overlay on the map using boundaries of South Africa
 
@@ -165,11 +160,6 @@ function case_8_1_fig1() {
 
     case_8_1_fig1_legend.addTo(map);
     add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
-<<<<<<< HEAD
-
-=======
-
->>>>>>> master
 
 };
 
@@ -242,11 +232,6 @@ function case_9_1_fig1() {
     waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
     $('.leaflet-control-layers-selector:checked')
     add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1","Water Funds phases");
-<<<<<<< HEAD
-
-=======
-
->>>>>>> master
     waterfund_bool=true;
 }
 
@@ -377,15 +362,8 @@ function view_world(){
 }
 
 function add_legend_to_right_menu(legend,id, title){
-<<<<<<< HEAD
-
-        var htmlObject = legend.getContainer();//get slider container
-        //$('#right-case-'+cases[i].id)
-=======
-
         var htmlObject = legend.getContainer();//get slider container
 
->>>>>>> master
         var newpos = document.getElementById('right-case-'+id);//set time slider
         var legend_height = htmlObject.clientHeight;
         //console.log("height",legend_height);

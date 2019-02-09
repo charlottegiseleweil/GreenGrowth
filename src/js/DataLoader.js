@@ -3,13 +3,12 @@ class DataLoader {
     constructor(){
 
         this.geojson;
-        this.groups = [];
+        this.chapters = [];
         this.cases = [];
         this.active_case = null;
         this.countries = [];
         this.mechanisms = [];
         this.active_country = null;
-        this.browse_type = 'Chapter';
         this.progress_bar = {
             progress: 0,
             get _progress() { return this.progress; },
@@ -90,17 +89,13 @@ class DataLoader {
 
 async prepareDataframes(){
     //reset data
-    this.groups = [];
+    this.chapters = [];
     this.cases = [];
     this.mechanisms = [];
     //read csv file containing countries information
     var csv_countries = await d3.csv('./data/countries.csv');
     for(var i=0;i<csv_countries.length;i++){
       this.countries[csv_countries[i]["name"]] = new Country(csv_countries[i])
-      //if browsing by country, create groups dataframe here
-      if (this.browse_type=='Country'&&csv_countries[i]["name"]!='World'){
-        this.groups[csv_countries[i]["country_code"]] = new Group(csv_countries[i]["country_code"],csv_countries[i]["name"])
-      }
     }
     if (this.active_country == null)
       this.active_country = this.countries['World'];
@@ -111,104 +106,50 @@ async prepareDataframes(){
       this.mechanisms[csv_mechanisms[i]["name"]] = {};
       this.mechanisms[csv_mechanisms[i]["name"]]["name"] = csv_mechanisms[i]["name"]
       this.mechanisms[csv_mechanisms[i]["name"]]["code"] = csv_mechanisms[i]["code"]
-      //if browsing by mechanism, create groups dataframe here
-      if (this.browse_type=='Mechanism'){
-        this.groups[csv_mechanisms[i]["code"]] = new Group(csv_mechanisms[i]["code"],csv_mechanisms[i]["name"])
-      }
     }
 
-    //add intro group
+    //add intro chapter
     var other_elems = await d3.csv("./data/other_elements.csv");
-    let intro_group = new Group(other_elems[0]["ch_no"],other_elems[0]["ch_title"]);
-    this.groups[intro_group.id]= intro_group;
-    let intro_case = new Case(0,other_elems[0],intro_group, this.countries['World'])
-    this.groups[intro_group.id].add_case(intro_case);
+    let intro_chapter = new Chapter(other_elems[0]["ch_no"],other_elems[0]["ch_title"]);
+    this.chapters[intro_chapter.id]= intro_chapter;
+    let intro_case = new Case(0,other_elems[0],intro_chapter, this.countries['World'])
+    this.chapters[intro_chapter.id].add_case(intro_case);
     this.cases[intro_case.id]= intro_case;
 
-    let group_id=1;
+    let chapter_id=1;
     let case_id = 1;
-    let current_group = null;
+    let previous_chapter = null;
+    let current_chapter = null;
     let current_country = null;
     let current_mechanism = null;
     let country = null;
     // read csv file containing cases information
     var case_studies = await d3.csv("./data/case_studies.csv");
 
-    if(data_loader.browse_type=='Chapter'){
 
-        //iterate over each case study
-        for(var i=0;i<case_studies.length;i++){
-          if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')){
 
-            //fetch and populate with the actual data
-            if (group_id != case_studies[i]["ch_no"]){
-              if (current_group!=null)
-                  this.groups[group_id]=current_group;
-              group_id = case_studies[i]["ch_no"];
-              current_group = new Group(case_studies[i]["ch_no"],case_studies[i]["ch_title"]);
-            }
-            current_country=  this.countries[case_studies[i]["country"]];
-            current_mechanism=  this.mechanisms[case_studies[i]["mechanism"]];
-            let new_case = new Case(case_id,case_studies[i],current_group, current_country, current_mechanism);
-            current_group.add_case(new_case);
-            this.cases[new_case.id]= new_case;
-            case_id++;
-          }
+    //iterate over each case study
+    for(var i=0;i<case_studies.length;i++){
+      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')){
+
+        //fetch and populate with the actual data
+        if (chapter_id != case_studies[i]["ch_no"]){
+          if (current_chapter!=null)
+              this.chapters[chapter_id]=current_chapter;
+          chapter_id = case_studies[i]["ch_no"];
+          current_chapter = new Chapter(case_studies[i]["ch_no"],case_studies[i]["ch_title"]);
         }
-        this.groups[group_id]=current_group;
-        this.active_case = this.cases[Object.keys(this.cases)[0]]
+        current_country=  this.countries[case_studies[i]["country"]];
+        current_mechanism=  this.mechanisms[case_studies[i]["mechanism"]];
+        let new_case = new Case(case_id,case_studies[i],current_chapter, current_country, current_mechanism);
+        current_chapter.add_case(new_case);
+        this.cases[new_case.id]= new_case;
+        case_id++;
+      }
     }
+    this.chapters[chapter_id]=current_chapter;
+    this.active_case = this.cases[Object.keys(this.cases)[0]]
 
-    else if(data_loader.browse_type=='Country'){
-
-        //iterate over each case study
-        for(var k=0;k<Object.keys(this.countries).length;k++){
-          for(var i=0;i<case_studies.length;i++){
-            if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
-                &&(case_studies[i]["country"]==this.countries[Object.keys(this.countries)[k]].name)){
-              current_group = this.groups[this.countries[case_studies[i]["country"]].country_code]
-              current_country=  this.countries[case_studies[i]["country"]];
-              current_mechanism=  this.mechanisms[case_studies[i]["mechanism"]]
-              let new_case = new Case(case_id,case_studies[i],current_group, current_country, current_mechanism)
-              current_group.add_case(new_case);
-              case_id++;
-              this.cases[new_case.id]= new_case;
-
-            }
-          }
-        }
-        this.active_case = this.cases[Object.keys(this.cases)[0]]
-    }
-
-    else if(data_loader.browse_type=='Mechanism'){
-        //add the intro page as first case
-        //iterate over each case study
-        for(var k=0;k<Object.keys(this.mechanisms).length;k++){
-          current_mechanism = null;
-          for(var i=0;i<case_studies.length;i++){
-            if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
-                &&(case_studies[i]["mechanism"]==this.mechanisms[Object.keys(this.mechanisms)[k]].name)){
-              current_group = this.groups[this.mechanisms[case_studies[i]["mechanism"]].code]
-              //add intro as first case to each mechanism group
-              if (current_mechanism==null){
-                let mech_intro_case = new Case(case_id,other_elems[0],current_group, this.countries['World'])
-                mech_intro_case.id = this.mechanisms[case_studies[i]["mechanism"]].code+'-'+0;
-                current_group.add_case(mech_intro_case);
-                this.cases[this.mechanisms[case_studies[i]["mechanism"]].code+'-'+0] = mech_intro_case
-                case_id++;
-              }
-              current_country=  this.countries[case_studies[i]["country"]];
-              current_mechanism=  this.mechanisms[case_studies[i]["mechanism"]];
-              let new_case = new Case(case_id,case_studies[i],current_group, current_country,current_mechanism)
-              current_group.add_case(new_case);
-              case_id++;
-              this.cases[new_case.id]= new_case;
-
-            }
-          }
-        }
-        this.active_case = this.cases[Object.keys(this.cases)[0]]
-    }
 
     // read csv file containing figure information
     var figures = await d3.csv('./data/figures.csv');
@@ -223,9 +164,6 @@ async prepareDataframes(){
 
       }
     }
-    //console.log(this.cases)
-    //console.log(this.groups)
-    //console.log(this.countries)
 
   }
 }

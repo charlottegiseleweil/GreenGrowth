@@ -26,7 +26,6 @@ load_data();
 function open_page() {
 
   $(".opening-page").fadeOut( 1000, function() {
-//      map.keyboard.disable();
       $(".opening-page").remove();
       map.addLayer(Esri_WorldImagery);// add tile layer
       $(".mapbox").css({'display': 'block'});
@@ -46,7 +45,6 @@ function open_page() {
       //build left and right menu
       buildRightMenu();
       buildLeftMenu();
-      buildBottomMenu();
       //create user guide
       intro = introJs();
 
@@ -57,7 +55,7 @@ function open_page() {
           },
           {
               element: '#left-menu',
-              intro: 'Here you can: <br> -Refresh the visualization <br> -Start the tutorial <br> -Read about us and the book <br>-See the chapters (or mechanisms / countries), and click them',
+              intro: 'Here you can: <br> -Refresh the visualization <br> -Start the tutorial <br> -Read about us and the book <br>-See the chapters, and click them',
               position: 'right'
           },
           {
@@ -76,7 +74,6 @@ function open_page() {
     //intro.start();//start user-guide
 
   });
-  buildMechanismMenu();
   setGalleryStyle();
   $('.gallery').on("click",function(){
     console.log("click image");

@@ -1,4 +1,4 @@
-class Group{
+class Chapter{
 
     constructor(id, title){
         this.id =id;
