@@ -31,7 +31,7 @@ async function handleCountryClick(layer) {
     refreshLayers()
   }
   //zoom to country
-  zoom_to(data_loader.active_country);
+  zoom_to(data_loader.active_country, true);
   console.log("moved to: "+data_loader.active_country.name);
   //use all data again
   await data_loader.prepareDataframes()
