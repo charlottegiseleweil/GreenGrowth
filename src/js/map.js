@@ -23,7 +23,6 @@
 
      return false;
  };
-
  // create Leaflet Map
  var map = L.map('map', {
     keyboard: false,

@@ -344,6 +344,7 @@ p {
 
 .case-6-1-button{
   width: 15vw;
+  background-color:rgba(156, 156, 156, 0.753); 
   cursor: pointer;
   border-radius: 2vh 2vh 2vh 2vh;
 }
@@ -362,10 +363,33 @@ p {
 }
 
 .case-img {
-    float: right;
-    margin: 2% 0 2% 2%;
-    border-radius: 10px;
-    width: 40%;
+  float: right;
+  top: 1vh;
+  margin-left:1vw;
+  margin-top:1vh; 
+  border-radius: 10px;
+  -webkit-filter: brightness(100%);  
+  width: 14vw;
+}
+
+.case-img:hover{
+  -webkit-filter: brightness(70%);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.case-img-hidden {
+  display: none;
+}
+
+.pin {
+  float: right;
+  right: 8.5vw;
+  top: 11vh;
+  z-index:10; /* Just in case of z-index issues, remove if not needed */
 }
 
 #water_marker_control {
