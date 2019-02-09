@@ -11,10 +11,12 @@ function buildLeftMenu(){
   $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
   $('#left-menu').append("<span id=left-chapter-about class='left-chapter-helper' title='About Us' onclick=openAbout();><i class='fas fa-address-card'></i></span><hr>");
-
+  $('#left-menu').append("<span id='left-chapter-mechanism' class='left-chapter-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-cog'></i></span><hr>");
+  
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
   add_tooltip("#left-menu #left-chapter-about");
+  add_tooltip("#left-menu #left-chapter-mechanism");
   refresh_left_menu();
   //$('#left-menu').append("<span id=left-chapter-0 class='left-chapter' title='Overview' onclick=caseClick("+0+","+1+");>" +0+ "</span>");
 }
@@ -101,22 +103,12 @@ function openAbout() {
 
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
-
-  $("#myNav").load("static/chapter.html", function() {
-    $("#nav-title").html('Chapters');
-    for(var i=1; i<Object.keys(data_loader.chapters).length; i++){
-      current_chapter=data_loader.chapters[Object.keys(data_loader.chapters)[i]];
-      $("#chapter-nav-list").append('<li id="nav-item-'+current_chapter.id+'" class="nav-item"></li>');
-      $("#nav-item-"+current_chapter.id).append('<a class="nav-link active" href="javascript:void(0)" onclick="changeImage(this)" name="'+current_chapter.id+'">'+current_chapter.id+': '+current_chapter.title+'</a>')
-    }
-  });
-
+  $("#myNav").load("static/mechanism.html");
 }
 
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
 }
-
 function changeImage(e) {
   $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
 }
