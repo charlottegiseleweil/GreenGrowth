@@ -38,7 +38,7 @@ function buildRightMenu(){
         }
         //adds figures of right menu (static and dynamic)
         add_right_menu_figure(cases[i]);
-        startGallery(cases[i].id);
+        startGallery('gallery'+cases[i].id);
     }
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();
@@ -61,9 +61,15 @@ function add_right_menu_figure(case_){
   if (case_.has_static_fig){
     //load the figure
     fig_file = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-1.png';
-    $('#right-case-'+case_.id).append('<img class="img-center" src="' + fig_file + '">');
+
+    $('#right-case-'+case_.id).append('<div class ="static-gallery'+case_.id+'" onclick="disableKeyboard();"></div>');
+    //$('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
+
+    $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'"><img class="img-center" src="' + fig_file + '"></a>');
     //add figure title
     $('#right-case-'+case_.id).append('<p class="figure-text">Figure: ' + case_.static_fig_title+ '</p>');
+    startGallery('static-gallery'+case_.id);
+    
   }
 
   //add dynamic figure (special case, case 6-1)
@@ -144,7 +150,7 @@ function disableKeyboard(image_class){
 
     
 function startGallery(id){
-    $('.gallery'+id).magnificPopup({
+    $('.'+id).magnificPopup({
         delegate: 'a', // child items selector, by clicking on it popup will open
         type: 'image',
         gallery:{
