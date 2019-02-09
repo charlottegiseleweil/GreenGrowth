@@ -7,6 +7,8 @@ function buildRightMenu(){
   else
     $('#right-subtitle').html(data_loader.active_case.chapter.id +': '+data_loader.active_case.chapter.title)
 
+  //clear it
+  $('#right-menu-body').html('');
 
 
   cases = data_loader.cases;

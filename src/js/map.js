@@ -48,7 +48,6 @@ var myStyle = {
 
 // reset highlightning on filtered countries on mouse hover
 function onEachFeature(feature, layer) {
-  //console.log(e)
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
