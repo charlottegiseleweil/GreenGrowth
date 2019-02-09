@@ -310,9 +310,9 @@ span {
   background-color : rgb(3, 59, 15);
 }
 
-.left-case-dynamic{
+.left-dot-dynamic{
   border-style: solid;
-  border-color: orange;
+  border-color: hsl(4, 72%, 55%, 0.81);
   border-width: 0.3vh;
   line-height: 2.4vh;
 }
