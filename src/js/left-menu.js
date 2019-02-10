@@ -86,6 +86,9 @@ async function home_menu(){
   await buildLeftMenu();
   $(".tooltip").hide();
 
+  $("#country-display-panel-reg").hide();
+  $("#country-display-panel-mech").hide();
+
 }
 
 function tutorial(){
