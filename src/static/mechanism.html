@@ -30,12 +30,16 @@
 
     </div>
     <div class="col-4">
-        <img src="./static/mechanisms/government.png" class="mechanism-img">
+      <div class='mechanism-img-gallery'>
+        <a href ='./static/mechanisms/"+this.name.split(" ")[0].toLowerCase()+".png'>
+          <img src="./static/mechanisms/government.png" class='img-mechanism' >
+        </a>
+      </div>
     </div>
     <div class="col-4">
         <ul id="mechanism-chapters-list">
         </ul>
     </div>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    
+
 </div>

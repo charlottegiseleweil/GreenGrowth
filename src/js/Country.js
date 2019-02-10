@@ -22,6 +22,8 @@ async function handleCountryClick(layer) {
     refreshLayers()
     //highlight layer of country left (in case still hovering)
     highlightFeature(layer);
+    //remove country name display
+    $("#country-display-panel").hide();
   }
   //new country was clicked
   else{
@@ -29,6 +31,10 @@ async function handleCountryClick(layer) {
     data_loader.active_country = data_loader.countries[layer.feature.properties.name];
     //resets map layers
     refreshLayers()
+    //display country name
+    $('#country-display-panel').slideDown( "slow",  function() {});
+    $("#country-display").html(data_loader.active_country.name.toUpperCase());
+
   }
   //zoom to country
   zoom_to(data_loader.active_country, true);

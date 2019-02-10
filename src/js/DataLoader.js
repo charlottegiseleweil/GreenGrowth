@@ -83,6 +83,7 @@ class DataLoader {
         case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
 
         this.progress_bar._progress += 20;
+        $('#country-display-panel').hide()
 
         setTimeout(function(){$('.progress').trigger('loaded')}, 600);
     }
@@ -153,7 +154,7 @@ async prepareDataframes(){
       }
     }
 
-    console.log("Mechanism",this.mechanisms);
+    //console.log("Mechanism",this.mechanisms);
     this.chapters[chapter_id]=current_chapter;
     this.active_case = this.cases[Object.keys(this.cases)[0]]
 

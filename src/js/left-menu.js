@@ -69,6 +69,8 @@ async function home_menu(){
 
   //clean the map of dynamic figues
   await clean_layers();
+  //remove country name display
+  $("#country-display-panel").hide();
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
   //resets layers
@@ -83,6 +85,7 @@ async function home_menu(){
   await buildRightMenu();
   await buildLeftMenu();
   $(".tooltip").hide();
+
 }
 
 function tutorial(){
@@ -113,6 +116,13 @@ function openNav() {
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
 }
+
+async function mechanismCaseClick(case_id){
+  console.log(case_id)
+  await closeNav();
+  caseClick(case_id.split("-")[0],case_id);
+}
+
 function changeImage(e) {
 //  $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
   data_loader.mechanisms[e.name].change_image();
@@ -163,5 +173,5 @@ function refresh_left_menu(){
 }
 function load_mechanism(){
     data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].change_image();
-    data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].list_chapters_on_overlay();  
+    data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].list_chapters_on_overlay();
 }

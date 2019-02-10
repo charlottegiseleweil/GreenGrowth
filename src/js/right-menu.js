@@ -42,6 +42,8 @@ function buildRightMenu(){
     }
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();
+    startGallery('mechanism-img-gallery');
+    
 }
 
 // add figures on right menu
