@@ -83,7 +83,7 @@ class DataLoader {
         case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
 
         this.progress_bar._progress += 20;
-        $('#country-display-panel').hide()
+        $('#country-display-panel-reg').hide()
 
         setTimeout(function(){$('.progress').trigger('loaded')}, 600);
     }
