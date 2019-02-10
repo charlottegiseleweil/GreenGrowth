@@ -100,18 +100,23 @@ function add_tooltip(path){
 
 function openAbout() {
   document.getElementById("myNav").style.width = "100%";
+  $("#myNav").load("static/about.html");
 }
 
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
   $("#myNav").load("static/mechanism.html");
+  console.log("first key",data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]]);
+
 }
 
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
 }
 function changeImage(e) {
-  $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
+//  $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
+  data_loader.mechanisms[e.name].change_image();
+  data_loader.mechanisms[e.name].list_chapters_on_overlay();
 }
 
 function refresh_left_menu(){
@@ -155,4 +160,8 @@ function refresh_left_menu(){
 
   //[left-menu] set the color on active case button
   $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')
+}
+function load_mechanism(){
+    data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].change_image();
+    data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].list_chapters_on_overlay();  
 }
