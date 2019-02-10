@@ -1,4 +1,7 @@
 <div class="row" style="height:100%;">
+        <script type="text/javascript">
+            load_mechanism();
+         </script>
     <div class="col-4" style="padding-left: 5vw; padding-top: 5vh;">
 
         <div class="alert alert-dark">
@@ -7,35 +10,31 @@
 
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="javascript:void(0)" onclick="changeImage(this)" name="government">Government
+                <a class="nav-link active" href="javascript:void(0)" onclick="changeImage(this)" name="Government Subsidies">Government
                     Subsidies</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="regulatory">Regulatory-driven
+                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="Regulatory-driven Mitigation">Regulatory-driven
                     Mitigation</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="voluntary">Voluntary Conservation</a>
+                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="Voluntary Conservation">Voluntary Conservation</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="water">Water Funds</a>
+                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="Water Fund">Water Funds</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="eco">Eco-Certification</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="impact">Impact Investing</a>
+                <a class="nav-link" href="javascript:void(0)" onclick="changeImage(this)" name="Impact Investing">Impact Investing</a>
             </li>
         </ul>
 
     </div>
     <div class="col-4">
-        <img src="./static/mechanisms/government.png" class="mechanism-img mechanism-menu">
+        <img src="./static/mechanisms/government.png" class="mechanism-img">
     </div>
     <div class="col-4">
-        <div id="mechanism-chapters">
-        <p> Chapters and Cases Related to selected mechanism </p>        
-        </div>
+        <ul id="mechanism-chapters-list">
+        </ul>
     </div>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     

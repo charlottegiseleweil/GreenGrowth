@@ -7,7 +7,7 @@ class DataLoader {
         this.cases = [];
         this.active_case = null;
         this.countries = [];
-        this.mechanisms = [];
+        this.mechanisms = {};
         this.active_country = null;
         this.progress_bar = {
             progress: 0,
@@ -91,7 +91,6 @@ async prepareDataframes(){
     //reset data
     this.chapters = [];
     this.cases = [];
-    this.mechanisms = [];
     //read csv file containing countries information
     var csv_countries = await d3.csv('./data/countries.csv');
     for(var i=0;i<csv_countries.length;i++){
@@ -103,11 +102,11 @@ async prepareDataframes(){
     //read csv file containing mechanism information
     var csv_mechanisms = await d3.csv('./data/mechanisms.csv');
     for(var i=0;i<csv_mechanisms.length;i++){
-      this.mechanisms[csv_mechanisms[i]["name"]] = {};
-      this.mechanisms[csv_mechanisms[i]["name"]]["name"] = csv_mechanisms[i]["name"]
-      this.mechanisms[csv_mechanisms[i]["name"]]["code"] = csv_mechanisms[i]["code"]
+      let new_mechanism = new Mechanism(csv_mechanisms[i]["name"], csv_mechanisms[i]["code"]);
+      this.mechanisms[new_mechanism.name] = new_mechanism;
     }
-
+    console.log("mechanisms",this.mechanisms);
+    
     //add intro chapter
     if(this.active_country.name=='World'){
       var other_elems = await d3.csv("./data/other_elements.csv");
@@ -134,7 +133,7 @@ async prepareDataframes(){
     //iterate over each case study
     for(var i=0;i<case_studies.length;i++){
       if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
-        &&(this.active_country.name=='World'||this.active_country.name==case_studies[i]['country'])){
+      &&(this.active_country.name=='World'||this.active_country.name==case_studies[i]['country'])){
 
         //fetch and populate with the actual data
         if (chapter_id != case_studies[i]["ch_no"]){
@@ -146,11 +145,16 @@ async prepareDataframes(){
         current_country=  this.countries[case_studies[i]["country"]];
         current_mechanism=  this.mechanisms[case_studies[i]["mechanism"]];
         let new_case = new Case(case_id,case_studies[i],current_chapter, current_country, current_mechanism);
+        if (current_mechanism){
+            this.mechanisms[current_mechanism.name].add_case(new_case);
+        }
         current_chapter.add_case(new_case);
         this.cases[new_case.id]= new_case;
         case_id++;
       }
     }
+
+    console.log("Mechanism",this.mechanisms);
     this.chapters[chapter_id]=current_chapter;
     this.active_case = this.cases[Object.keys(this.cases)[0]]
 
@@ -204,3 +208,4 @@ var geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8
 };
+
