@@ -46,6 +46,23 @@ html, body {
     margin-top: 1vh !important;
 }
 
+#country-display-panel {
+    position:absolute;
+    top:0vh;
+    left:40vw;
+    z-index: 100;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    font-family: 'Maven Pro', sans-serif;
+    background-color: rgba(242, 242, 242, 0.8);
+    border-radius: 0 0 2vh 2vh;
+    border-style: solid;
+    border-color: rgba(242, 242, 242, 0.8) black black black;
+    border-width:1px;
+    padding: 6px;
+}
+
 #title-panel {
     position:absolute;
     top:3vh;
@@ -126,6 +143,12 @@ html, body {
     font-size: calc(1em + 1vw)
 }
 
+#country-display{
+  color:black;
+  font-weight: bold;
+  font-size: 1.5vmax;
+}
+
 #right-title{
   color:hsl(100, 84%, 24%, 1);
   font-weight: bold;
@@ -203,6 +226,9 @@ html, body {
   margin-right: 5vw;
 }
 
+.clickable{
+  cursor: pointer;
+}
 .left-chapter{
   height: 3vmin;
   width: 3vmin;
@@ -274,7 +300,7 @@ span {
     color: aqua;
   }
 
-  .mechanism-img {
+  .img-mechanism {
     width: 17vw;
     height: auto;
     border-radius: 10px;
@@ -474,8 +500,6 @@ p {
     right: 35px;
     }
   }
-<<<<<<< HEAD
-=======
 
   ul li{
     margin: 1em 0;
@@ -484,4 +508,3 @@ p {
   ul ul li{
     color: white;
   }
->>>>>>> gunes
