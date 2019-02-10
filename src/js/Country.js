@@ -23,7 +23,7 @@ async function handleCountryClick(layer) {
     //highlight layer of country left (in case still hovering)
     highlightFeature(layer);
     //remove country name display
-    $("#country-display-panel").hide();
+    $("#country-display-panel-reg").hide();
   }
   //new country was clicked
   else{
@@ -32,8 +32,11 @@ async function handleCountryClick(layer) {
     //resets map layers
     refreshLayers()
     //display country name
-    $('#country-display-panel').slideDown( "slow",  function() {});
-    $("#country-display").html(data_loader.active_country.name.toUpperCase());
+    $("#country-display-reg").html(data_loader.active_country.name.toUpperCase());
+    $('#country-display-panel-reg').slideDown( "slow",  function() {});
+
+    //$("#country-display-mech").html(data_loader.active_country.name.toUpperCase());
+    //$("#country-display-panel-mech").show();
 
   }
   //zoom to country

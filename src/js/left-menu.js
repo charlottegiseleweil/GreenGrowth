@@ -108,7 +108,17 @@ function openAbout() {
 
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
-  $("#myNav").load("static/mechanism.html");
+  $("#myNav").load("static/mechanism.html", function(){
+    if(data_loader.active_country.name=='World'){
+      $("#country-display-panel-mech").hide()
+    }
+    else{
+      $("#country-display-mech").html(data_loader.active_country.name.toUpperCase());
+      $("#country-display-panel-mech").show()
+    }
+  });
+
+
   console.log("first key",data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]]);
 
 }
