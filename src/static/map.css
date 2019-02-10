@@ -195,9 +195,11 @@ html, body {
   margin-left:1vw;
 }
 
-#mechanism-chapters{
+#mechanism-chapters-list{
   color:white;
-  margin-top:12vh;
+  font-size: 1.3vw;
+  float: left;
+  margin-top:15vh;
   margin-right: 5vw;
 }
 
@@ -281,7 +283,7 @@ span {
     margin: auto;
     float: left;
     margin-left: 7vw;
-    margin-top: 15vh;
+    margin-top: 17vh;
   }
 
   .left-menu-sub{
@@ -472,3 +474,14 @@ p {
     right: 35px;
     }
   }
+<<<<<<< HEAD
+=======
+
+  ul li{
+    margin: 1em 0;
+    color: rgb(204, 68, 68);
+  }
+  ul ul li{
+    color: white;
+  }
+>>>>>>> gunes
