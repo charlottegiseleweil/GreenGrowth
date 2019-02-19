@@ -1,5 +1,6 @@
 This application gives a brief overview of the cases studied in <a href="http://placeholder.com"> Green Growth That Works</a>. Here is a description of the page and how to use it:
 <br> 
+<br> &bull; The user may go through cases either by selecting them in the left-hand menu, or by using the left and right arrows.
 <br> &bull; The right-hand side panel (here) displays content specific to the case being viewed. It offers a brief summary of the case and, when available, images, figures, legends, and buttons.
 <br> &bull; The left-hand side menu is for navigation. It contains buttons to: 
 <br> &nbsp; &mdash; Go back to this view 
@@ -7,4 +8,3 @@ This application gives a brief overview of the cases studied in <a href="http://
 <br> &nbsp; &mdash; Read something about us  
 <br> &nbsp; &mdash; Select and track the chapters. Each chapter contains one or multiple case studies. These will be displayed in a sub-menu once the chapter is selected. The cases with a red border contain a dynamic figure.
 <br> &bull; The center displays a map of the world. The focus of the map will change according to the case being viewed. It is also possible to click on a country to explore only the cases present in that country.
-<br> &bull; The user may go through cases either by selecting them in the left-hand menu, or by using the left and right arrows.

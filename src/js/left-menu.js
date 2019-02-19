@@ -8,7 +8,7 @@ function buildLeftMenu(){
   chapters = data_loader.chapters;
   cases = data_loader.cases;
   //add chapter number to (main) left-menu
-  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Refresh' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
+  $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Home' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
   $('#left-menu').append("<span id=left-chapter-about class='left-chapter-helper' title='About Us' onclick=openAbout();><i class='fas fa-address-card'></i></span><hr>");
   $('#left-menu').append("<span id='left-chapter-mechanism' class='left-chapter-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-cog'></i></span><hr>");
