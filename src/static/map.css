@@ -193,15 +193,14 @@ html, body {
 }
 
 #bottom-menu {
-  position: absolute;
-  bottom: 0;
-  top: 20vh;
-  right: 3vw;
-  height: 4vh;
-  z-index: 100;
-  text-align: center;
-  border-radius: 20%;
-  font-family: 'Righteous', cursive;
+    position:absolute;
+    bottom:0;
+    height: 4vh;
+    z-index: 100;
+    text-align:center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 2vh 2vh 0 0;
+    font-family: 'Righteous', cursive;
 }
 
 #mechanism-menu {
@@ -244,17 +243,17 @@ html, body {
 
 .bottom-menu-element{
   height: 3vh;
-  width: 9vw;
+  width: 12vh;
   background-color: black;
-  border-radius: 10px;
+  border-radius: 20%;
   display: inline-block;
   color: white;
-  margin-right: 0.5vh;
+  margin-right: 1vh;
   margin-top: 0.5vh;
-  margin-left: 0.5vw;
+  margin-left: 1vh;
   font-size: 1.5vh;
   line-height: 3vh;
-  background-color: rgb(3, 59, 15);
+  background-color : rgb(3, 59, 15);
 }
 span {
   display: inline-flex;

@@ -15,9 +15,12 @@ async function handleCountryClick(layer) {
   //clean dynamic figure on map (if any)
   clean_layers();
   //country clicked was active, go back back to default view
-  if (data_loader.active_country.name == layer.feature.properties.name){
+  if ((data_loader.active_country.name == layer.feature.properties.name)
+      &&(!data_loader.browsing_all_cases)){
     //reset to world
     data_loader.active_country = data_loader.countries['World'];
+    //browsing all cases again
+    data_loader.browsing_all_cases = true;
     //resets map layers
     refreshLayers()
     //highlight layer of country left (in case still hovering)
@@ -29,6 +32,8 @@ async function handleCountryClick(layer) {
   else{
     //set new active country
     data_loader.active_country = data_loader.countries[layer.feature.properties.name];
+    //browsing a subset of the cases
+    data_loader.browsing_all_cases = false;
     //resets map layers
     refreshLayers()
     //display country name

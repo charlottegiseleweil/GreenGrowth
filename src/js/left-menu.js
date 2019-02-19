@@ -11,12 +11,15 @@ function buildLeftMenu(){
   $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Home' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
   $('#left-menu').append("<span id=left-chapter-about class='left-chapter-helper' title='About Us' onclick=openAbout();><i class='fas fa-address-card'></i></span><hr>");
-  $('#left-menu').append("<span id='left-chapter-mechanism' class='left-chapter-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-cog'></i></span><hr>");
+  //$('#left-menu').append("<span id='left-chapter-mechanism' class='left-chapter-helper mechanism-button' title='Mechanisms' onclick=openNav();><i class='fas fa-cog'></i></span><hr>");
 
   add_tooltip("#left-menu #left-chapter-home");
   add_tooltip("#left-menu #left-chapter-question");
   add_tooltip("#left-menu #left-chapter-about");
   add_tooltip("#left-menu #left-chapter-mechanism");
+
+  //$('#bottom-menu').append("<span id='by-type-button' class='bottom-menu-element' title='Browse by type' onclick='openNav();'>By Type</span>");
+
   refresh_left_menu();
   //$('#left-menu').append("<span id=left-chapter-0 class='left-chapter' title='Overview' onclick=caseClick("+0+","+1+");>" +0+ "</span>");
 }
@@ -69,8 +72,8 @@ async function home_menu(){
 
   //clean the map of dynamic figues
   await clean_layers();
-  //remove country name display
-  $("#country-display-panel").hide();
+
+
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
   //resets layers
@@ -85,7 +88,8 @@ async function home_menu(){
   await buildRightMenu();
   await buildLeftMenu();
   $(".tooltip").hide();
-
+  //remove country name display
+    //$("#country-display-panel").hide();
   $("#country-display-panel-reg").hide();
   $("#country-display-panel-mech").hide();
 
@@ -112,7 +116,7 @@ function openAbout() {
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
   $("#myNav").load("static/mechanism.html", function(){
-    if(data_loader.active_country.name=='World'){
+    if(data_loader.browsing_all_cases){
       $("#country-display-panel-mech").hide()
     }
     else{
