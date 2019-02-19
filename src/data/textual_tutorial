@@ -7,4 +7,5 @@ This application gives a brief overview of the cases studied in <a href="http://
 <br> &nbsp; &mdash; Start a more descriptive tutorial  
 <br> &nbsp; &mdash; Read something about us  
 <br> &nbsp; &mdash; Select and track the chapters. Each chapter contains one or multiple case studies. These will be displayed in a sub-menu once the chapter is selected. The cases with a red border contain a dynamic figure.
+<br> &nbsp; &mdash; Open a window presenting the types of mechanisms that case studies use in the book.
 <br> &bull; The center displays a map of the world. The focus of the map will change according to the case being viewed. It is also possible to click on a country to explore only the cases present in that country.

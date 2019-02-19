@@ -35,7 +35,7 @@ async function handleCountryClick(layer) {
     //browsing a subset of the cases
     data_loader.browsing_all_cases = false;
     //resets map layers
-    refreshLayers()
+    await refreshLayers()
     //display country name
     $("#country-display-reg").html(data_loader.active_country.name.toUpperCase());
     $('#country-display-panel-reg').slideDown( "slow",  function() {});
@@ -44,12 +44,13 @@ async function handleCountryClick(layer) {
     //$("#country-display-panel-mech").show();
 
   }
-  //zoom to country
-  zoom_to(data_loader.active_country, true);
-  console.log("moved to: "+data_loader.active_country.name);
   //use all data again
   await data_loader.prepareDataframes()
   //rebuild left and right menu
   buildRightMenu();
   buildLeftMenu();
+  display_figure(data_loader.active_case);
+  //zoom to country
+  zoom_to(data_loader.active_country, true);
+  console.log("moved to: "+data_loader.active_country.name);
 }

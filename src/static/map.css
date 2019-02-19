@@ -178,12 +178,16 @@ html, body {
     text-align : center;
 }
 
-
+#left-menu-panel{
+  position:absolute;
+  top:10vh;
+  left:0vh;
+}
 
 #left-menu {
-    display: block;
-    position:absolute;
-    top:10vh;
+    position:relative;
+    display: inline-block;
+    top:0vh;
     width: 4vh;
     z-index: 100;
     text-align:center;
@@ -192,15 +196,27 @@ html, body {
     font-family: 'Righteous', cursive;
 }
 
-#bottom-menu {
+#by-type-button-panel {
     position:absolute;
     bottom:0;
     height: 4vh;
     z-index: 100;
     text-align:center;
     background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 2vh 2vh 0 0;
+    border-radius: 0 2vh 0 0;
     font-family: 'Righteous', cursive;
+}
+
+
+#back-button-panel {
+  position:relative;
+  top:6vh;
+  display: block;
+  z-index: 100;
+  text-align:center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 0 2vh 2vh 0;
+  font-family: 'Righteous', cursive;
 }
 
 #mechanism-menu {
@@ -241,20 +257,37 @@ html, body {
   background-color : rgb(3, 59, 15);
 }
 
-.bottom-menu-element{
+#by-type-button{
   height: 3vh;
-  width: 12vh;
+  width: 8vh;
   background-color: black;
   border-radius: 20%;
   display: inline-block;
   color: white;
   margin-right: 1vh;
   margin-top: 0.5vh;
-  margin-left: 1vh;
+  margin-left: 0.5vh;
   font-size: 1.5vh;
   line-height: 3vh;
   background-color : rgb(3, 59, 15);
 }
+
+#back-button{
+  height: 3vh;
+  width: 6vh;
+  background-color: black;
+  border-radius: 20%;
+  display: inline-block;
+  color: white;
+  margin-right: 1vh;
+  margin-top: 0.5vh;
+  margin-left: 1.5vh;
+  margin-bottom: 0.5vh;
+  font-size: 1.5vh;
+  line-height: 3vh;
+  background-color : rgb(3, 59, 15);
+}
+
 span {
   display: inline-flex;
   align-items: center;
