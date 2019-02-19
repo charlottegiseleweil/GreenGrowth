@@ -17,8 +17,8 @@ function buildRightMenu(){
         //case
         $('#right-menu-body').append("<p id=right-case-"+cases[i].id+" class=right-case></p>")
         //case title
-        if (cases[i].id.split('-')[0]==0) //special case for arrival page
-          $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i]["title"]+"</b></h5>")
+        if (cases[i].id.split('-')[0]==0) //special case for overview page
+          $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i].title+"</b></h5>")
         else
           $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i].id+": "+cases[i]["title"]+"</b></h5>")
         //case summary and (ambiance) images if available
@@ -36,6 +36,11 @@ function buildRightMenu(){
         else {
             $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+"-summary+ class=text-body>"+cases[i].summary+ "</p>")
         }
+        //add second summary to overview page
+        if (cases[i].id.split('-')[0]==0){
+          $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i].titleSecond+"</b></h5>")
+          $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+"-summary+ class=text-body>"+cases[i].summarySecond+ "</p>")
+        }
         //adds figures of right menu (static and dynamic)
         add_right_menu_figure(cases[i]);
         startGallery('gallery'+cases[i].id);
@@ -43,7 +48,7 @@ function buildRightMenu(){
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();
     startGallery('mechanism-img-gallery');
-    
+
 }
 
 // add figures on right menu

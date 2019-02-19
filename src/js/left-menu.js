@@ -37,7 +37,7 @@ function caseClick(chapter_id,case_id){
 
 
   //special handling for intro case, resets to default
-  if(data_loader.active_case.chapter.title=="Introduction") {
+  if(data_loader.active_case.chapter.id=="0") {
       //update chapter title
       $('#right-subtitle').html(data_loader.active_case.chapter.title)
       //home_menu();
