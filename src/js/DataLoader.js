@@ -9,6 +9,7 @@ class DataLoader {
         this.countries = [];
         this.mechanisms = {};
         this.active_country = null;
+        this.browsing_all_cases = true;
         this.progress_bar = {
             progress: 0,
             get _progress() { return this.progress; },
