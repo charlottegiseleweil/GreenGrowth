@@ -119,6 +119,8 @@ async prepareDataframes(){
       let intro_case = new Case(case_id,other_elems[0],intro_chapter, this.countries['World'])
       this.chapters[intro_chapter.id].add_case(intro_case);
       this.cases[intro_case.id]= intro_case;
+      this.cases[intro_case.id]['titleSecond'] = other_elems[0]["nameSecond"]
+      this.cases[intro_case.id]['summarySecond'] = other_elems[0]["summarySecond"]
       case_id++;
     }
     let chapter_id=null;
