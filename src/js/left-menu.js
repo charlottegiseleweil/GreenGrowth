@@ -76,6 +76,8 @@ async function home_menu(){
 
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
+  //browsing all cases again
+  data_loader.browsing_all_cases = true;
   //resets layers
   await refreshLayers();
   await buildLeftMenu();
@@ -163,6 +165,8 @@ function refresh_left_menu(){
       $("#left-menu-sub-"+current_chapter.id).append('<p class="left-menu-cases-name">CASES</p>');
     }
 
+
+
     //add a chapter button, note that here onClick calls caseClick on the first case
     if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
     else{
@@ -177,13 +181,22 @@ function refresh_left_menu(){
   }
 
   $('#left-menu').append('<p class="left-menu-name">'+"CHAPTERS"+'</p>');
+  //back button when browsing a country
+  if(data_loader.browsing_all_cases){
+    $('#back-button-panel').hide();
+  }
+  else{
+    $('#back-button-panel').show();
+    //$('#back-button-panel').show();
+  }
+
 
   //[left-menu] set the color on active chapter button
   $('#left-chapter-'+data_loader.active_case.chapter.id).css('background-color', 'hsl(129, 67%, 64%)')
 
   //[left-menu] display submenu of active chapter (and not others)
   $(".left-menu-sub").hide()
-  $("#left-menu-sub-"+data_loader.active_case.chapter.id).show()
+  $("#left-menu-sub-"+data_loader.active_case.chapter.id).show();
 
   //[left-menu] set the color on active case button
   $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')
