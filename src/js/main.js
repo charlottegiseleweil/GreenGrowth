@@ -15,8 +15,9 @@ const load_data = async function(){
       //load and prepare dataframes
       data_loader.prepareDataframes();
       //preload the data of the dynamic figures (slow)
-      data_loader.preloadDynamicFigures();
-      //setTimeout(function(){$('.progress').trigger('loaded')}, 600)
+      // Comment line below, and uncomment following one for running locally w/o loading dynamic figs
+      //data_loader.preloadDynamicFigures();
+      setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }
 
@@ -27,14 +28,15 @@ function open_page() {
 
   $(".opening-page").fadeOut( 1000, function() {
       $(".opening-page").remove();
-      map.addLayer(Esri_WorldImagery);// add tile layer
+      map.addLayer(Esri_WorldImagery1);// add tile layer
+      map.addLayer(CartoDB_VoyagerOnlyLabels);
       $(".mapbox").css({'display': 'block'});
       map.invalidateSize();
 
       $.getJSON('./data/countries.geojson', function(data) {//add layer of boundaries of filtered countries
           geojson = L.geoJson(data, {
               filter: filter_countries,
-              style: myStyle,
+              style: countriesBaseStyle,
               onEachFeature: onEachFeature,
               scrollWheelZoom: false}).addTo(map);
       });
