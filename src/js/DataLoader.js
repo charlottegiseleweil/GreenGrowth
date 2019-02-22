@@ -137,7 +137,6 @@ async prepareDataframes(){
     for(var i=0;i<case_studies.length;i++){
       if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
       &&(this.active_country.name=='World'||this.active_country.name==case_studies[i]['country'])){
-
         //fetch and populate with the actual data
         if (chapter_id != case_studies[i]["ch_no"]){
           if (current_chapter!=null)

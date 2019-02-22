@@ -158,7 +158,7 @@ function case_8_1_fig1() {
     };
 
     case_8_1_fig1_legend.addTo(map);
-    add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
+    add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Areas (ARPA)");
 
 };
 
