@@ -15,6 +15,11 @@
     'Costa Rica'
  ]
 
+ 
+
+
+
+
  //filter out the countries which have no related case study
  function filter_countries(data) {
      if (COUNTRIES.includes(data.properties.admin)){

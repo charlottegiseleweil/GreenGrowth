@@ -70,7 +70,7 @@ function open_page() {
           ],
           showStepNumbers:false
     });
-
+    //map.addLayer( markerClusters );
     //intro.start();//start user-guide
 
   });

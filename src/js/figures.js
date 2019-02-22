@@ -6,13 +6,13 @@ function display_figure(case_){
     clean_layers()
     switch(case_.id){
       case '6-1':
-        //case_6_1_fig2()
+        case_6_1_fig2()
         break
       case '6-3':
         case_6_3_fig1();
         break
       case '7-2':
-        case_7_2_fig1_layer.addTo(map);
+        case_7_2_fig1();
         break
       case '7-4':
         case_7_4_fig1_layer.addTo(map);
@@ -29,7 +29,10 @@ function display_figure(case_){
 }
 
 
-
+function case_7_2_fig1(){
+    map.addLayer( case_7_2_fig1_clusters );
+    //case_7_2_fig1_layer.addTo(map);
+}
 
 
 function case_6_1_fig2() {
@@ -263,7 +266,7 @@ function clean_layers(){
 
   //case_7_2_fig1
   else if(previous_active_case.id=='7-2'){
-    map.removeLayer(case_7_2_fig1_layer);
+    map.removeLayer(case_7_2_fig1_clusters);
   }
 
   //case_7_4_fig1

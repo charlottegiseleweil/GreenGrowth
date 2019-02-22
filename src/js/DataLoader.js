@@ -33,7 +33,7 @@ class DataLoader {
         //preload case_6_1-2
         choropleth_map_county = await shp("data/county/counties");
         this.progress_bar._progress += 20;
-        var data = await $.getJSON('data/mitigation_bank.json');
+
         case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
 
         case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2016'],[0, 0, 1, 5, 10],true,2);
@@ -45,13 +45,38 @@ class DataLoader {
 
 
         //preload case 7_2-1
+        //var myURL = jQuery( 'script[src$="DataLoader.js"]' ).attr( 'src' ).replace( 'DataLoader.js', '' );
+
+        var myIcon = L.icon({
+           iconUrl: './static/marker/pin24.png',
+           iconRetinaUrl: './static/marker/pin48.png',
+           iconSize: [29, 24],
+           iconAnchor: [9, 21],
+           popupAnchor: [0, -14]
+         });
+
+         case_7_2_fig1_clusters = L.markerClusterGroup();
+
+         for ( var i = 0; i < markers_7_2.length; ++i )
+         {
+           var popup = '<b>'+markers_7_2[i].Name+'</b>' +
+                       '<br/><u>Bank Type:</u> ' + markers_7_2[i].Bank_Type +
+                       '<br/><u>Bank Status:</u> ' + markers_7_2[i].Bank_Status;
+
+           var m = L.marker( [markers_7_2[i].lat, markers_7_2[i].lng], {icon: myIcon} )
+                           .bindPopup( popup );
+
+           case_7_2_fig1_clusters.addLayer( m );
+         }
+       /*
+        var data = await $.getJSON('data/mitigation_bank.json');
         case_7_2_fig1_layer = L.geoJson(data, {
             pointToLayer: function (feature, latlng) {
                 let label = String(feature.properties.NUMPOINTS)
                 return new L.circleMarker(latlng, geojsonMarkerOptions).bindTooltip(label, {permanent: true, opacity: 0.7}).openTooltip();
             }
         });
-
+        */
 
         this.progress_bar._progress += 20;
         //preload case_7_4-1
@@ -77,7 +102,7 @@ class DataLoader {
         geojson = await shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w");
         case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {"color": "#00994c","opacity": 0.65}});
 
-        data = await $.getJSON('data/brazil/amapoly_ivb.json');
+        var data = await $.getJSON('data/brazil/amapoly_ivb.json');
         case_8_1_fig1_layer2 = L.geoJson(data, {style: {"color": "#665BCE"}});
 
         data = await $.getJSON('data/brazil/amazonriver_865.json');
@@ -190,7 +215,7 @@ var waterfund_markers={}
 var lineplot_data;
 var case_6_1_fig3_data;
 var case_6_1_fig2_data;
-var case_7_2_fig1_layer;
+var case_7_2_fig1_clusters;
 var case_7_4_fig1_layer;
 var case_9_1_fig1_data;
 var choropleth_map_county;
