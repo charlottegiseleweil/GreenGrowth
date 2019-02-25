@@ -6,6 +6,7 @@ function display_figure(case_){
     clean_layers()
     switch(case_.id){
       case '6-1':
+        case_6_1_fig2();
         //case_6_1_fig2()
         break
       case '6-3':
@@ -67,8 +68,16 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
                 choropleth_fips[data[i]['FIPS']]= parseInt( data[i][year])/2.4711;
             }
         }
+        let colors=[]
+        if(fig==3){
+            colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
+            choropleth_map_objs[year+'geo-'+fig] = L.geoJson(choropleth_map_county, {style: style_red, time: year})
+        }
+        else{
+            colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073']
+            choropleth_map_objs[year+'geo-'+fig] = L.geoJson(choropleth_map_county, {style: style_blue, time: year})
+        }
 
-        choropleth_map_objs[year+'geo-'+fig] = L.geoJson(choropleth_map_county, {style: style, time: year})
         layers.push(choropleth_map_objs[year+'geo-'+fig]);
 
         choropleth_map_objs['legend-'+fig] = L.control({position: 'bottomleft'});
@@ -81,7 +90,7 @@ function case_6_1_choropleth_from_csv(data, year_list,grades,percent,fig){
             else if(fig=='3'){
                 categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','40 - 50 USD/ha','> 80 USD/ha'];
             }
-            colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
+
             lgnd = [];
 
             for (var i = 0; i < categories.length; i++) {
@@ -325,7 +334,7 @@ function get_marker_color(phase){
 }
 
 // get colors of legend
-function getColor(d,grades) {
+function getColor_reddish(d,grades) {
     return d > grades[4] ?  '#800026' :
            d > grades[3] ?  '#BD0026' :
            d > grades[2] ?  '#E31A1C' :
@@ -333,6 +342,13 @@ function getColor(d,grades) {
                             '#FFFFFF' ;
 }
 
+function getColor_blueish(d,grades) {
+    return d > grades[4] ?  '#005073' :
+           d > grades[3] ?  '#107dac' :
+           d > grades[2] ?  '#189ad3' :
+           d > grades[1] ?  '#71c7ec' :
+                            '#FFFFFF' ;
+}
 //return sum of given array
 function sum_values(data,column){
     var sum=0.0;
@@ -343,9 +359,9 @@ function sum_values(data,column){
 }
 
 //get colors of choropleth
-function style(feature) {
+function style_blue(feature) {
     return {
-        fillColor: getColor(choropleth_fips[feature.properties.fips],choropleth_fips['grades']),
+        fillColor: getColor_blueish(choropleth_fips[feature.properties.fips],choropleth_fips['grades']),
         weight: 1,
         opacity: 1,
         color: 'white',
@@ -353,7 +369,16 @@ function style(feature) {
         fillOpacity: 0.7
     };
 }
-
+function style_red(feature) {
+    return {
+        fillColor: getColor_reddish(choropleth_fips[feature.properties.fips],choropleth_fips['grades']),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
 //set map to show whole world
 function view_world(){
   map.setView([20.0, 0.0], 3);

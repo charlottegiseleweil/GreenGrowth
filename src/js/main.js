@@ -16,7 +16,7 @@ const load_data = async function(){
       data_loader.prepareDataframes();
       //preload the data of the dynamic figures (slow)
       // Comment line below, and uncomment following one for running locally w/o loading dynamic figs
-      //data_loader.preloadDynamicFigures();
+      data_loader.preloadDynamicFigures();
       setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }
