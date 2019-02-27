@@ -1,29 +1,32 @@
 let previous_active_case = '0-0';
-
+var color;
 // display dynamic figures (on map) for cases (subchapter) that have one
 function display_figure(case_){
   //if (true){
     clean_layers()
     switch(case_.id){
-      case '6-1':
+        case '6-1':
         case_6_1_fig2();
         //case_6_1_fig2()
-        break
-      case '6-3':
-        case_6_3_fig1();
-        break
-      case '7-2':
-        case_7_2_fig1_layer.addTo(map);
-        break
-      case '7-4':
-        case_7_4_fig1_layer.addTo(map);
-        break
-      case '8-1':
-        case_8_1_fig1();
-        break
-      case '9-1':
-        case_9_1_fig1();
-        break
+            break
+        case '6-3':
+            case_6_3_fig1();
+            break
+        case '7-1':
+            case_7_1_show_layers();
+            break
+        case '7-2':
+            case_7_2_fig1_layer.addTo(map);
+            break
+        case '7-4':
+            case_7_4_fig1_layer.addTo(map);
+            break
+        case '8-1':
+            case_8_1_fig1();
+            break
+        case '9-1':
+            case_9_1_fig1();
+            break
     }
     previous_active_case = case_;
   //}
@@ -31,6 +34,11 @@ function display_figure(case_){
 
 
 
+function case_7_1_show_layers(){
+    for (var layer in case_7_1_fig1_layer_group['layers']){
+        map.addLayer(case_7_1_fig1_layer_group['layers'][layer]);
+    }
+};
 
 
 function case_6_1_fig2() {
@@ -142,6 +150,21 @@ function case_6_3_fig1() {
 
 
 };
+
+function case_7_1_create_layers(){
+    let colors=['#71c7ec', 'red', 'yellow', '#ffffff'];
+    let overlay_maps={}
+    for (var i in case_7_1_fig1_layer){
+        color=colors[i];
+        overlay_maps[i] = new L.Shapefile(case_7_1_fig1_layer[i], {style:style});
+        console.log("7.1",i,case_7_1_fig1_layer[i]);
+    }
+//create layer control by adding layer groups
+    case_7_1_fig1_layer_group['layers']=overlay_maps;
+    return;
+}
+
+
 
 function case_8_1_fig1() {
     //add layers of ARPA
@@ -269,6 +292,12 @@ function clean_layers(){
         }
     });
   }
+  //case_7_1_fig1
+  else if(previous_active_case.id=='7-1'){
+    for (var layer in case_7_1_fig1_layer_group['layers']){
+        map.removeLayer(case_7_1_fig1_layer_group['layers'][layer])
+    }
+}
 
   //case_7_2_fig1
   else if(previous_active_case.id=='7-2'){
@@ -379,6 +408,19 @@ function style_red(feature) {
         fillOpacity: 0.7
     };
 }
+
+function style(feature) {
+    console.log(color);
+    return {
+        fillColor: color,
+        weight: 2,
+        opacity: 1,
+        color: color,
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
 //set map to show whole world
 function view_world(){
   map.setView([20.0, 0.0], 3);

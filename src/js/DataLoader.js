@@ -43,6 +43,14 @@ class DataLoader {
         case_6_1_choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,3);
         this.progress_bar._progress += 20;
 
+        //preload case 7_2-1
+        let case_7_1_files=["NHDArea","NHDLine","WBDLine"];
+        for (var file in case_7_1_files){
+            let shape_file = await shp("data/7.1/"+case_7_1_files[file]);
+            case_7_1_fig1_layer.push(shape_file);
+        }
+        case_7_1_create_layers();
+        
 
         //preload case 7_2-1
         case_7_2_fig1_layer = L.geoJson(data, {
@@ -192,6 +200,8 @@ var lineplot_data;
 var case_6_1_fig3_data;
 var case_6_1_fig2_data;
 var case_7_2_fig1_layer;
+var case_7_1_fig1_layer=[];
+var case_7_1_fig1_layer_group={};
 var case_7_4_fig1_layer;
 var case_9_1_fig1_data;
 var choropleth_map_county;

@@ -14,6 +14,5 @@ class Case{
         this.has_static_fig = false;
         this.static_fig_title = "none";
         this.figures = []
-
     }
 }
