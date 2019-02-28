@@ -507,9 +507,9 @@ p {
   .overlay a {
     padding: 8px;
     text-decoration: none;
-    font-size: 36px;
+    font-size: inherit;
     color: #818181;
-    display: block;
+    display: inline;
     transition: 0.3s;
   }
 

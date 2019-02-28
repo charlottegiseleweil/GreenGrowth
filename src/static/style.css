@@ -1,0 +1,10 @@
+.inline-icon{
+    display: inline;
+    width: 100%;
+}
+
+a.inline-icon{
+	display: inline;
+	font-size: inherit;
+	vertical-align: text-bottom;
+}
