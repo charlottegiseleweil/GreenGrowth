@@ -6,7 +6,7 @@
 Green Growth the Works provides a practical guide to the policies and finance mechanisms for securing and enhancing natural capital and ecosystem service benefits around the world. Through a series of case studies – contributed by experts from the natural and social sciences, government, private companies, financial institutions, and civil society organizations – Green Growth the Works addresses key questions including: How can economic and other incentives be channeled to make conservation and restoration attractive and mainstream? Which approaches have been successful, under what conditions? What roles can governments, businesses, landowners, nongovernmental organizations, and other actors play, and how can they complement each other? What are the opportunities to scale and improve these successful models?
 
 
-- [Buy the book!](this link will be available soon)
+- [Buy the book!](http://this_link_will_be_available.soon)
 - [Green Growth Explorer](https://charlottegiseleweil.github.io/GreenGrowth/src/)
 
 ## Contributors
