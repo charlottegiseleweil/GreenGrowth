@@ -2,6 +2,7 @@ class Case{
 
     constructor(index,case_, chapter, country, mechanism){
         this.id  = case_["number"].replace(".","-");
+        console.log(this.id);
         this.title = case_["name"];
         this.country = country;
         this.mechanism = mechanism;
@@ -13,6 +14,12 @@ class Case{
         this.has_dynamic_fig = case_['dynamic'];
         this.has_static_fig = false;
         this.static_fig_title = "none";
-        this.figures = []
+        this.figures = [];
+        this.files = [];
+        this.layers = {};
+        this.data=null;
+        this.show = function(){}
+        this.hide = function(){}
+        this.create_data = function(){}
     }
 }

@@ -1,6 +1,6 @@
 var data_loader = new DataLoader();
 var intro;
-const load_data = async function(){
+async function load_data(){
     $('.mfp-close').on("click",function() {
         startKeyListener();
         console.log("Start key listener");
@@ -11,12 +11,12 @@ const load_data = async function(){
           $('.progress').hide();
           open_page();
     });
-
+    //value="start";
+    data_loader.prepareDataframes();     
       //load and prepare dataframes
-      data_loader.prepareDataframes();
+
       //preload the data of the dynamic figures (slow)
       // Comment line below, and uncomment following one for running locally w/o loading dynamic figs
-      data_loader.preloadDynamicFigures();
       setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }

@@ -4,7 +4,7 @@ class DataLoader {
 
         this.geojson;
         this.chapters = [];
-        this.cases = [];
+        this.cases = {};
         this.active_case = null;
         this.countries = [];
         this.mechanisms = {};
@@ -21,80 +21,32 @@ class DataLoader {
     //read csv files, meanwhile update progress bar and create all leaflet layers on pre-loading page
     async preloadDynamicFigures() {
         //preload 6_1-1
-        lineplot_data = await d3.csv("data/line_plot.csv");
-
-        for(var i=0;i<lineplot_data.length;i++){
-            data_points_acres.push({x: parseInt(lineplot_data[i]['yr'],10) ,y:lineplot_data[i]['Total_Acres']/1000000})
-            data_points_money.push({x: parseInt(lineplot_data[i]['yr'],10),y:lineplot_data[i]['Total_Money']/1000000})
-        }
-
-        this.progress_bar._progress += 20;
-
-        //preload case_6_1-2
-        choropleth_map_county = await shp("data/county/counties");
-        this.progress_bar._progress += 20;
-        var data = await $.getJSON('data/mitigation_bank.json');
-        case_6_1_fig2_data = await d3.csv("data/acres_new.csv");
-
-        case_6_1_choropleth_from_csv(case_6_1_fig2_data, ['2016'],[0, 0, 1, 5, 10],true,2);
-
-        //preload case_6_1-3
-        case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
-        case_6_1_choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,3);
-        this.progress_bar._progress += 20;
-
-        //preload case 7_2-1
-        let case_7_1_files=["NHDArea","NHDLine","WBDLine"];
-        for (var file in case_7_1_files){
-            let shape_file = await shp("data/7.1/"+case_7_1_files[file]);
-            case_7_1_fig1_layer.push(shape_file);
-        }
-        case_7_1_create_layers();
-        
-
-        //preload case 7_2-1
-        case_7_2_fig1_layer = L.geoJson(data, {
-            pointToLayer: function (feature, latlng) {
-                let label = String(feature.properties.NUMPOINTS)
-                return new L.circleMarker(latlng, geojsonMarkerOptions).bindTooltip(label, {permanent: true, opacity: 0.7}).openTooltip();
-            }
-        });
-
-
-        this.progress_bar._progress += 20;
-        //preload case_7_4-1
-        var geojson = await shp("data/forest/forest.offset.projects.updated2017");
-        case_7_4_fig1_layer = L.geoJson(geojson, {
-            pointToLayer: function (feature, latlng) {
-                return new L.marker(latlng, {
-                    icon: L.divIcon({
-                    html: '<i class="fa fa-tree" aria-hidden="true" style="color:blue"></i>',
-                    className: 'myDivIcon'
-                    })
-                }).bindPopup('<i>'+String(feature.properties.NAME)+'</i><br>'+String(feature.properties.Area2)+' <strong>hectares.</strong>').on('mouseover', function (e) {
-                    this.openPopup();
-                }).on('mouseout', function (e) {
-                    this.closePopup();
-                });
-            }
-        })
-
-
-
-        case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");
-        geojson = await shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w");
-        case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {"color": "#00994c","opacity": 0.65}});
-
-        data = await $.getJSON('data/brazil/amapoly_ivb.json');
-        case_8_1_fig1_layer2 = L.geoJson(data, {style: {"color": "#665BCE"}});
-
-        data = await $.getJSON('data/brazil/amazonriver_865.json');
-        case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
-
-        this.progress_bar._progress += 20;
-        $('#country-display-panel-reg').hide()
+        data_loader.cases['6-1'].create_data();
+        this.progress_bar._progress += 10;        
+        data_loader.cases['6-2'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['7-1'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['7-2'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['7-3'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['7-4'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['9-1'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['8-1'].create_data();
+        data_loader.cases['8-2'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['10-3'].create_data();
+        this.progress_bar._progress += 10;
+        data_loader.cases['13-1'].create_data();
+        this.progress_bar._progress += 10;
 
         setTimeout(function(){$('.progress').trigger('loaded')}, 600);
+        $('#country-display-panel-reg').hide()
+        return "-dynamic";
+        
     }
 
 async prepareDataframes(){
@@ -115,8 +67,6 @@ async prepareDataframes(){
       let new_mechanism = new Mechanism(csv_mechanisms[i]["name"], csv_mechanisms[i]["code"]);
       this.mechanisms[new_mechanism.name] = new_mechanism;
     }
-
-
 
     let case_id = 0;
 
@@ -183,13 +133,15 @@ async prepareDataframes(){
 
       }
     }
-
-  }
+    console.log("return prep",this.cases);
+    construct_cases();  
+    return "prep";
+    }
 }
 
 //used as data selecter
 let only_dynamic_figs = false;
-
+var data_loaded=false;
 //used in figures (must clean)
 var choropleth_fips={}
 var choropleth_map_objs = {}

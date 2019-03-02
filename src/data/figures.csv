@@ -24,6 +24,6 @@ ch_no,case_no,fig_no from google doc,fig_no,name,description,dynamic,static
 16,16.1,16.1,1,Belize scenarios,,,TRUE
 17,17,17.1,1,Clément ES initiatives,,,
 17,17,17.2,2,Clément Bordeaux ES trade-offs,,,
-17,17.1,17.1,1,Hamel: Yarra Ranges Council loc,,,
-17,17.2,17.3,1,Hamel: Nantes+Bdx location,,,
+17,17.1,17.1,1,Hamel: Yarra Ranges Council loc,,,TRUE
+17,17.2,17.3,1,Hamel: Nantes+Bdx location,,,TRUE
 17,17.3,17.3,1,Hamel: Nantes+Bdx location,,,

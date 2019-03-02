@@ -6,8 +6,11 @@ function display_figure(case_){
     clean_layers()
     switch(case_.id){
         case '6-1':
-        case_6_1_fig2();
+            case_6_1_fig2();
         //case_6_1_fig2()
+            break
+        case '6-2':
+            data_loader.cases['6-2'].show();        
             break
         case '6-3':
             case_6_3_fig1();
@@ -18,16 +21,29 @@ function display_figure(case_){
         case '7-2':
             case_7_2_fig1_layer.addTo(map);
             break
+        case '7-3':
+            data_loader.cases['7-3'].show();        
+            break
         case '7-4':
             case_7_4_fig1_layer.addTo(map);
             break
         case '8-1':
             case_8_1_fig1();
             break
+        case '8-2':
+            console.log("8-2");
+            data_loader.cases['8-2'].show();
+            break
         case '9-1':
             case_9_1_fig1();
             break
-    }
+        case '10-3':
+            data_loader.cases['10-3'].show();
+            break
+        case '13-1':
+            data_loader.cases['13-1'].show();
+            break
+        }
     previous_active_case = case_;
   //}
 }
@@ -297,7 +313,7 @@ function clean_layers(){
     for (var layer in case_7_1_fig1_layer_group['layers']){
         map.removeLayer(case_7_1_fig1_layer_group['layers'][layer])
     }
-}
+    }
 
   //case_7_2_fig1
   else if(previous_active_case.id=='7-2'){
@@ -316,7 +332,9 @@ function clean_layers(){
     map.removeLayer(case_8_1_fig1_layer3);
     map.removeControl(case_8_1_fig1_legend);
   }
-
+  else if(previous_active_case.id=='8-2'){
+    data_loader.cases['8-2'].hide();
+  }
   //case_9_1_fig1
   else if(previous_active_case.id=='9-1'){
     waterfund_markers=[]
@@ -329,7 +347,18 @@ function clean_layers(){
     waterfund_objs['phase_4'].clearLayers();
     waterfund_objs['phase_5'].clearLayers();
   }
-
+  else if(previous_active_case.id=='10-3'){
+    data_loader.cases['10-3'].hide();
+  }
+  else if(previous_active_case.id=='13-1'){
+    data_loader.cases['13-1'].hide();
+  }
+  else if(previous_active_case.id=='6-2'){
+    data_loader.cases['6-2'].hide();
+  }
+  else if(previous_active_case.id=='7-3'){
+    data_loader.cases['7-3'].hide();
+  }
 }
 
 //create legends, give grades as parameter
@@ -410,7 +439,6 @@ function style_red(feature) {
 }
 
 function style(feature) {
-    console.log(color);
     return {
         fillColor: color,
         weight: 2,
