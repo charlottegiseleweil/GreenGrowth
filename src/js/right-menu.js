@@ -78,8 +78,8 @@ function add_right_menu_figure(case_){
     case_6_1_fig1();
     //add the two buttons of the figure
     $('#right-case-'+case_.id).append('<div id="button-div"></div><br><br>');
-    $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="case_6_1_fig2();">Enrollment per county</button>');
-    $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="case_6_1_fig3();" style="float:right;">Soil rental rate per county</button><br>');
+    $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="data_loader.cases['+"'6-1'"+'].show(1);">Enrollment per county</button>');
+    $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="data_loader.cases['+"'6-1'"+'].show(2);" style="float:right;">Soil rental rate per county</button><br>');
   }
 
 }
