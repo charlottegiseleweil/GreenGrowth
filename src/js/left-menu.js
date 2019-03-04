@@ -31,7 +31,6 @@ function caseClick(chapter_id,case_id){
 
   data_loader.active_case = data_loader.cases[case_id];
 
-
   //set new active country
   data_loader.active_country =data_loader.cases[case_id].country;
   refreshLayers();

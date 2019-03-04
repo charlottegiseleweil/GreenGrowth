@@ -174,9 +174,7 @@ var waterfund_markers={}
 var lineplot_data;
 var case_6_1_fig3_data;
 var case_6_1_fig2_data;
-var case_7_2_fig1_layer;
-var case_7_1_fig1_layer=[];
-var case_7_1_fig1_layer_group={};
+var case_7_2_fig1_clusters;
 var case_7_4_fig1_layer;
 var case_9_1_fig1_data;
 var choropleth_map_county;
