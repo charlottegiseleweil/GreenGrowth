@@ -256,10 +256,15 @@ html, body {
   line-height: 3vh;
   background-color : rgb(3, 59, 15);
 }
+.nav-link{
+  font-size: 5vw;
+  line-height: 6vh;
+}
+
 
 #by-type-button{
   height: 3vh;
-  width: 8vh;
+  width: 20vh;
   background-color: black;
   border-radius: 20%;
   display: inline-block;
