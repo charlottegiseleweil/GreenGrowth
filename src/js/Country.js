@@ -45,7 +45,7 @@ async function handleCountryClick(layer) {
 
   }
   //use all data again
-  await data_loader.prepareDataframes()
+  await data_loader.selectCases()
   //rebuild left and right menu
   buildRightMenu();
   buildLeftMenu();

@@ -13,37 +13,39 @@ function buildRightMenu(){
 
   cases = data_loader.cases;
   //iterate over cases to add to right menu
-  for (var i in cases){
+  for (var i in data_loader.selected_case_ids){
+        let case_ = data_loader.cases[data_loader.selected_case_ids[i]]
+        //console.log(case_)
         //case
-        $('#right-menu-body').append("<p id=right-case-"+cases[i].id+" class=right-case></p>")
+        $('#right-menu-body').append("<p id=right-case-"+case_.id+" class=right-case></p>")
         //case title
-        if (cases[i].id.split('-')[0]==0) //special case for overview page
-          $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i].title+"</b></h5>")
+        if (case_.id.split('-')[0]==0) //special case for overview page
+          $("#right-case-"+case_.id).append("<h5 id="+case_.id+"-title class=text-body><b>"+case_.title+"</b></h5>")
         else
-          $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i].id+": "+cases[i]["title"]+"</b></h5>")
+          $("#right-case-"+case_.id).append("<h5 id="+case_.id+"-title class=text-body><b>"+case_.id+": "+case_["title"]+"</b></h5>")
         //case summary and (ambiance) images if available
 
-        if (cases[i].num_images){ //
-            $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+'-summary+ class=text-body> <div class ="gallery'+cases[i].id+'" onclick="disableKeyboard();"></div>'+cases[i].summary+'<p>');
-            //$('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
-            $('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a href ="./static/figure_and_images/'+ cases[i].id + '/1.jpg"><img class="case-img"'+cases[i].id+' src="./static/figure_and_images/'+ cases[i].id + '/1.jpg" alt="case-image"></a>');
+        if (case_.num_images){ //
+            $('#right-case-'+case_.id).append("<p id="+case_.id+'-summary+ class=text-body> <div class ="gallery'+case_.id+'" onclick="disableKeyboard();"></div>'+case_.summary+'<p>');
+            //$('#right-case-'+case_.id +' .gallery'+case_.id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
+            $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></a>');
 
-            for (var j=2;j<=parseInt(cases[i].num_images);j++){
-                $('#right-case-'+cases[i].id+' .gallery'+cases[i].id).append('<a href ="./static/figure_and_images/'+ cases[i].id +'/'+ j +'.jpg" class="case-img-hidden><img class="case-img-hidden" src="./static/figure_and_images/'+ cases[i].id + '/'+j+'.jpg" alt="case-image"></a>');
+            for (var j=2;j<=parseInt(case_.num_images);j++){
+                $('#right-case-'+case_.id+' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id +'/'+ j +'.jpg" class="case-img-hidden><img class="case-img-hidden" src="./static/figure_and_images/'+ case_.id + '/'+j+'.jpg" alt="case-image"></a>');
 
             }
         }
         else {
-            $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+"-summary+ class=text-body>"+cases[i].summary+ "</p>")
+            $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary+ class=text-body>"+case_.summary+ "</p>")
         }
         //add second summary to overview page
-        if (cases[i].id.split('-')[0]==0){
-          $("#right-case-"+cases[i].id).append("<h5 id="+cases[i].id+"-title class=text-body><b>"+cases[i].titleSecond+"</b></h5>")
-          $('#right-case-'+cases[i].id).append("<p id="+cases[i].id+"-summary+ class=text-body>"+cases[i].summarySecond+ "</p>")
+        if (case_.id.split('-')[0]==0){
+          $("#right-case-"+case_.id).append("<h5 id="+case_.id+"-title class=text-body><b>"+case_.titleSecond+"</b></h5>")
+          $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary+ class=text-body>"+case_.summarySecond+ "</p>")
         }
         //adds figures of right menu (static and dynamic)
-        add_right_menu_figure(cases[i]);
-        startGallery('gallery'+cases[i].id);
+        add_right_menu_figure(case_);
+        startGallery('gallery'+case_.id);
     }
     $(".right-case").hide();
     $("#right-case-"+data_loader.active_case.id).show();

@@ -2,7 +2,7 @@ class Case{
 
     constructor(index,case_, chapter, country, mechanism){
         this.id  = case_["number"].replace(".","-");
-        console.log(this.id);
+        //console.log(this.id);
         this.title = case_["name"];
         this.country = country;
         this.mechanism = mechanism;

@@ -4,8 +4,10 @@ class DataLoader {
 
         this.geojson;
         this.chapters = [];
+        this.selected_chapter_ids = []
         this.cases = {};
         this.active_case = null;
+        this.selected_case_ids = [];
         this.countries = [];
         this.mechanisms = {};
         this.active_country = null;
@@ -21,26 +23,26 @@ class DataLoader {
     //read csv files, meanwhile update progress bar and create all leaflet layers on pre-loading page
     async preloadDynamicFigures() {
         //preload 6_1-1
-        data_loader.cases['6-1'].create_data();
+        await data_loader.cases['6-1'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['6-2'].create_data();
+        await data_loader.cases['6-2'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['7-1'].create_data();
+        await data_loader.cases['7-1'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['7-2'].create_data();
+        await data_loader.cases['7-2'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['7-3'].create_data();
+        await data_loader.cases['7-3'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['7-4'].create_data();
+        await data_loader.cases['7-4'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['9-1'].create_data();
+        await data_loader.cases['9-1'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['8-1'].create_data();
-        data_loader.cases['8-2'].create_data();
+        await data_loader.cases['8-1'].create_data();
+        await data_loader.cases['8-2'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['10-3'].create_data();
+        await data_loader.cases['10-3'].create_data();
         this.progress_bar._progress += 10;
-        data_loader.cases['13-1'].create_data();
+        await data_loader.cases['13-1'].create_data();
         this.progress_bar._progress += 10;
 
         setTimeout(function(){$('.progress').trigger('loaded')}, 600);
@@ -93,8 +95,7 @@ async prepareDataframes(){
 
     //iterate over each case study
     for(var i=0;i<case_studies.length;i++){
-      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')
-      &&(this.active_country.name=='World'||this.active_country.name==case_studies[i]['country'])){
+      if ((!only_dynamic_figs || case_studies[i]['dynamic']=='TRUE')){
 
         //fetch and populate with the actual data
         if (chapter_id != case_studies[i]["ch_no"]){
@@ -133,11 +134,33 @@ async prepareDataframes(){
 
       }
     }
-    console.log("return prep",this.cases);
-    construct_cases();
+    //console.log("return prep",this.cases);
+    //construct_cases();
     return "prep";
+  }
+
+  async  selectCases(){
+    this.selected_case_ids = [];
+    this.selected_chapter_ids = [];
+    for (var i in this.cases){
+    //  console.log(this.active_country.name)
+    //console.log('test111')
+    //console.log(this.cases[i]['country'])
+       if(this.active_country.name=='World'||this.active_country.name==this.cases[i].country.name){
+         console.log('test')
+         this.selected_case_ids.push(this.cases[i].id)
+         if(!this.selected_chapter_ids.includes(this.cases[i].chapter.id)){
+           this.selected_chapter_ids.push(this.cases[i].chapter.id)
+         }
+       }
     }
+    //console.log(this.active_case)
+    this.active_case = this.cases[this.selected_case_ids[0]]
+  }
+
 }
+
+
 
 //used as data selecter
 let only_dynamic_figs = false;

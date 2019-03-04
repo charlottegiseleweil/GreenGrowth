@@ -2,7 +2,7 @@ async function construct_cases(){
 
     //////////////////CHAPTER 6//////////////////////
     // Case 6-1
-    console.log("cases",data_loader.cases);    
+    console.log("cases",data_loader.cases);
         //create
         data_loader.cases['6-1'].create_data = async function(){
             //preload 6_1-1
@@ -10,10 +10,10 @@ async function construct_cases(){
                     data_points_acres.push({x: parseInt(lineplot_data['yr'],10) ,y:lineplot_data['Total_Acres']/1000000})
                     data_points_money.push({x: parseInt(lineplot_data['yr'],10),y:lineplot_data['Total_Money']/1000000})
             });
-            choropleth_map_county = await shp("data/county/counties");            
+            choropleth_map_county = await shp("data/county/counties");
             case_6_1_fig2_data = await  d3.csv("data/acres_new.csv");
             choropleth_from_csv(case_6_1_fig2_data, ['2016'],[0, 0, 1, 5, 10],true,1);
-    
+
             //preload case_6_1-3
             case_6_1_fig3_data = await d3.csv("data/acres_payments.csv");
             choropleth_from_csv(case_6_1_fig3_data, ['2016'],[0, 0, 20, 40, 80],false,2);
@@ -36,7 +36,7 @@ async function construct_cases(){
             map.removeControl(choropleth_map_objs['legend-1']);
             map.removeControl(choropleth_map_objs['legend-2']);
             //map.removeControl(choropleth_map_objs['slider']);
-        
+
             Object.keys(choropleth_map_objs).forEach(function(key) {
                 map.removeLayer(choropleth_map_objs[key]);
             });
@@ -45,7 +45,7 @@ async function construct_cases(){
     ///////////Case 6-2///////////
     data_loader.cases['6-2'].create_data = async function(a){
         let files=["Aqueducts","Croton_","Incityflow","NY_City","Tunnels","dfw_hudson_river_morphology"];
-        colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073',"#214587"]        
+        colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073',"#214587"]
         let kml_layer = omnivore.kml("data/6-2/doc.kml");
         add_shape_file(this.id,files,colors,kml_layer);
         return;
@@ -56,7 +56,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("6-2")        
+    console.log("6-2")
         return;
     }
     //hide
@@ -66,28 +66,28 @@ async function construct_cases(){
         }
         return;
     }
-    
+
     data_loader.cases['6-3'].show = async function(a){
         var lg;
         var imageUrl = './data/sonuc.png';
-  
+
         case_6_3_fig1_legend = L.control({position: 'bottomleft'});
         geojson.eachLayer(function(layer) {
             if (layer.feature.properties.name == 'South Africa') {
                 layer.setStyle({fillOpacity: 0});
             }
         });
-  
+
         case_6_3_fig1_legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
             categories = ['0 or no data','0 - 5%','5 - 10%','> 10%','Clearing areas'];
             colors = ['#ffffff', '#EBB57D', '#CF6042', '#980001', '#386507']
             lgnd = [];
-  
+
             for (var i = 0; i < categories.length; i++) {
                 div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
             }
-  
+
             div.innerHTML = lgnd.join('<br>');
             return div;
             };
@@ -96,14 +96,14 @@ async function construct_cases(){
         add_legend_to_right_menu(case_6_3_fig1_legend,"6-3","Invasive Alien Species (%)");
         imageBounds = [[-22.046289062500017, 33.80013281250005], [-34.885742187500006, 15.747558593750045]];
         case_6_3_fig1_layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);//add image as overlay on the map using boundaries of South Africa
-        
+
         return;
     }
     data_loader.cases['6-3'].hide = async function(a){
         map.removeLayer(case_6_3_fig1_layer);
         map.removeControl(case_6_3_fig1_legend);
         geojson.eachLayer(function(layer) {
-    
+
             if (layer.feature.properties.name == 'South Africa') {
                 //layer.setStyle({fillOpacity: 0});
                 geojson.resetStyle(layer);
@@ -130,7 +130,7 @@ async function construct_cases(){
         case_7_1_fig1_layer_group['layers']=overlay_maps;
         return;
     }
-    
+
     data_loader.cases['7-1'].show = async function(a){
         for (var layer in case_7_1_fig1_layer_group['layers']){
             map.addLayer(case_7_1_fig1_layer_group['layers'][layer]);
@@ -156,7 +156,7 @@ async function construct_cases(){
         return;
     }
     data_loader.cases['7-2'].show = async function(a){
-        this.layers["geojson"].addTo(map);        
+        this.layers["geojson"].addTo(map);
         return;
     }
     data_loader.cases['7-2'].hide = async function(a){
@@ -166,26 +166,26 @@ async function construct_cases(){
     ///////////// 7-3 //////////////
     data_loader.cases['7-3'].create_data = async function(a){
         let files=["cb_2017_us_state_500k"];
-        colors = ['#ffffff']        
+        colors = ['#ffffff']
         await add_shape_file(this.id,files,colors);
         var markers = [];
-        
+
         d3.csv("data/7-3/CA_Conservation Banks.csv",function(mitigation_data){
-            
+
             //create marker
             var marker = L.marker([mitigation_data['Y'],mitigation_data['X']], {
                 icon: L.divIcon({
                   html: '<i class="fa fa-leaf fa-lg" aria-hidden="true" style="color:green"#234523"></i>',
                   className: 'myDivIcon'
                 })}
-            );            
+            );
             //set values in popup
             marker.bindPopup("<b>Name:</b>" +mitigation_data['Name']+"<br><b>Bank Type:</b>" +mitigation_data['Bank Type']+"<br>"+"<b>Bank Status:</b>"+mitigation_data['Bank Status']).on('mouseover', function (e) {
                 this.openPopup();
             }).on('mouseout', function (e) {
                 this.closePopup();
             });
-//            overlay_maps[mitigation_data['Name']] = marker;      
+//            overlay_maps[mitigation_data['Name']] = marker;
             //data_loader.cases['7-3'].layers[mitigation_data['Name']]= marker;
             markers.push(marker);
         });
@@ -201,16 +201,16 @@ async function construct_cases(){
             this.layers["markers"][i].addTo(map);
         this.layers[0].addTo(map)
     }
-    
+
     //hide
     data_loader.cases['7-3'].hide = async function(a){
         map.removeLayer(this.layers[0])
         for (var i in this.layers["markers"])
             map.removeLayer(this.layers["markers"][i])
-        
+
         return;
     }
-    
+
     //case 7-4
     data_loader.cases['7-4'].create_data = async function(a){
         var geojson = await shp("data/forest/forest.offset.projects.updated2017");
@@ -228,15 +228,15 @@ async function construct_cases(){
                 });
             }
         })
-        console.log("---7-4");        
+        console.log("---7-4");
         return;
     }
     data_loader.cases['7-4'].show = async function(a){
-        this.layers["geojson"].addTo(map);        
+        this.layers["geojson"].addTo(map);
         return;
     }
     data_loader.cases['7-4'].hide = async function(a){
-        map.removeLayer(this.layers["geojson"]);        
+        map.removeLayer(this.layers["geojson"]);
         return;
     }
     //case 8-1
@@ -251,7 +251,7 @@ async function construct_cases(){
         case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
         console.log("---8-1");
         return;
-    }   
+    }
     //show
     data_loader.cases['8-1'].show = async function(a){
         case_8_1_fig1_layer1.addTo(map);
@@ -278,7 +278,7 @@ async function construct_cases(){
         case_8_1_fig1_legend.addTo(map);
         add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
         return;
-    } 
+    }
     //show
     data_loader.cases['8-1'].hide = async function(a){
             map.removeLayer(case_8_1_fig1_layer1);
@@ -286,7 +286,7 @@ async function construct_cases(){
             map.removeLayer(case_8_1_fig1_layer3);
             map.removeControl(case_8_1_fig1_legend);
         return;
-    }   
+    }
 
     //case 9-1
     data_loader.cases['9-1'].create_data = async function(a){
@@ -296,7 +296,7 @@ async function construct_cases(){
     data_loader.cases['9-1'].show = async function(a){
         data=case_9_1_fig1_data;
         //case_6_1_button_active = '1'
-    
+
         case_no = 9.1;
         fig_no = 1;
         //init marker lists of each phase
@@ -307,7 +307,7 @@ async function construct_cases(){
         waterfund_markers['phase_3'] = [];
         waterfund_markers['phase_4'] = [];
         waterfund_markers['phase_5'] = [];
-    
+
         // iterate over water funds
         for(var i=0;i< data.length;i++){
             //create marker
@@ -317,7 +317,7 @@ async function construct_cases(){
                   className: 'myDivIcon'
                 })}
             );
-    
+
             //set values in popup
             if (data[i]['Phase']==('Operation'||'Maturity')){
                 marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
@@ -347,7 +347,7 @@ async function construct_cases(){
         waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
         waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
         waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
-    
+
         var overlayMaps = {
             "Being Explored":               waterfund_objs['phase_'] ,
             "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
@@ -381,7 +381,7 @@ async function construct_cases(){
     //create
     data_loader.cases['8-2'].create_data = async function(a){
          //"NCED_Polygons_08152017"
-         colors=['#E31A1C'];         
+         colors=['#E31A1C'];
          let files=["Agg_per_county_all_stats"];
         add_shape_file(this.id,files,colors);
         return;
@@ -391,7 +391,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("8-2")        
+    console.log("8-2")
         return;
     }
     //hide
@@ -406,9 +406,9 @@ async function construct_cases(){
     //create
     data_loader.cases['10-3'].create_data = async function(a){
         //"NCED_Polygons_08152017"
-        colors=['#E31A1C'];        
+        colors=['#E31A1C'];
         let files=["mdb_boundary"];
-        add_shape_file(this.id,files,colors);        
+        add_shape_file(this.id,files,colors);
     return;
     }
     //show
@@ -416,7 +416,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("10-3")        
+    console.log("10-3")
         return;
     }
     //hide
@@ -431,9 +431,9 @@ async function construct_cases(){
     //create
     data_loader.cases['13-1'].create_data = async function(a){
         //"NCED_Polygons_08152017"
-        colors=['#E31A1C'];        
+        colors=['#E31A1C'];
         let files=["guanacaste"];
-        add_shape_file(this.id,files,colors);        
+        add_shape_file(this.id,files,colors);
     return;
     }
     //show
@@ -441,7 +441,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("13-1")        
+    console.log("13-1")
         return;
     }
     //hide
@@ -452,7 +452,7 @@ async function construct_cases(){
         return;
     }
 
-    data_loader.preloadDynamicFigures();   
+    //data_loader.preloadDynamicFigures();   
     return "cases";
 }
 
@@ -483,7 +483,7 @@ async function add_shape_file(id,files,colors,additional_layer){
     }
     if (additional_layer!=null){
         i+=1
-        overlay_maps[i] = additional_layer;    
+        overlay_maps[i] = additional_layer;
     }
 //create layer control by adding layer groups
 data_loader.cases[id].layers=overlay_maps;

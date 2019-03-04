@@ -5,8 +5,8 @@ function buildLeftMenu(){
   //clear left menu, in case it's being overwritten
   $('#left-menu').html("");
   //add left-menu title
-  chapters = data_loader.chapters;
-  cases = data_loader.cases;
+//  chapters = data_loader.chapters;
+//  cases = data_loader.cases;
   //add chapter number to (main) left-menu
   $('#left-menu').append("<span id=left-chapter-home class='left-chapter-helper' title='Home' onclick=home_menu();><i class='fas fa-globe-africa'></i></span>");
   $('#left-menu').append("<span id=left-chapter-question class='left-chapter-helper' title='Tutorial' onclick=tutorial();><i class='fas fa-question'></i></span>");
@@ -149,18 +149,20 @@ function changeImage(e) {
 }
 
 function refresh_left_menu(){
-  for (var i in chapters){
-    current_chapter = chapters[i];
+  for (var i in data_loader.selected_chapter_ids){
+    current_chapter = data_loader.chapters[data_loader.selected_chapter_ids[i]];
 
     if(current_chapter.id!=0){ //special case for arrival page
       //add submenu for the chapter
       $('#left-menu').append("<div id=left-menu-sub-"+current_chapter.id+" class='left-menu-sub' ></div>")
       //add case buttons in submenu
       for (var j=0;j<current_chapter.cases.length;j++){
-        $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
-        if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
-          $("#left-case-"+current_chapter.cases[j].id).addClass("left-dot-dynamic")
-        add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-case-"+current_chapter.cases[j].id);
+        if(data_loader.selected_case_ids.includes(current_chapter.cases[j].id)){
+          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
+          if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
+            $("#left-case-"+current_chapter.cases[j].id).addClass("left-dot-dynamic")
+          add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-case-"+current_chapter.cases[j].id);
+        }
       }
       $("#left-menu-sub-"+current_chapter.id).append('<p class="left-menu-cases-name">CASES</p>');
     }
@@ -168,7 +170,7 @@ function refresh_left_menu(){
 
 
     //add a chapter button, note that here onClick calls caseClick on the first case
-    if (i==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
+    if (data_loader.selected_chapter_ids[i]==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
     else{
       $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_chapter.id+ "</span>");
       for (var j=0;j<current_chapter.cases.length;j++){

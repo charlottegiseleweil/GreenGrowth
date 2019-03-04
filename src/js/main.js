@@ -5,20 +5,21 @@ async function load_data(){
         startKeyListener();
         console.log("Start key listener");
       });
-  $( 'body' ).ready(function() {
+  $( 'body' ).ready(async function() {
       // create progress bar
       $('.progress').bind('loaded',function(){
           $('.progress').hide();
           open_page();
     });
     //value="start";
-    data_loader.prepareDataframes();
+        await data_loader.prepareDataframes();
+        await data_loader.selectCases()
       //load and prepare dataframes
-
+        await construct_cases();
       //preload the data of the dynamic figures (slow)
       // Comment line below, and uncomment following one for running locally w/o loading dynamic figs
-      //data_loader.preloadDynamicFigures();
-      setTimeout(function(){$('.progress').trigger('loaded')}, 600)
+       await data_loader.preloadDynamicFigures();
+      //setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }
 
