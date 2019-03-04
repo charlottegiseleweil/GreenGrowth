@@ -17,7 +17,7 @@ function display_figure(case_){
 }
 
 function clean_layers(){
-    console.log("hide case id:",previous_active_case.id)
+    //console.log("hide case id:",previous_active_case.id)
     if (previous_active_case.id != null)
         data_loader.cases[previous_active_case.id].hide();
 }

@@ -77,17 +77,14 @@ async function home_menu(){
   data_loader.active_country = data_loader.countries['World'];
   //browsing all cases again
   data_loader.browsing_all_cases = true;
+  //use all data again
+  await data_loader.selectCases()
   //resets layers
   await refreshLayers();
   await buildLeftMenu();
   //zoom to world
   zoom_to(data_loader.active_country, true);
   console.log("moved to: "+data_loader.active_country.name);
-  //use all data again
-  await data_loader.prepareDataframes()
-  //rebuild left and right menu
-  await buildRightMenu();
-  await buildLeftMenu();
   $(".tooltip").hide();
   //remove country name display
     //$("#country-display-panel").hide();
@@ -127,7 +124,7 @@ function openNav() {
   });
 
 
-  console.log("first key",data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]]);
+  //console.log("first key",data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]]);
 
 }
 
@@ -136,7 +133,6 @@ function closeNav() {
 }
 
 async function mechanismCaseClick(case_id){
-  console.log(case_id)
   await closeNav();
   caseClick(case_id.split("-")[0],case_id);
 }
@@ -157,7 +153,7 @@ function refresh_left_menu(){
       //add case buttons in submenu
       for (var j=0;j<current_chapter.cases.length;j++){
         if(data_loader.selected_case_ids.includes(current_chapter.cases[j].id)){
-          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+i+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
+          $("#left-menu-sub-"+current_chapter.id).append("<span id=left-case-"+current_chapter.cases[j].id+" class='left-case' title='"+current_chapter.cases[j].title+"'onclick=caseClick(\""+current_chapter.id+"\",\""+current_chapter.cases[j].id+"\");>" +current_chapter.cases[j].id.split('-')[1]+ "</span>");
           if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
             $("#left-case-"+current_chapter.cases[j].id).addClass("left-dot-dynamic")
           add_tooltip("#left-menu-sub-"+current_chapter.id+" #left-case-"+current_chapter.cases[j].id);
@@ -169,9 +165,9 @@ function refresh_left_menu(){
 
 
     //add a chapter button, note that here onClick calls caseClick on the first case
-    if (data_loader.selected_chapter_ids[i]==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");><i class='fas fa-circle'></span>");
+    if (data_loader.selected_chapter_ids[i]==0) $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+current_chapter.id+"\","+0+");><i class='fas fa-circle'></span>");
     else{
-      $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+i+"\","+0+");>" +current_chapter.id+ "</span>");
+      $('#left-menu').append("<span id=left-chapter-"+current_chapter.id+" class='left-chapter' title='"+current_chapter.title+"' onclick=caseClick(\""+current_chapter.id+"\","+0+");>" +current_chapter.id+ "</span>");
       for (var j=0;j<current_chapter.cases.length;j++){
         if(current_chapter.cases[j].has_dynamic_fig=="TRUE")
           $("#left-chapter-"+current_chapter.id).addClass("left-dot-dynamic")

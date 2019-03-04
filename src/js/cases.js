@@ -2,7 +2,7 @@ async function construct_cases(){
 
     //////////////////CHAPTER 6//////////////////////
     // Case 6-1
-    console.log("cases",data_loader.cases);
+    //console.log("cases",data_loader.cases);
         //create
         data_loader.cases['6-1'].create_data = async function(){
             //preload 6_1-1
@@ -22,7 +22,7 @@ async function construct_cases(){
         //show
         data_loader.cases['6-1'].show = function(button_id){
             clean_layers();
-            console.log(button_id,"button",choropleth_map_objs,'legend-'+button_id);
+            //console.log(button_id,"button",choropleth_map_objs,'legend-'+button_id);
             description=["Land enrolled in CRP (%)","Soil rental rate (USD/ha)"];
             $("#button-"+button_id).css('background-color','#39ac73');
             choropleth_map_objs['2016geo-'+button_id].addTo(map)//add choropleth layer
@@ -56,7 +56,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("6-2")
+    //console.log("6-2")
         return;
     }
     //hide
@@ -124,7 +124,7 @@ async function construct_cases(){
         for (var i in case_7_1_fig1_layer){
             color=colors[i];
             overlay_maps[i] = new L.Shapefile(case_7_1_fig1_layer[i], {style:style});
-            console.log("7.1",i,case_7_1_fig1_layer[i]);
+            //console.log("7.1",i,case_7_1_fig1_layer[i]);
         }
     //create layer control by adding layer groups
         case_7_1_fig1_layer_group['layers']=overlay_maps;
@@ -145,98 +145,101 @@ async function construct_cases(){
     }
     //case 7-2
     data_loader.cases['7-2'].create_data = async function(a){
-        var data = await $.getJSON('data/mitigation_bank.json');
-        this.layers["geojson"] = L.geoJson(data, {
-            pointToLayer: function (feature, latlng) {
-                let label = String(feature.properties.NUMPOINTS)
-                return new L.circleMarker(latlng, geojsonMarkerOptions).bindTooltip(label, {permanent: true, opacity: 0.7}).openTooltip();
-            }
-        });
-        console.log("---7-2");
-        return;
+      var myIcon = L.icon({
+         iconUrl: './static/marker/pin24.png',
+         iconRetinaUrl: './static/marker/pin48.png',
+         iconSize: [29, 24],
+         iconAnchor: [9, 21],
+         popupAnchor: [0, -14]
+       });
+
+       case_7_2_fig1_clusters = L.markerClusterGroup();
+
+       for ( var i = 0; i < markers_7_2.length; ++i )
+       {
+         var popup = '<b>'+markers_7_2[i].Name+'</b>' +
+                     '<br/><u>Bank Type:</u> ' + markers_7_2[i].Bank_Type +
+                     '<br/><u>Bank Status:</u> ' + markers_7_2[i].Bank_Status;
+
+         var m = L.marker( [markers_7_2[i].lat, markers_7_2[i].lng], {icon: myIcon} )
+                         .bindPopup( popup );
+
+         case_7_2_fig1_clusters.addLayer( m );
+       }
+      return;
     }
     data_loader.cases['7-2'].show = async function(a){
-        this.layers["geojson"].addTo(map);
+        map.addLayer(case_7_2_fig1_clusters);
         return;
     }
     data_loader.cases['7-2'].hide = async function(a){
-        map.removeLayer(this.layers["geojson"]);
+        map.removeLayer(case_7_2_fig1_clusters);
         return;
     }
     ///////////// 7-3 //////////////
     data_loader.cases['7-3'].create_data = async function(a){
-        let files=["cb_2017_us_state_500k"];
-        colors = ['#ffffff']
-        await add_shape_file(this.id,files,colors);
         var markers = [];
+
+        case_7_3_fig1_clusters = L.markerClusterGroup();
 
         d3.csv("data/7-3/CA_Conservation Banks.csv",function(mitigation_data){
 
-            //create marker
-            var marker = L.marker([mitigation_data['Y'],mitigation_data['X']], {
-                icon: L.divIcon({
-                  html: '<i class="fa fa-leaf fa-lg" aria-hidden="true" style="color:green"#234523"></i>',
-                  className: 'myDivIcon'
-                })}
-            );
-            //set values in popup
-            marker.bindPopup("<b>Name:</b>" +mitigation_data['Name']+"<br><b>Bank Type:</b>" +mitigation_data['Bank Type']+"<br>"+"<b>Bank Status:</b>"+mitigation_data['Bank Status']).on('mouseover', function (e) {
-                this.openPopup();
-            }).on('mouseout', function (e) {
-                this.closePopup();
-            });
-//            overlay_maps[mitigation_data['Name']] = marker;
-            //data_loader.cases['7-3'].layers[mitigation_data['Name']]= marker;
-            markers.push(marker);
+
+          var popup = "<b>"+mitigation_data['Name']+"</b>"
+                    +"<br><u>Bank Type:</u>"+mitigation_data['Bank Type']+"<br>"
+                    +"<u>Bank Status:</u>"+mitigation_data['Bank Status'];
+          //create marker
+          var m = L.marker([mitigation_data['Y'],mitigation_data['X']], {icon:
+            L.divIcon({
+            html: '<i class="fa fa-leaf fa-lg" aria-hidden="true" style="color:blue"#234523"></i>',
+            className: 'myDivIcon'
+            })}).bindPopup( popup );
+            case_7_3_fig1_clusters.addLayer(m);
+            //markers.push(marker);
         });
         //map.addLayer(markers);
-
-        this.layers["markers"]=markers;
+        //this.layers["markers"]=markers;
         return;
     }
 
     //show
     data_loader.cases['7-3'].show = async function(a){
-        for (var i in this.layers["markers"])
-            this.layers["markers"][i].addTo(map);
-        this.layers[0].addTo(map)
+      map.addLayer(case_7_3_fig1_clusters);
+      return;
     }
+
 
     //hide
     data_loader.cases['7-3'].hide = async function(a){
-        map.removeLayer(this.layers[0])
-        for (var i in this.layers["markers"])
-            map.removeLayer(this.layers["markers"][i])
-
-        return;
+      map.removeLayer(case_7_3_fig1_clusters);
+      return;
     }
 
     //case 7-4
     data_loader.cases['7-4'].create_data = async function(a){
-        var geojson = await shp("data/forest/forest.offset.projects.updated2017");
-        this.layers["geojson"] = L.geoJson(geojson, {
-            pointToLayer: function (feature, latlng) {
-                return new L.marker(latlng, {
-                    icon: L.divIcon({
-                    html: '<i class="fa fa-tree" aria-hidden="true" style="color:blue"></i>',
-                    className: 'myDivIcon'
-                    })
-                }).bindPopup('<i>'+String(feature.properties.NAME)+'</i><br>'+String(feature.properties.Area2)+' <strong>hectares.</strong>').on('mouseover', function (e) {
-                    this.openPopup();
-                }).on('mouseout', function (e) {
-                    this.closePopup();
-                });
-            }
-        })
-        console.log("---7-4");
-        return;
+      case_7_4_fig1_clusters = L.markerClusterGroup();
+
+      for ( var i = 0; i < markers_7_4.length; ++i )
+      {
+        var popup = '<b>'+markers_7_4[i].Name+'</b>' +
+                    '<br/><u>Area:</u> ' + markers_7_4[i].Area
+
+        var m = L.marker([markers_7_4[i].Lat, markers_7_4[i].Long], {icon: L.divIcon({
+                            html: '<i class="fa fa-tree fa-lg" aria-hidden="true" style="color:blue"></i>',
+                            className: 'myDivIcon'
+                            })})
+                        .bindPopup( popup );
+
+        case_7_4_fig1_clusters.addLayer( m );
+      }
+      return;
     }
     data_loader.cases['7-4'].show = async function(a){
-        this.layers["geojson"].addTo(map);
+        map.addLayer(case_7_4_fig1_clusters);
         return;
     }
     data_loader.cases['7-4'].hide = async function(a){
-        map.removeLayer(this.layers["geojson"]);
+        map.removeLayer(case_7_4_fig1_clusters);
         return;
     }
     //case 8-1
@@ -249,7 +252,7 @@ async function construct_cases(){
 
         data = await $.getJSON('data/brazil/amazonriver_865.json');
         case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
-        console.log("---8-1");
+        //console.log("---8-1");
         return;
     }
     //show
@@ -377,6 +380,8 @@ async function construct_cases(){
         return;
     }
 
+
+    /*
     ////////case 8-2//////////
     //create
     data_loader.cases['8-2'].create_data = async function(a){
@@ -401,6 +406,7 @@ async function construct_cases(){
         }
         return;
     }
+  */
 
     ///////10-3/////////
     //create
@@ -416,7 +422,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("10-3")
+    //console.log("10-3")
         return;
     }
     //hide
@@ -441,7 +447,7 @@ async function construct_cases(){
         for (var layer in this.layers){
             map.addLayer(this.layers[layer]);
         }
-    console.log("13-1")
+    //console.log("13-1")
         return;
     }
     //hide
@@ -452,13 +458,13 @@ async function construct_cases(){
         return;
     }
 
-    //data_loader.preloadDynamicFigures();   
+    //data_loader.preloadDynamicFigures();
     return "cases";
 }
 
 
 function style(feature) {
-    console.log(color);
+    //console.log(color);
     return {
         fillColor: color,
         weight: 2,

@@ -147,7 +147,6 @@ async prepareDataframes(){
     //console.log('test111')
     //console.log(this.cases[i]['country'])
        if(this.active_country.name=='World'||this.active_country.name==this.cases[i].country.name){
-         console.log('test')
          this.selected_case_ids.push(this.cases[i].id)
          if(!this.selected_chapter_ids.includes(this.cases[i].chapter.id)){
            this.selected_chapter_ids.push(this.cases[i].chapter.id)
@@ -174,8 +173,11 @@ var waterfund_markers={}
 var lineplot_data;
 var case_6_1_fig3_data;
 var case_6_1_fig2_data;
+var case_7_1_fig1_layer = [];
+var case_7_1_fig1_layer_group = {};
 var case_7_2_fig1_clusters;
-var case_7_4_fig1_layer;
+var case_7_3_fig1_clusters;
+var case_7_4_fig1_clusters;
 var case_9_1_fig1_data;
 var choropleth_map_county;
 var progress_bar = 0;
