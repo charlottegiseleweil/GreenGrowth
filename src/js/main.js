@@ -12,11 +12,12 @@ async function load_data(){
           open_page();
     });
     //value="start";
-    data_loader.prepareDataframes();     
+    data_loader.prepareDataframes();
       //load and prepare dataframes
 
       //preload the data of the dynamic figures (slow)
       // Comment line below, and uncomment following one for running locally w/o loading dynamic figs
+      //data_loader.preloadDynamicFigures();
       setTimeout(function(){$('.progress').trigger('loaded')}, 600)
   });
 }

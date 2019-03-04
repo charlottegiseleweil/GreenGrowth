@@ -22,7 +22,7 @@ class DataLoader {
     async preloadDynamicFigures() {
         //preload 6_1-1
         data_loader.cases['6-1'].create_data();
-        this.progress_bar._progress += 10;        
+        this.progress_bar._progress += 10;
         data_loader.cases['6-2'].create_data();
         this.progress_bar._progress += 10;
         data_loader.cases['7-1'].create_data();
@@ -46,7 +46,7 @@ class DataLoader {
         setTimeout(function(){$('.progress').trigger('loaded')}, 600);
         $('#country-display-panel-reg').hide()
         return "-dynamic";
-        
+
     }
 
 async prepareDataframes(){
@@ -134,7 +134,7 @@ async prepareDataframes(){
       }
     }
     console.log("return prep",this.cases);
-    construct_cases();  
+    construct_cases();
     return "prep";
     }
 }

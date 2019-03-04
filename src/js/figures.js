@@ -1,5 +1,9 @@
 let previous_active_case = '0-0';
+<<<<<<< HEAD
 var color;
+=======
+
+>>>>>>> master
 // display dynamic figures (on map) for cases (subchapter) that have one
 function display_figure(case_){
   //if (true){
