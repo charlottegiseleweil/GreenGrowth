@@ -114,7 +114,7 @@ async function construct_cases(){
 
     /////////case 7-1/////////
     data_loader.cases['7-1'].create_data = async function(a){
-        let case_7_1_files=["NHDArea","NHDLine","WBDLine"];
+        let case_7_1_files=["NHDArea"];
         for (var file in case_7_1_files){
             let shape_file = await shp("data/7.1/"+case_7_1_files[file]);
             case_7_1_fig1_layer.push(shape_file);

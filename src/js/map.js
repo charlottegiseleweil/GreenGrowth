@@ -15,7 +15,7 @@
     'Costa Rica'
  ]
 
- 
+
 
 
 
@@ -55,9 +55,9 @@ var CartoDB_VoyagerOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/r
 });
 
 var countriesBaseStyle = {
-"color": "orange",
+"color": "#00cc00",
 "weight": 0.7,
-"opacity": 0.7
+"fillOpacity": 0.35
 };
 
 // reset highlightning on filtered countries on mouse hover
@@ -77,7 +77,7 @@ function highlightFeature(layer){
   if (layer.feature.properties.name!=data_loader.active_country.name){
     layer.setStyle({
         weight: 0.5,
-        color: 'orange',
+        color: '#00cc00',
         dashArray: '',
         fillOpacity: 0.85
     });
@@ -88,10 +88,11 @@ function activeHighlight(layer){
   if(Object.keys(layer).includes('target'))
     layer = layer.target;
   layer.setStyle({
-      weight: 0.5,
-      color: "#bb3e00",
+      weight: 4,
+      color: '#00cc00',//"#bb3e00",
       dashArray: '',
-      fillOpacity: 0.45
+      fillOpacity: 0.1
+
   });
 }
 
