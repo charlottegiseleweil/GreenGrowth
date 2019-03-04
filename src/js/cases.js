@@ -296,7 +296,7 @@ async function construct_cases(){
         case_9_1_fig1_data = await d3.csv("data/Water_Funds.csv");
         return;
     }
-    data_loader.cases['9-1'].show = async function(a){
+    data_loader.cases['9-1'].show = data_loader.cases['9-1'].show = async function(a){
         data=case_9_1_fig1_data;
         //case_6_1_button_active = '1'
 
@@ -343,22 +343,14 @@ async function construct_cases(){
             //waterfund_objs[i]=marker
         }
         //create layer groups containing markers for each case
-        waterfund_objs['phase_'] = L.layerGroup(waterfund_markers['phase_']).addTo(map);
-        waterfund_objs['phase_0'] = L.layerGroup(waterfund_markers['phase_0']).addTo(map);
-        waterfund_objs['phase_1'] = L.layerGroup(waterfund_markers['phase_1']).addTo(map);
-        waterfund_objs['phase_2'] = L.layerGroup(waterfund_markers['phase_2']).addTo(map);
-        waterfund_objs['phase_3'] = L.layerGroup(waterfund_markers['phase_3']).addTo(map);
-        waterfund_objs['phase_4'] = L.layerGroup(waterfund_markers['phase_4']).addTo(map);
-        waterfund_objs['phase_5'] = L.layerGroup(waterfund_markers['phase_5']).addTo(map);
+        waterfund_objs['Potential Future'] = L.layerGroup(waterfund_markers['phase_0'].concat(waterfund_markers['phase_1'].concat(waterfund_markers['phase_']))).addTo(map);
+        waterfund_objs['In Development'] = L.layerGroup(waterfund_markers['phase_2'].concat(waterfund_markers['phase_3'])).addTo(map);
+        waterfund_objs['Operating'] = L.layerGroup(waterfund_markers['phase_4'].concat(waterfund_markers['phase_5'])).addTo(map);
 
         var overlayMaps = {
-            "Being Explored":               waterfund_objs['phase_'] ,
-            "Phase 0: Pre-Feasibility ":    waterfund_objs['phase_0'],
-            "Phase 1: Feasibility ":        waterfund_objs['phase_1'],
-            "Phase 2: Design":              waterfund_objs['phase_2'],
-            "Phase 3: Creation":            waterfund_objs['phase_3'],
-            "Phase 4: Operation":           waterfund_objs['phase_4'],
-            "Phase 5: Maturity":            waterfund_objs['phase_5']
+            "Potential Future":    waterfund_objs['Potential Future'],
+            "In Development":        waterfund_objs['In Development'],
+            "Operating":              waterfund_objs['Operating']
         };
         //create layer control by adding layer groups
         waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
@@ -370,18 +362,14 @@ async function construct_cases(){
     data_loader.cases['9-1'].hide = async function(a){
         waterfund_markers=[]
         waterfund_objs['con_layers'].remove(map);
-        waterfund_objs['phase_'].clearLayers();
-        waterfund_objs['phase_0'].clearLayers();
-        waterfund_objs['phase_1'].clearLayers();
-        waterfund_objs['phase_2'].clearLayers();
-        waterfund_objs['phase_3'].clearLayers();
-        waterfund_objs['phase_4'].clearLayers();
-        waterfund_objs['phase_5'].clearLayers();
+        waterfund_objs['Potential Future'] .clearLayers();
+        waterfund_objs['In Development'].clearLayers();
+        waterfund_objs['Operating'].clearLayers();
         return;
     }
 
 
-    /*
+
     ////////case 8-2//////////
     //create
     data_loader.cases['8-2'].create_data = async function(a){
@@ -406,7 +394,7 @@ async function construct_cases(){
         }
         return;
     }
-  */
+  
 
     ///////10-3/////////
     //create
