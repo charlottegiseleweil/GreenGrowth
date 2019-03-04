@@ -72,7 +72,6 @@ async function home_menu(){
   //clean the map of dynamic figues
   await clean_layers();
 
-
   //set world as active country
   data_loader.active_country = data_loader.countries['World'];
   //browsing all cases again
@@ -81,6 +80,7 @@ async function home_menu(){
   await data_loader.selectCases()
   //resets layers
   await refreshLayers();
+  await buildRightMenu();
   await buildLeftMenu();
   //zoom to world
   zoom_to(data_loader.active_country, true);
