@@ -1,7 +1,5 @@
 let previous_active_case = '0-0';
-
 var color;
-
 // display dynamic figures (on map) for cases (subchapter) that have one
 function display_figure(case_){
   //if (true){
@@ -17,7 +15,7 @@ function display_figure(case_){
 }
 
 function clean_layers(){
-    //console.log("hide case id:",previous_active_case.id)
+    console.log("hide case id:",previous_active_case.id)
     if (previous_active_case.id != null)
         data_loader.cases[previous_active_case.id].hide();
 }
@@ -41,7 +39,7 @@ function choropleth_from_csv(data, year_list,grades,percent,fig){
             }
         }
         let colors=[]
-        if(fig==3){
+        if(fig==2){
             colors = ['#ffffff', '#FFEDA0', '#E31A1C', '#BD0026', '#800026']
             choropleth_map_objs[year+'geo-'+fig] = L.geoJson(choropleth_map_county, {style: style_red, time: year})
         }
@@ -57,10 +55,10 @@ function choropleth_from_csv(data, year_list,grades,percent,fig){
         choropleth_map_objs['legend-'+fig].onAdd = function (map){
             var div = L.DomUtil.create('div', 'info legend');
             let categories=[];
-            if(fig=='2'){
+            if(fig=='1'){
                 categories = ['0%','0 - 1%','1 - 5%','5 - 10%','> 10%'];
             }
-            else if(fig=='3'){
+            else if(fig=='2'){
                 categories = ['0 USD/ha','0 - 20 USD/ha','20 - 40 USD/ha','40 - 50 USD/ha','> 80 USD/ha'];
             }
 
@@ -195,4 +193,4 @@ function add_legend_to_right_menu(legend,id, title){
         setParent(htmlObject, newpos);
         $('#right-case-legend').remove();
         $('#right-case-'+id).append('<p id="right-case-legend" class="figure-text">' + title+ '</p>');
-    }
+}
