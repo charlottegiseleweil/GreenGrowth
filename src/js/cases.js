@@ -202,9 +202,10 @@ async function construct_cases(){
 
         colors= ['#033fff','#4a9ff5','#5ff4ee','#c2fcf6'];
         lgnd = [];
-        for (var i = 0; i < categories.length; i++) {
+        for (var i = 0; i < categories.length-1; i++) {
             div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '; border-radius:50%;"></i> ' + (categories[i]));
         }
+        div.innerHTML +=  lgnd.push('<i id="blue-drop-icon"></i>'+ (categories[3]))
         div.innerHTML = lgnd.join('<br>');
         return div;
         }

@@ -4,15 +4,24 @@ html, body {
     margin: 0;
 }
 
+#blue-drop-icon{
+   background: url(./marker/blue_drop_24.png) no-repeat;
+   height:24px;
+   width:24px;
+   border: none;
+
+   display:inline-block;
+}
+
 .mycluster-small {
     width: 20px;
     height: 20px;
     font-size: 20px;
     line-height: 20px;
     background-color: #5ff4ee;
-
     text-align: center;
     border-radius: 50%;
+    border: 1px solid black;
   }
 
 .mycluster-medium {
@@ -24,6 +33,7 @@ html, body {
 
     text-align: center;
     border-radius: 50%;
+    border: 1px solid black;
   }
 
 .mycluster-large {
@@ -35,6 +45,7 @@ html, body {
 
     text-align: center;
     border-radius: 50%;
+    border: 1px solid black;
   }
 
 .mapbox {
@@ -106,35 +117,35 @@ html, body {
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
     padding: 0px;
-    background-color: rgba(230, 230, 230, 0.7);
+    background-color: rgba(230, 230, 230, 0.8);
     border-radius: 20px;
 }
 
 #subtitle-panel {
 
     position:absolute;
-    top:25vh;
+    top:24vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 10vh;
+    height: 20vh;
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
     padding: 0px;
-    background-color: rgba(242, 242, 242, 0.7);
+    background-color: rgba(242, 242, 242, 0.8);
     border-radius: 20px;
 }
 
 #right-menu {
     border-radius: 20px;
     position:absolute;
-    top:34vh;
+    top:30vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 65vh;
+    height: 66vh;
     margin-top: 2vh;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 1.0);
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
 }
@@ -438,7 +449,7 @@ p {
 }
 
 .legend {
-    line-height: 18px;
+    line-height: 29px;
     padding: 1%;
     border-radius: 5px;
     border: 3px;
@@ -447,8 +458,9 @@ p {
 }
 
 .legend i {
-    width: 18px;
-    height: 18px;
+    line-height: 29px;
+    width: 24px;
+    height: 24px;
     margin-left: 0.5vw;
     float: left;
     margin-right: 1vw;
