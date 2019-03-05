@@ -145,15 +145,51 @@ async function construct_cases(){
     }
     //case 7-2
     data_loader.cases['7-2'].create_data = async function(a){
+
+      /*
       var myIcon = L.icon({
-         iconUrl: './static/marker/pin24.png',
-         iconRetinaUrl: './static/marker/pin48.png',
-         iconSize: [29, 24],
+      //html: '<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x fa-sm" style="color:#66ccff;"></i><i class="fa fa-water fa-stack-1x" style="color:black"></i></span>',
+      html: '<i class="fa fa-water" style="color:blue"></i>',
+      className: 'myDivIcon',
+      iconSize: [29, 24],
+      iconAnchor: [9, 21],
+      popupAnchor: [0, -14]
+      })
+      */
+
+
+      var myIcon = L.icon({
+         iconUrl: './static/marker/blue_drop_24.png',
+         iconRetinaUrl: './static/marker/blue_drop_24.png',
+         iconSize: [24, 24],
          iconAnchor: [9, 21],
          popupAnchor: [0, -14]
        });
 
-       case_7_2_fig1_clusters = L.markerClusterGroup();
+
+       case_7_2_fig1_clusters = L.markerClusterGroup({
+         maxClusterRadius: 120,
+         iconCreateFunction: function (cluster) {
+           var markers = cluster.getAllChildMarkers();
+           var n= markers.length;
+           if (n<10){
+             var myclassname= 'mycluster-small';
+             var size = 20;}
+           else if (n<100){
+             var myclassname= 'mycluster-medium';
+             var size = 20+Math.sqrt(n)*4;}
+           else{
+             var myclassname= 'mycluster-large';
+             var size = 20+Math.sqrt(n)*4;}
+
+           return L.divIcon({ html: n, className: myclassname, iconSize: L.point(size,size) , html: '<span style= "line-height:'+size+'px">'+n+'</span>'});
+         },
+         //set options
+         showCoverageOnHover: true, zoomToBoundsOnClick: false,
+         maxClusterRadius: 80, disableClusteringAtZoom: 8
+       });
+
+       //case_7_2_fig1_clusters = L.markerClusterGroup();
 
        for ( var i = 0; i < markers_7_2.length; ++i )
        {
@@ -161,8 +197,14 @@ async function construct_cases(){
                      '<br/><u>Bank Type:</u> ' + markers_7_2[i].Bank_Type +
                      '<br/><u>Bank Status:</u> ' + markers_7_2[i].Bank_Status;
 
-         var m = L.marker( [markers_7_2[i].lat, markers_7_2[i].lng], {icon: myIcon} )
-                         .bindPopup( popup );
+         var m = L.marker( [markers_7_2[i].lat, markers_7_2[i].lng], {icon:myIcon}).bindPopup( popup )
+         .on('mouseover', function (e) {
+             this.openPopup();
+         }).on('mouseout', function (e) {
+             this.closePopup();
+        });
+
+
 
          case_7_2_fig1_clusters.addLayer( m );
        }
@@ -394,7 +436,7 @@ async function construct_cases(){
         }
         return;
     }
-  
+
 
     ///////10-3/////////
     //create

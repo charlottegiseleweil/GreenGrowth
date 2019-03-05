@@ -186,6 +186,7 @@ var case_8_1_fig1_layer2;
 var case_8_1_fig1_layer3;
 var data_points_acres= [];
 var data_points_money=[];
+var test = null;
 
 //marker options
 var geojsonMarkerOptions = {

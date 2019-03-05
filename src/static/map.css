@@ -4,6 +4,39 @@ html, body {
     margin: 0;
 }
 
+.mycluster-small {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    background-color: #5ff4ee;
+
+    text-align: center;
+    border-radius: 50%;
+  }
+
+.mycluster-medium {
+    width: 32px;
+    height: 32px;
+    font-size: 26px;
+    line-height: 32px;
+    background-color: #4a9ff5;
+
+    text-align: center;
+    border-radius: 50%;
+  }
+
+.mycluster-large {
+    width: 60px;
+    height: 60px;
+    font-size: 35px;
+    line-height: 60px;
+    background-color: #033fff;
+
+    text-align: center;
+    border-radius: 50%;
+  }
+
 .mapbox {
     height: 100%;
     width: 100%;
