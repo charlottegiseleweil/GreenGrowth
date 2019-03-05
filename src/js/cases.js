@@ -27,7 +27,7 @@ async function construct_cases(){
             $("#button-"+button_id).css('background-color','#39ac73');
             choropleth_map_objs['2016geo-'+button_id].addTo(map)//add choropleth layer
             choropleth_map_objs['legend-'+button_id].addTo(map);//add legend
-            add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[0]);
+            add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[button_id-1]);
         }
         //hide
         data_loader.cases['6-1'].hide = function(){
@@ -146,18 +146,6 @@ async function construct_cases(){
     //case 7-2
     data_loader.cases['7-2'].create_data = async function(a){
 
-      /*
-      var myIcon = L.icon({
-      //html: '<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x fa-sm" style="color:#66ccff;"></i><i class="fa fa-water fa-stack-1x" style="color:black"></i></span>',
-      html: '<i class="fa fa-water" style="color:blue"></i>',
-      className: 'myDivIcon',
-      iconSize: [29, 24],
-      iconAnchor: [9, 21],
-      popupAnchor: [0, -14]
-      })
-      */
-
-
       var myIcon = L.icon({
          iconUrl: './static/marker/blue_drop_24.png',
          iconRetinaUrl: './static/marker/blue_drop_24.png',
@@ -203,15 +191,31 @@ async function construct_cases(){
          }).on('mouseout', function (e) {
              this.closePopup();
         });
-
-
-
          case_7_2_fig1_clusters.addLayer( m );
        }
-      return;
+
+       //legend
+       case_7_2_fig1_legend = L.control({position: 'bottomleft'});
+       case_7_2_fig1_legend.onAdd = function (map){
+           var div = L.DomUtil.create('div', 'info legend');
+           let categories = ['>100','10 - 100','1 - 10','1'];
+
+        colors= ['#033fff','#4a9ff5','#5ff4ee','#c2fcf6'];
+        lgnd = [];
+        for (var i = 0; i < categories.length; i++) {
+            div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '; border-radius:50%;"></i> ' + (categories[i]));
+        }
+        div.innerHTML = lgnd.join('<br>');
+        return div;
+        }
+
+        return;
     }
     data_loader.cases['7-2'].show = async function(a){
         map.addLayer(case_7_2_fig1_clusters);
+        case_7_2_fig1_legend.addTo(map);//add legend
+        add_legend_to_right_menu(case_7_2_fig1_legend,"7-2","Wetlands (u)");
+
         return;
     }
     data_loader.cases['7-2'].hide = async function(a){
