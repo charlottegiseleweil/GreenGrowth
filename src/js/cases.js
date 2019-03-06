@@ -495,25 +495,23 @@ async function construct_cases(){
                   className: 'myDivIcon'
                 })}
             );
-
+            
+            let text="<b>City:</b>"+data[i]['City']+"<br>"+"<b>Country:</b>"+data[i]['Country'];
+            if (data[i]['State']!=""){
+                text+="<br>"+"<b>State:</b>"+data[i]['State'];
+            }
+            
             //set values in popup
-            if (data[i]['Phase']==('Operation'||'Maturity')){
-                marker.bindPopup("<b>Phase:</b>" +data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']
-                +"<br>"+"<b>Operational since:</b>"+data[i]['Operational']).on('mouseover', function (e) {
-                    this.openPopup();
-                }).on('mouseout', function (e) {
-                    this.closePopup();
-                });
-            }
-            else{
-                marker.bindPopup("<b>Phase:</b>"+data[i]['Phase']+"<br>"+"<b>City:</b>"+data[i]['City']
-                +"<br>"+"<b>Country:</b>"+data[i]['Country']+"<br>"+"<b>State:</b>"+data[i]['State']).on('mouseover', function (e) {
-                    this.openPopup();
-                }).on('mouseout', function (e) {
-                    this.closePopup();
-                });;
-            }
+            if (data[i]['Phase']==('Operation'||'Maturity'))
+                text+="<br>"+"<b>Operational since:</b>"+data[i]['Operational']
+            
+            
+            marker.bindPopup(text).on('mouseover', function (e) {
+                this.openPopup();
+            }).on('mouseout', function (e) {
+                this.closePopup();
+            });;
+        
             waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
             //waterfund_objs[i]=marker
         }

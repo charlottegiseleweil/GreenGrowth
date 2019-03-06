@@ -100,11 +100,10 @@ function legend(grades){
 
 //get color of water fund marker
 function get_marker_color(phase){
-    return phase == ('phase_'||'phase_1'||'phase_2') ?  'rgb(206,71,70)' :
-           phase == ('phase_2'||'phase_3') ? 'Aqua' :
-           phase == ('phase_5')||'phase_4' ?'rgb(89,222,101)' :
-                                'Orange';
-
+    return phase == 'phase_0'||phase == 'phase_1'||phase == 'phase_' ?  'hsl(4, 72%, 55%, 0.81)' :
+           phase == 'phase_2'||phase == 'phase_3' ? '#eea551cf' :
+           phase == 'phase_5'||phase ==  'phase_4' ?'hsl(115, 100%, 51%)' :
+                                'white';
 }
 
 // get colors of legend
