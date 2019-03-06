@@ -4,6 +4,7 @@ html, body {
     margin: 0;
 }
 
+
 #blue-drop-icon{
    background: url(./marker/blue_drop_24.png) no-repeat;
    height:24px;
@@ -13,39 +14,95 @@ html, body {
    display:inline-block;
 }
 
-.mycluster-small {
+#green-pentagon-icon{
+   background: url(./marker/green_pentagon_24.png) no-repeat;
+   height:24px;
+   width:24px;
+   border: none;
+
+   display:inline-block;
+}
+
+#green-tree-icon{
+  background: url(./marker/green_tree_24.png) no-repeat;
+  height:24px;
+  width:24px;
+  border: none;
+  color:#b5ff7d;
+
+  display:inline-block;
+}
+
+
+.cluster{
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid black;
+  }
+
+
+.cluster-small-7-2 {
     width: 20px;
     height: 20px;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 20px;
     background-color: #5ff4ee;
-    text-align: center;
-    border-radius: 50%;
-    border: 1px solid black;
   }
 
-.mycluster-medium {
-    width: 32px;
-    height: 32px;
-    font-size: 24px;
-    line-height: 32px;
+.cluster-medium-7-2 {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+    line-height: 28px;
     background-color: #4a9ff5;
-
-    text-align: center;
-    border-radius: 50%;
-    border: 1px solid black;
   }
 
-.mycluster-large {
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    line-height: 60px;
+.cluster-large-7-2 {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
     background-color: #033fff;
+  }
 
-    text-align: center;
-    border-radius: 50%;
-    border: 1px solid black;
+.cluster-small-7-3 {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 30px;
+    background-color: #7cb855;
+  }
+
+.cluster-medium-7-3 {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    line-height: 48px;
+    background-color: #469b4c;
+  }
+
+.cluster-large-7-3 {
+    width: 90px;
+    height: 90px;
+    font-size: 24px;
+    line-height: 90px;
+    background-color: #3c6e57;
+  }
+
+.cluster-small-7-4 {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 30px;
+    background-color: #52d681;
+  }
+
+.cluster-medium-7-4 {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    line-height: 48px;
+    background-color: #00ad7c;
   }
 
 .mapbox {

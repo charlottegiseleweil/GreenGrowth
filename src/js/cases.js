@@ -148,7 +148,7 @@ async function construct_cases(){
 
       var myIcon = L.icon({
          iconUrl: './static/marker/blue_drop_24.png',
-         iconRetinaUrl: './static/marker/blue_drop_24.png',
+         iconRetinaUrl: './static/marker/blue_drop_48.png',
          iconSize: [24, 24],
          iconAnchor: [9, 21],
          popupAnchor: [0, -14]
@@ -156,21 +156,20 @@ async function construct_cases(){
 
 
        case_7_2_fig1_clusters = L.markerClusterGroup({
-         maxClusterRadius: 120,
          iconCreateFunction: function (cluster) {
            var markers = cluster.getAllChildMarkers();
            var n= markers.length;
            if (n<10){
-             var myclassname= 'mycluster-small';
-             var size = 20;}
+             var myclassname= 'cluster-small-7-2';
+             var size = 20+Math.sqrt(n)*3;}
            else if (n<100){
-             var myclassname= 'mycluster-medium';
-             var size = 20+Math.sqrt(n)*4;}
+             var myclassname= 'cluster-medium-7-2';
+             var size = 20+Math.sqrt(n)*3;}
            else{
-             var myclassname= 'mycluster-large';
-             var size = 20+Math.sqrt(n)*4;}
+             var myclassname= 'cluster-large-7-2';
+             var size = 20+Math.sqrt(n)*3;}
 
-           return L.divIcon({ html: n, className: myclassname, iconSize: L.point(size,size) , html: '<span style= "line-height:'+size+'px">'+n+'</span>'});
+           return L.divIcon({ html: n, className: myclassname +' cluster', iconSize: L.point(size,size) , html: '<span style= "line-height:'+size+'px">'+n+'</span>'});
          },
          //set options
          showCoverageOnHover: true, zoomToBoundsOnClick: false,
@@ -221,13 +220,42 @@ async function construct_cases(){
     }
     data_loader.cases['7-2'].hide = async function(a){
         map.removeLayer(case_7_2_fig1_clusters);
+        map.removeControl(case_7_2_fig1_legend);
         return;
     }
     ///////////// 7-3 //////////////
     data_loader.cases['7-3'].create_data = async function(a){
+      var myIcon = L.icon({
+         iconUrl: './static/marker/green_pentagon_24.png',
+         iconRetinaUrl: './static/marker/green_pentagon_48.png',
+         iconSize: [24, 24],
+         iconAnchor: [9, 21],
+         popupAnchor: [0, -14]
+       });
+
+
         var markers = [];
 
-        case_7_3_fig1_clusters = L.markerClusterGroup();
+        case_7_3_fig1_clusters = L.markerClusterGroup({
+          iconCreateFunction: function (cluster) {
+            var markers = cluster.getAllChildMarkers();
+            var n= markers.length;
+            if (n<10){
+              var myclassname= 'cluster-small-7-3';
+              var size = 30+Math.sqrt(n)*6;}
+            else if (n<100){
+              var myclassname= 'cluster-medium-7-3';
+              var size = 30+Math.sqrt(n)*6;}
+            else{
+              var myclassname= 'cluster-large-7-3';
+              var size = 30+Math.sqrt(n)*6;}
+
+            return L.divIcon({ html: n, className: myclassname+' cluster', iconSize: L.point(size,size) , html: '<span style= "line-height:'+size+'px">'+n+'</span>'});
+          },
+          //set options
+          showCoverageOnHover: true, zoomToBoundsOnClick: false,
+          maxClusterRadius: 80, disableClusteringAtZoom: 8
+        });
 
         d3.csv("data/7-3/CA_Conservation Banks.csv",function(mitigation_data){
 
@@ -236,22 +264,44 @@ async function construct_cases(){
                     +"<br><u>Bank Type:</u>"+mitigation_data['Bank Type']+"<br>"
                     +"<u>Bank Status:</u>"+mitigation_data['Bank Status'];
           //create marker
-          var m = L.marker([mitigation_data['Y'],mitigation_data['X']], {icon:
-            L.divIcon({
-            html: '<i class="fa fa-leaf fa-lg" aria-hidden="true" style="color:blue"#234523"></i>',
-            className: 'myDivIcon'
-            })}).bindPopup( popup );
+          var m = L.marker([mitigation_data['Y'],mitigation_data['X']], {icon:myIcon}).bindPopup( popup )
+            .on('mouseover', function (e) {
+                this.openPopup();
+            }).on('mouseout', function (e) {
+                this.closePopup();
+           });
+
+
+
             case_7_3_fig1_clusters.addLayer(m);
             //markers.push(marker);
         });
-        //map.addLayer(markers);
-        //this.layers["markers"]=markers;
+
+        //legend
+        case_7_3_fig1_legend = L.control({position: 'bottomleft'});
+        case_7_3_fig1_legend.onAdd = function (map){
+            var div = L.DomUtil.create('div', 'info legend');
+            let categories = ['>100','10 - 100','1 - 10','1'];
+
+         colors= ['#3c6e57','#469b4c','#7cb855','#bbe06c'];
+         lgnd = [];
+         for (var i = 0; i < categories.length-1; i++) {
+             div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '; border-radius:50%;"></i> ' + (categories[i]));
+         }
+         div.innerHTML +=  lgnd.push('<i id="green-pentagon-icon"></i>'+ (categories[3]))
+         div.innerHTML = lgnd.join('<br>');
+         return div;
+         }
+
+
         return;
     }
 
     //show
     data_loader.cases['7-3'].show = async function(a){
       map.addLayer(case_7_3_fig1_clusters);
+      case_7_3_fig1_legend.addTo(map);//add legend
+      add_legend_to_right_menu(case_7_3_fig1_legend,"7-3","Conservation Banks (u)");
       return;
     }
 
@@ -259,34 +309,76 @@ async function construct_cases(){
     //hide
     data_loader.cases['7-3'].hide = async function(a){
       map.removeLayer(case_7_3_fig1_clusters);
+      map.removeControl(case_7_3_fig1_legend);
       return;
     }
 
     //case 7-4
     data_loader.cases['7-4'].create_data = async function(a){
-      case_7_4_fig1_clusters = L.markerClusterGroup();
+      case_7_4_fig1_clusters = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+          var markers = cluster.getAllChildMarkers();
+          var n= markers.length;
+          if (n<10){
+            var myclassname= 'cluster-small-7-4';
+            var size = 30+Math.sqrt(n)*6;}
+          else if (n<100){
+            var myclassname= 'cluster-medium-7-4';
+            var size = 30+Math.sqrt(n)*6;}
+
+          return L.divIcon({ html: n, className: myclassname+' cluster', iconSize: L.point(size,size) , html: '<span style= "line-height:'+size+'px">'+n+'</span>'});
+        },
+        //set options
+        showCoverageOnHover: true, zoomToBoundsOnClick: false,
+        maxClusterRadius: 80, disableClusteringAtZoom: 8
+      });
 
       for ( var i = 0; i < markers_7_4.length; ++i )
       {
         var popup = '<b>'+markers_7_4[i].Name+'</b>' +
-                    '<br/><u>Area:</u> ' + markers_7_4[i].Area
+                    '<br/><u>Area:</u> ' + markers_7_4[i].Area +' hectares'
 
         var m = L.marker([markers_7_4[i].Lat, markers_7_4[i].Long], {icon: L.divIcon({
-                            html: '<i class="fa fa-tree fa-lg" aria-hidden="true" style="color:blue"></i>',
-                            className: 'myDivIcon'
-                            })})
-                        .bindPopup( popup );
+                html: '<i class="fa fa-tree fa-2x" aria-hidden="true" style="color:#b5ff7d;"></i>',
+                className: 'myDivIcon'
+                })}).bindPopup( popup )
+                  .on('mouseover', function (e) {
+                      this.openPopup();
+                  }).on('mouseout', function (e) {
+                      this.closePopup();
+                 });
 
         case_7_4_fig1_clusters.addLayer( m );
       }
+
+      //legend
+      case_7_4_fig1_legend = L.control({position: 'bottomleft'});
+      case_7_4_fig1_legend.onAdd = function (map){
+          var div = L.DomUtil.create('div', 'info legend');
+          let categories = ['10 - 100','1 - 10','1'];
+
+       colors= ['#00ad7c','#52d681','#b5ff7d'];
+       lgnd = [];
+       for (var i = 0; i < categories.length-1; i++) {
+           div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '; border-radius:50%;"></i> ' + (categories[i]));
+       }
+       div.innerHTML +=  lgnd.push('<i id="green-tree-icon"></i>'+ (categories[2]))
+       div.innerHTML = lgnd.join('<br>');
+       return div;
+       }
+
+
       return;
     }
     data_loader.cases['7-4'].show = async function(a){
         map.addLayer(case_7_4_fig1_clusters);
+        case_7_4_fig1_legend.addTo(map);//add legend
+        add_legend_to_right_menu(case_7_4_fig1_legend,"7-4","Forest offset projects (u)");
         return;
     }
     data_loader.cases['7-4'].hide = async function(a){
         map.removeLayer(case_7_4_fig1_clusters);
+        map.removeControl(case_7_4_fig1_legend);
         return;
     }
     //case 8-1
