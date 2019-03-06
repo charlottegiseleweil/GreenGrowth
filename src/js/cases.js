@@ -436,7 +436,7 @@ async function construct_cases(){
         data_loader.cases['8-2'].create_data = async function(a){
              //"NCED_Polygons_08152017"
 
-             choropleth_map_county_8_2 = await shp("data/8-2/NCED_with_")
+             let file = await shp("data/8-2/NCED_with_")
 
           //case_8_2_fig1_data = await d3.csv("data/8-2/NCED_with_.csv");
             //for(var i=0;i< case_8_2_fig1_data.length;i++){
@@ -444,13 +444,13 @@ async function construct_cases(){
             //    }
             //
             colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073']
-            choropleth_map_objs_8_2 = L.geoJson(choropleth_map_county_8_2, {style: style_blue_8_2})
+            this.layers['8-2']=L.geoJson(file, {style: style_blue_8_2});
             return;
         }
         //show
         data_loader.cases['8-2'].show = async function(a){
           description=["blabla(%)"];
-          choropleth_map_objs_8_2.addTo(map)//add choropleth layer
+          this.layers['8-2'].addTo(map)//add choropleth layer
           //choropleth_map_objs['legend-'+button_id].addTo(map);//add legend
           //add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[button_id-1]);
 
@@ -459,8 +459,8 @@ async function construct_cases(){
         }
         //hide
         data_loader.cases['8-2'].hide = async function(a){
-            for (var layer in this.layers){
-                map.removeLayer(this.layers[layer]);
+            for (var layer in Object.keys(this.layers)){
+                map.removeLayer(this.layers[Object.keys(this.layers)[layer]]);
             }
             return;
         }
@@ -547,23 +547,37 @@ async function construct_cases(){
     //create
     data_loader.cases['10-3'].create_data = async function(a){
         //"NCED_Polygons_08152017"
-        colors=['#E31A1C'];
-        let files=["mdb_boundary"];
+        this.layers["markers"] = L.layerGroup();
+        var locations = [[-28.5,144],[-36,138.5],[-33,142],[-35,144]];
+        var texts= ["MURRAY-DARLING BASIN","Murray","Darling","Lachlan"];
+
+        colors=['#81abef','#0050cc'];
+        let files=["mdb_boundary","Rivers_in_MDB"];
         add_shape_file(this.id,files,colors);
-    return;
+
+        for (var i in texts){
+            var marker = new L.marker(locations[i], { opacity: 0.01 }); //opacity may be set to zero
+            marker.bindTooltip(texts[i], {permanent: true, className: "my-label", offset: [0, 0] });
+            marker.addTo(this.layers["markers"])
+        }
+        
+        return;
     }
     //show
     data_loader.cases['10-3'].show = async function(a){
-        for (var layer in this.layers){
-            map.addLayer(this.layers[layer]);
+
+        for (var i in Object.keys(this.layers)){
+            key =  Object.keys(this.layers)[i];
+            map.addLayer(this.layers[key]);
         }
-    //console.log("10-3")
+   
         return;
     }
     //hide
     data_loader.cases['10-3'].hide = async function(a){
-        for (var layer in this.layers){
-            map.removeLayer(this.layers[layer]);
+        for (var i in Object.keys(this.layers)){
+            key =  Object.keys(this.layers)[i];
+            map.removeLayer(this.layers[key]);
         }
         return;
     }
@@ -620,12 +634,11 @@ async function add_shape_file(id,files,colors,additional_layer){
     for (var i in data_loader.cases[id].files){
         shape = data_loader.cases[id].files[i];
         color=colors[i]
-        overlay_maps[i] = new L.Shapefile(shape, {style:style});
+        data_loader.cases[id].layers[i] = new L.Shapefile(shape, {style:style});
     }
     if (additional_layer!=null){
         i+=1
-        overlay_maps[i] = additional_layer;
+        data_loader.cases[id].layers[i] = additional_layer;
     }
 //create layer control by adding layer groups
-data_loader.cases[id].layers=overlay_maps;
 }

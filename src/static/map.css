@@ -4,6 +4,37 @@ html, body {
     margin: 0;
 }
 
+.my-label {
+  position: absolute;
+  font-size:13px;
+}
+
+.leaflet-tooltip {
+  position: absolute;
+  padding: 6px;
+  background-color: #49505700;
+  border: 0px solid #fff;
+  border-radius: 0px;
+  color: rgb(223, 243, 239);
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 0px 0px rgba(0,0,0,0.4);
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+    position: absolute;
+    pointer-events: none;
+    border: 0px solid transparent;
+    background: transparent;
+    content: "";
+    }
 
 #blue-drop-icon{
    background: url(./marker/blue_drop_24.png) no-repeat;
@@ -200,6 +231,8 @@ html, body {
     right:1vw;
     z-index: 100;
     width: 33vw;
+    overflow-y: scroll;
+    height:65vh;
     margin-top: 2vh;
     background-color: rgba(255, 255, 255, 1.0);
     overflow: auto;
