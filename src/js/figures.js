@@ -154,6 +154,18 @@ function style_red(feature) {
     };
 }
 
+function style_blue_8_2(feature) {
+    return {
+
+        fillColor: getColor_blueish(feature.properties.Percent_Co*100,[0, 0, 20, 40, 80]),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
 function style(feature) {
     return {
         fillColor: color,

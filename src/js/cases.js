@@ -355,7 +355,7 @@ async function construct_cases(){
       case_7_4_fig1_legend = L.control({position: 'bottomleft'});
       case_7_4_fig1_legend.onAdd = function (map){
           var div = L.DomUtil.create('div', 'info legend');
-          let categories = ['10 - 100','1 - 10','1'];
+          let categories = ['10+','1 - 10','1'];
 
        colors= ['#00ad7c','#52d681','#b5ff7d'];
        lgnd = [];
@@ -384,10 +384,10 @@ async function construct_cases(){
     //case 8-1
     data_loader.cases['8-1'].create_data = async function(a){
         geojson = await shp("data/brazil/ucs_arpa_br_mma_snuc_2017_w");
-        case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {"color": "#00994c","opacity": 0.65}});
+        case_8_1_fig1_layer1 = L.geoJson(geojson, {style: {"color": "#00ff99","opacity": 1}});
 
         data = await $.getJSON('data/brazil/amapoly_ivb.json');
-        case_8_1_fig1_layer2 = L.geoJson(data, {style: {"color": "#665BCE"}});
+        case_8_1_fig1_layer2 = L.geoJson(data, {style: {"color": "#665BCE", "opacity": 0.5}});
 
         data = await $.getJSON('data/brazil/amazonriver_865.json');
         case_8_1_fig1_layer3 = L.geoJson(data, {style: {"weight": 5}});
@@ -405,8 +405,8 @@ async function construct_cases(){
         //create legend
         case_8_1_fig1_legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            categories = ['Amazon Basin','ARPA System','Amazon River'];
-            colors = ["rgb(102, 91, 206)", "rgb(110, 168, 117)", "rgb(84, 131, 244)"]
+            categories = ['ARPA System','Amazon Basin','Amazon River'];
+            colors = ["#00ff99","rgb(102, 91, 206)",  "rgb(84, 131, 244)"]
             lgnd = [];
 
             for (var i = 0; i < categories.length; i++) {
@@ -429,6 +429,42 @@ async function construct_cases(){
             map.removeControl(case_8_1_fig1_legend);
         return;
     }
+
+
+        ////////case 8-2//////////
+        //create
+        data_loader.cases['8-2'].create_data = async function(a){
+             //"NCED_Polygons_08152017"
+
+             choropleth_map_county_8_2 = await shp("data/8-2/NCED_with_")
+
+          //case_8_2_fig1_data = await d3.csv("data/8-2/NCED_with_.csv");
+            //for(var i=0;i< case_8_2_fig1_data.length;i++){
+            //        case_8_2_fig1_data_percent[i]= (parseInt(case_8_2_fig1_data[i]['Percent_Co']*100));
+            //    }
+            //
+            colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073']
+            choropleth_map_objs_8_2 = L.geoJson(choropleth_map_county_8_2, {style: style_blue_8_2})
+            return;
+        }
+        //show
+        data_loader.cases['8-2'].show = async function(a){
+          description=["blabla(%)"];
+          choropleth_map_objs_8_2.addTo(map)//add choropleth layer
+          //choropleth_map_objs['legend-'+button_id].addTo(map);//add legend
+          //add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[button_id-1]);
+
+            console.log("8-2")
+            return;
+        }
+        //hide
+        data_loader.cases['8-2'].hide = async function(a){
+            for (var layer in this.layers){
+                map.removeLayer(this.layers[layer]);
+            }
+            return;
+        }
+
 
     //case 9-1
     data_loader.cases['9-1'].create_data = async function(a){
@@ -506,34 +542,6 @@ async function construct_cases(){
         waterfund_objs['Operating'].clearLayers();
         return;
     }
-
-
-
-    ////////case 8-2//////////
-    //create
-    data_loader.cases['8-2'].create_data = async function(a){
-         //"NCED_Polygons_08152017"
-         colors=['#E31A1C'];
-         let files=["Agg_per_county_all_stats"];
-        add_shape_file(this.id,files,colors);
-        return;
-    }
-    //show
-    data_loader.cases['8-2'].show = async function(a){
-        for (var layer in this.layers){
-            map.addLayer(this.layers[layer]);
-        }
-    console.log("8-2")
-        return;
-    }
-    //hide
-    data_loader.cases['8-2'].hide = async function(a){
-        for (var layer in this.layers){
-            map.removeLayer(this.layers[layer]);
-        }
-        return;
-    }
-
 
     ///////10-3/////////
     //create
