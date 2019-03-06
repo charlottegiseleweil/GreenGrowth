@@ -44,8 +44,8 @@ async function construct_cases(){
 
     ///////////Case 6-2///////////
     data_loader.cases['6-2'].create_data = async function(a){
-        let files=["Aqueducts","Croton_","Incityflow","NY_City","Tunnels","dfw_hudson_river_morphology"];
-        colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073',"#214587"]
+        let files=["Aqueducts","Croton_","Incityflow","NY_City","Tunnels","dfw_hudson_river_morphology","huygtfr"];
+        colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073',"#214587","#71c7ec"]
         let kml_layer = omnivore.kml("data/6-2/doc.kml");
         add_shape_file(this.id,files,colors,kml_layer);
         return;
