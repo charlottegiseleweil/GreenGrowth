@@ -100,9 +100,9 @@ function legend(grades){
 
 //get color of water fund marker
 function get_marker_color(phase){
-    return phase == 'phase_0'||phase == 'phase_1'||phase == 'phase_' ?  'hsl(4, 72%, 55%, 0.81)' :
-           phase == 'phase_2'||phase == 'phase_3' ? '#eea551cf' :
-           phase == 'phase_5'||phase ==  'phase_4' ?'hsl(115, 100%, 51%)' :
+    return phase == 'phase_0'||phase == 'phase_1'||phase == 'phase_' ?  '#eea551cf' : //hsl(4, 72%, 55%, 0.81) #DF453A
+           phase == 'phase_2'||phase == 'phase_3' ? '#e6e600' :
+           phase == 'phase_5'||phase ==  'phase_4' ?'#1AFF05' :
                                 'white';
 }
 
@@ -156,7 +156,7 @@ function style_red(feature) {
 function style_blue_8_2(feature) {
     return {
 
-        fillColor: getColor_blueish(feature.properties.Percent_Co*100,[0, 0, 20, 40, 80]),
+        fillColor: getColor_blueish(feature.properties.Percent_Co*100,[0, 1, 20, 40, 80]),
         weight: 1,
         opacity: 1,
         color: 'white',

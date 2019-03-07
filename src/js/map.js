@@ -91,7 +91,7 @@ function activeHighlight(layer){
       weight: 4,
       color: '#00cc00',//"#bb3e00",
       dashArray: '',
-      fillOpacity: 0.1
+      fillOpacity: 0.05
 
   });
 }

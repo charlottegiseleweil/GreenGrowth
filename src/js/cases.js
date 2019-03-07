@@ -67,21 +67,25 @@ async function construct_cases(){
         return;
     }
 
+    ///////////Case 6-3///////////
+
     data_loader.cases['6-3'].show = async function(a){
         var lg;
         var imageUrl = './data/sonuc.png';
 
         case_6_3_fig1_legend = L.control({position: 'bottomleft'});
+        /*
         geojson.eachLayer(function(layer) {
             if (layer.feature.properties.name == 'South Africa') {
                 layer.setStyle({fillOpacity: 0});
             }
         });
+        */
 
         case_6_3_fig1_legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
             categories = ['0 or no data','0 - 5%','5 - 10%','> 10%','Clearing areas'];
-            colors = ['#ffffff', '#EBB57D', '#CF6042', '#980001', '#386507']
+            colors = ['', '#EBB57D', '#CF6042', '#980001', '#386507']
             lgnd = [];
 
             for (var i = 0; i < categories.length; i++) {
@@ -435,24 +439,31 @@ async function construct_cases(){
         //create
         data_loader.cases['8-2'].create_data = async function(a){
              //"NCED_Polygons_08152017"
-
-             let file = await shp("data/8-2/NCED_with_")
-
-          //case_8_2_fig1_data = await d3.csv("data/8-2/NCED_with_.csv");
-            //for(var i=0;i< case_8_2_fig1_data.length;i++){
-            //        case_8_2_fig1_data_percent[i]= (parseInt(case_8_2_fig1_data[i]['Percent_Co']*100));
-            //    }
-            //
-            colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073']
+             //choropleth map
+            let file = await shp("data/8-2/NCED_with_")
             this.layers['8-2']=L.geoJson(file, {style: style_blue_8_2});
+
+            //legend
+            this.layers['8-2-legend'] = L.control({position: 'bottomleft'});
+            this.layers['8-2-legend'].onAdd = function (map){
+                var div = L.DomUtil.create('div', 'info legend');
+                colors = ['#ffffff', '#71c7ec', '#189ad3', '#107dac', '#005073']
+                categories = ['0 - 1%','1 - 20%','20 - 40%','40 - 80%','> 80%'];
+                lgnd = [];
+                for (var i = 0; i < categories.length; i++) {
+                    div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
+                }
+                div.innerHTML = lgnd.join('<br>');
+                return div;
+            }
             return;
         }
         //show
         data_loader.cases['8-2'].show = async function(a){
           description=["blabla(%)"];
           this.layers['8-2'].addTo(map)//add choropleth layer
-          //choropleth_map_objs['legend-'+button_id].addTo(map);//add legend
-          //add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[button_id-1]);
+          this.layers['8-2-legend'].addTo(map);//add legend
+          add_legend_to_right_menu(this.layers["8-2-legend"],"8-2","Something");
 
             console.log("8-2")
             return;
@@ -495,23 +506,23 @@ async function construct_cases(){
                   className: 'myDivIcon'
                 })}
             );
-            
+
             let text="<b>City:</b>"+data[i]['City']+"<br>"+"<b>Country:</b>"+data[i]['Country'];
             if (data[i]['State']!=""){
                 text+="<br>"+"<b>State:</b>"+data[i]['State'];
             }
-            
+
             //set values in popup
             if (data[i]['Phase']==('Operation'||'Maturity'))
                 text+="<br>"+"<b>Operational since:</b>"+data[i]['Operational']
-            
-            
+
+
             marker.bindPopup(text).on('mouseover', function (e) {
                 this.openPopup();
             }).on('mouseout', function (e) {
                 this.closePopup();
             });;
-        
+
             waterfund_markers['phase_'+data[i]['Phase_Code']].push(marker);
             //waterfund_objs[i]=marker
         }
@@ -521,12 +532,19 @@ async function construct_cases(){
         waterfund_objs['Operating'] = L.layerGroup(waterfund_markers['phase_4'].concat(waterfund_markers['phase_5'])).addTo(map);
 
         var overlayMaps = {
-            "Potential Future":    waterfund_objs['Potential Future'],
-            "In Development":        waterfund_objs['In Development'],
-            "Operating":              waterfund_objs['Operating']
+            '<img src="./static/marker/orange_drop_24.png"> Potential Future':    waterfund_objs['Potential Future'],
+            '<img src="./static/marker/yellow_drop_24.png"> In Development':        waterfund_objs['In Development'],
+            '<img src="./static/marker/green_drop_24.png"> Operating':              waterfund_objs['Operating']
         };
-        //create layer control by adding layer groups
-        waterfund_objs['con_layers']=L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'}).addTo(map);
+
+
+
+        //waterfund_objs['con_layers'] = L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'},{'<i id="blue-drop-icon"></i>',});
+        waterfund_objs['con_layers'] = L.control.layers(null,overlayMaps,{collapsed:false, position: 'bottomleft'});
+
+        //waterfund_objs['con_layers'] = L.control.layers(null,{'<img src="./static/marker/blue_drop_24.png">Some text':new L.layerGroup(),})
+
+        waterfund_objs['con_layers'].addTo(map)
         $('.leaflet-control-layers-selector:checked')
         add_legend_to_right_menu(waterfund_objs['con_layers'],"9-1","Water Funds phases");
         waterfund_bool=true;
@@ -558,7 +576,7 @@ async function construct_cases(){
             marker.bindTooltip(texts[i], {permanent: true, className: "my-label", offset: [0, 0] });
             marker.addTo(this.layers["markers"])
         }
-        
+
         return;
     }
     //show
@@ -568,7 +586,7 @@ async function construct_cases(){
             key =  Object.keys(this.layers)[i];
             map.addLayer(this.layers[key]);
         }
-   
+
         return;
     }
     //hide
