@@ -602,7 +602,7 @@ async function construct_cases(){
     //create
     data_loader.cases['13-1'].create_data = async function(a){
         //"NCED_Polygons_08152017"
-        colors=['#E31A1C'];
+        colors=['#11ddbb'];
         let files=["guanacaste"];
         add_shape_file(this.id,files,colors);
     return;
