@@ -623,7 +623,61 @@ async function construct_cases(){
         return;
     }
 
+    ///////14-1/////////
+    //create
+    data_loader.cases['14-1'].create_data = async function(a){
+        
+            return;
+    }
+            //show
+    data_loader.cases['14-1'].show = async function(a){
+        show_image('./static/figure_and_images/14_1-1.png', 
+        'Belize scenarios');
+    //console.log("13-1")
+        return;
+    }
+    //hide
+    data_loader.cases['14-1'].hide = async function(a){
+        document.getElementById("static-overlay").innerHTML = "";
+    }
 
+     ///////16-1/////////
+    //create
+    data_loader.cases['16-1'].create_data = async function(a){
+
+    return;
+    }
+
+    ///////14-2/////////
+    //create
+    data_loader.cases['14-1'].create_data = async function(a){
+        
+            return;
+    }
+            //show
+    data_loader.cases['14-2'].show = async function(a){
+        show_image('./static/figure_and_images/14_2-1.png', 
+        'Belize scenarios');
+        
+    //console.log("13-1")
+        return;
+    }
+    //hide
+    data_loader.cases['14-2'].hide = async function(a){
+        document.getElementById("static-overlay").innerHTML = "";
+    }
+
+    //show
+    data_loader.cases['16-1'].show = async function(a){
+        show_image('./static/figure_and_images/16_1-1.png', 
+        'Belize scenarios');
+    //console.log("13-1")
+        return;
+    }
+    //hide
+    data_loader.cases['16-1'].hide = async function(a){
+        document.getElementById("static-overlay").innerHTML = "";
+    }
 
     //data_loader.preloadDynamicFigures();
     return "cases";
@@ -659,4 +713,17 @@ async function add_shape_file(id,files,colors,additional_layer){
         data_loader.cases[id].layers[i] = additional_layer;
     }
 //create layer control by adding layer groups
+}
+
+function show_image(src,alt) {
+    var background_overlay = document.createElement('div');  
+    var divBox = document.getElementById("static-overlay");
+    var img = document.createElement("img");
+    img.left= "0px"; /* Stay in place */
+    img.src = src;
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.alt = alt;
+    img.style.zIndex = 1000000;
+    divBox.appendChild(img);
 }

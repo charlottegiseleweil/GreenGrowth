@@ -636,7 +636,16 @@ p {
     width: 10vw;
     font-family: 'Maven Pro', sans-serif;
 }
-
+.dark-overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+}
 .overlay {
     height: 100%;
     width: 0;
@@ -649,7 +658,17 @@ p {
     overflow-x: hidden;
     transition: 0.5s;
   }
-
+  #static-overlay {
+    position: fixed;
+    width: 52vw;
+    height: 70vh;
+    top: 17vh;
+    left: 9vw;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    cursor: pointer;
+  }
   .overlay-content {
     position: relative;
     top: 25%;

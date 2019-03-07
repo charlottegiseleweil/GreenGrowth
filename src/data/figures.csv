@@ -19,9 +19,9 @@ ch_no,case_no,fig_no from google doc,fig_no,name,description,dynamic,static
 10,10,10.2,2,Mechanism: impact investing,,,
 10,10.3,10.3,1,Murray-Darling Basin,,,TRUE
 13,13.1,13.1,1,Costa Rica map,,,TRUE
-14,14.1,14.1,1,US Coastal hazard map,,,TRUE
-14,14.2,14.2,2,US coastal hazard bar chart,,,TRUE
-16,16.1,16.1,1,Belize scenarios,,,TRUE
+14,14.1,14.1,1,US Coastal hazard map,,,
+14,14.2,14.2,2,US coastal hazard bar chart,,,
+16,16.1,16.1,1,Belize scenarios,,,
 17,17.1,17.1,1,Clément ES initiatives,,,TRUE
 17,17.2,17.2,2,Clément Bordeaux ES trade-offs,,,TRUE
 17,17.1,17.1,1,Hamel: Yarra Ranges Council loc,,,
