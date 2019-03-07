@@ -623,6 +623,8 @@ async function construct_cases(){
         return;
     }
 
+
+
     //data_loader.preloadDynamicFigures();
     return "cases";
 }
