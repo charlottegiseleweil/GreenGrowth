@@ -40,9 +40,6 @@ async function handleCountryClick(layer) {
     $("#country-display-reg").html(data_loader.active_country.name.toUpperCase());
     $('#country-display-panel-reg').slideDown( "slow",  function() {});
 
-    //$("#country-display-mech").html(data_loader.active_country.name.toUpperCase());
-    //$("#country-display-panel-mech").show();
-
   }
   //use all data again
   await data_loader.selectCases()

@@ -391,8 +391,22 @@ html, body {
   background-color : rgb(3, 59, 15);
 }
 .nav-link{
-  font-size: 5vw;
-  line-height: 6vh;
+  font-size: 4vh;
+  padding-left: 10vw;
+}
+.nav-item{
+  width: 20vw;
+  display: inline-block;
+}
+.flex-column{
+  display: inline;
+}
+
+#mech-title{
+  width: 17vw;
+  font-size: 4vh;
+  background-color:#999999;
+  border-width: 2px;
 }
 
 
@@ -479,8 +493,8 @@ span {
     background-color: black;
     margin: auto;
     float: left;
-    margin-left: 7vw;
-    margin-top: 17vh;
+    margin-left: 0vw;
+    margin-top: 2vh;
   }
 
   .left-menu-sub{

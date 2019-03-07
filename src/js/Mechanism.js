@@ -32,8 +32,14 @@ class Mechanism{
 
         change_image(){
 
-            $(".mechanism-img-gallery").html("<a href ='./static/mechanisms/"+this.name.split(" ")[0].toLowerCase()+".png'><img class='img-mechanism' src='./static/mechanisms/"+this.name.split(" ")[0].toLowerCase()+".png'></a>");
+            //$(".mechanism-img-gallery").html("<a href ='./static/mechanisms/"+this.name.split(" ")[0].toLowerCase()+".png'><img class='img-mechanism' src='./static/mechanisms/"+this.name.split(" ")[0].toLowerCase()+".png'></a>");
             startGallery('mechanism-img-gallery');
         }
 
     }
+
+function listChapters(e) {
+  //set first mechanism title display back to normal
+  $('#first-mech').css('color','');
+  data_loader.mechanisms[e.name].list_chapters_on_overlay();
+}

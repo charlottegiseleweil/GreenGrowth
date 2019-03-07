@@ -18,10 +18,8 @@ function buildLeftMenu(){
   add_tooltip("#left-menu #left-chapter-about");
   add_tooltip("#left-menu #left-chapter-mechanism");
 
-  //$('#bottom-menu').append("<span id='by-type-button' class='bottom-menu-element' title='Browse by type' onclick='openNav();'>By Type</span>");
 
   refresh_left_menu();
-  //$('#left-menu').append("<span id=left-chapter-0 class='left-chapter' title='Overview' onclick=caseClick("+0+","+1+");>" +0+ "</span>");
 }
 
 function caseClick(chapter_id,case_id){
@@ -87,9 +85,7 @@ async function home_menu(){
   console.log("moved to: "+data_loader.active_country.name);
   $(".tooltip").hide();
   //remove country name display
-    //$("#country-display-panel").hide();
   $("#country-display-panel-reg").hide();
-  $("#country-display-panel-mech").hide();
 
 }
 
@@ -112,8 +108,10 @@ function openAbout() {
 }
 
 function openNav() {
+  home_menu();
   document.getElementById("myNav").style.width = "100%";
   $("#myNav").load("static/mechanism.html", function(){
+    /*
     if(data_loader.browsing_all_cases){
       $("#country-display-panel-mech").hide()
     }
@@ -121,10 +119,9 @@ function openNav() {
       $("#country-display-mech").html(data_loader.active_country.name.toUpperCase());
       $("#country-display-panel-mech").show()
     }
+    */
   });
-
-
-  //console.log("first key",data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]]);
+  $('#first-mech').click();
 
 }
 
@@ -137,11 +134,7 @@ async function mechanismCaseClick(case_id){
   caseClick(case_id.split("-")[0],case_id);
 }
 
-function changeImage(e) {
-//  $(".mechanism-img").attr("src","./static/mechanisms/"+e.name+".png");
-  data_loader.mechanisms[e.name].change_image();
-  data_loader.mechanisms[e.name].list_chapters_on_overlay();
-}
+
 
 function refresh_left_menu(){
   for (var i in data_loader.selected_chapter_ids){
@@ -199,6 +192,6 @@ function refresh_left_menu(){
   $('#left-case-'+data_loader.active_case.id).css('background-color', 'hsl(129, 67%, 64%)')
 }
 function load_mechanism(){
-    data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].change_image();
     data_loader.mechanisms[Object.keys(data_loader.mechanisms)[0]].list_chapters_on_overlay();
+
 }
