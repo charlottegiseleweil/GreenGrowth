@@ -39,6 +39,7 @@ class DataLoader {
         this.progress_bar._progress += 10;
         await data_loader.cases['8-1'].create_data();
         await data_loader.cases['8-2'].create_data();
+        await data_loader.cases['9-2'].create_data();
         this.progress_bar._progress += 10;
         await data_loader.cases['10-3'].create_data();
         this.progress_bar._progress += 10;

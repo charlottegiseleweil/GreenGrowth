@@ -559,6 +559,23 @@ async function construct_cases(){
         return;
     }
 
+     ///////13-1/////////
+    //create
+    data_loader.cases['9-2'].create_data = async function(a){
+
+    }
+    //show
+    data_loader.cases['9-2'].show = async function(a){
+        
+        imageBounds = [[-0.176425,37.328452], [-1.03,36.532694]];
+        data_loader.cases['9-2'].layers["image"] = L.imageOverlay("./data/9-2.png", imageBounds).addTo(map);
+        return;
+    }
+    //hide
+    data_loader.cases['9-2'].hide = async function(a){
+        map.removeLayer(this.layers["image"]);
+    }
+
     ///////10-3/////////
     //create
     data_loader.cases['10-3'].create_data = async function(a){
@@ -624,12 +641,7 @@ async function construct_cases(){
     }
 
     ///////14-1/////////
-    //create
-    data_loader.cases['14-1'].create_data = async function(a){
-        
-            return;
-    }
-            //show
+    //show
     data_loader.cases['14-1'].show = async function(a){
         show_image('./static/figure_and_images/14_1-1.png', 
         'Belize scenarios');
@@ -641,19 +653,6 @@ async function construct_cases(){
         document.getElementById("static-overlay").innerHTML = "";
     }
 
-     ///////16-1/////////
-    //create
-    data_loader.cases['16-1'].create_data = async function(a){
-
-    return;
-    }
-
-    ///////14-2/////////
-    //create
-    data_loader.cases['14-1'].create_data = async function(a){
-        
-            return;
-    }
             //show
     data_loader.cases['14-2'].show = async function(a){
         show_image('./static/figure_and_images/14_2-1.png', 
