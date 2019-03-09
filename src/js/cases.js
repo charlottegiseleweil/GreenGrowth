@@ -737,8 +737,9 @@ function show_image(src,alt) {
     var img = document.createElement("img");
     img.left= "0px"; /* Stay in place */
     img.src = src;
-    img.style.width = "100%";
-    img.style.height = "100%";
+
+    img.style.height = '65vh';
+
     img.alt = alt;
     img.style.zIndex = 1000000;
     divBox.appendChild(img);

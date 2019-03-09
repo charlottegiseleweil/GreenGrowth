@@ -660,10 +660,10 @@ p {
   }
   #static-overlay {
     position: fixed;
-    width: 52vw;
-    height: 70vh;
+    width: min-content;
+    height: min-content;
     top: 17vh;
-    left: 9vw;
+    left: 7vw;
     right: 0;
     bottom: 0;
     z-index: -1;
