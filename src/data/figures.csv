@@ -15,6 +15,7 @@ ch_no,case_no,fig_no from google doc,fig_no,name,description,dynamic,static
 8,8.2,8.3,1,Conservation easements,,,TRUE
 9,9,9.2,1,Mechanism: water funds,,,
 9,9.1,9.1,1,Water Funds Location on Map,Phases can be filtered using checkboxes on top right of the screen. Click on the markers to see more information.,TRUE,
+9,9.2,,1,Multi-objective optimization for the Maragua watershed,,,TRUE
 10,10,10.1,1,Mechanism: eco-certification,,,
 10,10,10.2,2,Mechanism: impact investing,,,
 10,10.3,10.3,1,Murray-Darling Basin,,,TRUE

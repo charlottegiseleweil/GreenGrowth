@@ -111,15 +111,6 @@ function openNav() {
   home_menu();
   document.getElementById("myNav").style.width = "100%";
   $("#myNav").load("static/mechanism.html", function(){
-    /*
-    if(data_loader.browsing_all_cases){
-      $("#country-display-panel-mech").hide()
-    }
-    else{
-      $("#country-display-mech").html(data_loader.active_country.name.toUpperCase());
-      $("#country-display-panel-mech").show()
-    }
-    */
   });
   $('#first-mech').click();
 

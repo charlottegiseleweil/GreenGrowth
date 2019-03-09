@@ -26,7 +26,12 @@ function buildRightMenu(){
         //case summary and (ambiance) images if available
 
         if (case_.num_images){ //
-            $('#right-case-'+case_.id).append("<p id="+case_.id+'-summary+ class=text-body> <div class ="gallery'+case_.id+'" onclick="disableKeyboard();"></div>'+case_.summary+'<p>');
+            $('#right-case-'+case_.id).append("<p id="+case_.id+'-summary class=text-body> <div class ="gallery'+case_.id+'" onclick="disableKeyboard();"></div>'+case_.summary+'<p>');
+            $('#right-case-'+case_.id).append("<div id="+case_.id+'-legend-holder></div>');
+            if(case_.id=='9-2'){
+              $('#right-case-'+case_.id).append('<br><u><b><a href="https://charlottegiseleweil.github.io/webviz_natcap/intro.html" style="font-size:1.1vmax;">  More about The Upper Tana, Nairobi Water and Multi-objective optimization Fund</a><b></u><br>')
+            }
+
             //$('#right-case-'+case_.id +' .gallery'+case_.id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
             $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></a>');
 
@@ -36,12 +41,13 @@ function buildRightMenu(){
             }
         }
         else {
-            $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary+ class=text-body>"+case_.summary+ "</p>")
+            $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary class=text-body>"+case_.summary+ "</p>")
+            $('#right-case-'+case_.id).append("<div id="+case_.id+'-legend-holder></div>')
         }
         //add second summary to overview page
         if (case_.id.split('-')[0]==0){
           $("#right-case-"+case_.id).append("<h5 id="+case_.id+"-title class=text-body><b>"+case_.titleSecond+"</b></h5>")
-          $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary+ class=text-body>"+case_.summarySecond+ "</p>")
+          $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary class=text-body>"+case_.summarySecond+ "</p>")
         }
         //adds figures of right menu (static and dynamic)
         add_right_menu_figure(case_);
@@ -63,10 +69,16 @@ function add_right_menu_figure(case_){
     $('#right-case-'+case_.id).append('<div class ="static-gallery'+case_.id+'" onclick="disableKeyboard();"></div>');
     //$('#right-case-'+cases[i].id +' .gallery'+cases[i].id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
 
-    $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'"><img class="img-center" src="' + fig_file + '"></a>');
+    if(case_.id=='9-2'){
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank"> <img class="img-center" src="' + fig_file + '"></a>');
+    }
+    else{
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'"><img class="img-center" src="' + fig_file + '"></a>');
+      startGallery('static-gallery'+case_.id);
+    }
     //add figure title
-    $('#right-case-'+case_.id).append('<p class="figure-text">Figure: ' + case_.static_fig_title+ '</p>');
-    startGallery('static-gallery'+case_.id);
+    $('#right-case-'+case_.id).append('<p class="figure-text">' + case_.static_fig_title+ '</p>');
+
 
   }
 

@@ -562,11 +562,24 @@ async function construct_cases(){
      ///////13-1/////////
     //create
     data_loader.cases['9-2'].create_data = async function(a){
-
+      //legend
+      this.layers['9-2-legend'] = L.control({position: 'bottomleft'});
+      this.layers['9-2-legend'].onAdd = function (map){
+          var div = L.DomUtil.create('div', 'info legend');
+          colors = ['#a45c54','#5c5cac','#ac5cac']
+          categories = ['Sagana-Gura','Maragua','Thika-Chania'];
+          lgnd = [];
+          for (var i = 0; i < categories.length; i++) {
+              div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
+          }
+          div.innerHTML = lgnd.join('<br>');
+          return div;
+      }
     }
     //show
     data_loader.cases['9-2'].show = async function(a){
-
+        this.layers['9-2-legend'].addTo(map);//add legend
+        add_legend_to_right_menu(this.layers["9-2-legend"],"9-2","Watersheds");
         imageBounds = [[-0.176425,37.328452], [-1.03,36.532694]];
         data_loader.cases['9-2'].layers["image"] = L.imageOverlay("./data/9-2.png", imageBounds).addTo(map);
         return;

@@ -185,7 +185,8 @@ function view_world(){
 function add_legend_to_right_menu(legend,id, title){
         var htmlObject = legend.getContainer();//get slider container
 
-        var newpos = document.getElementById('right-case-'+id);//set time slider
+        //var newpos = document.getElementById('right-case-'+id);//set time slider
+        var newpos = document.getElementById(id+'-legend-holder');//set time slider
         var legend_height = htmlObject.clientHeight;
         //console.log("height",legend_height);
         function setParent(el, newParent)
@@ -199,5 +200,6 @@ function add_legend_to_right_menu(legend,id, title){
         }
         setParent(htmlObject, newpos);
         $('#right-case-legend').remove();
-        $('#right-case-'+id).append('<p id="right-case-legend" class="figure-text">' + title+ '</p>');
+        //$('#right-case-'+id).append('<p id="right-case-legend" class="figure-text">' + title+ '</p>');
+        $('#'+id+'-legend-holder').append('<p id="right-case-legend" class="figure-text">' + title+ '</p>')
 }
