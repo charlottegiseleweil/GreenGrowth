@@ -421,6 +421,7 @@ async function construct_cases(){
             return div;
         };
 
+
         case_8_1_fig1_legend.addTo(map);
         add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
         return;
@@ -626,6 +627,42 @@ async function construct_cases(){
             map.removeLayer(this.layers[key]);
         }
         return;
+    }
+
+    ///////11-2/////////
+    //create
+    data_loader.cases['11-2'].create_data = async function(a){
+      data = await $.getJSON('data/brazil/amapoly_ivb.json');
+      case_11_2_fig1_layer = L.geoJson(data, {style: {"color": "#665BCE", "opacity": 0.5}});
+
+    return
+    }
+    //show
+    data_loader.cases['11-2'].show = async function(a){
+      case_11_2_fig1_layer.addTo(map);
+
+      case_11_2_fig1_legend = L.control({position: 'bottomleft'});
+
+      //create legend
+      case_11_2_fig1_legend.onAdd = function (map) {
+          var div = L.DomUtil.create('div', 'info legend');
+          lgnd = [];
+
+          div.innerHTML +=  lgnd.push('<i style="background:' + "rgb(102, 91, 206)" + '"></i> ' + ('Amazon Basin'));
+
+          div.innerHTML = lgnd.join('<br>');
+          return div;
+      };
+      case_11_2_fig1_legend.addTo(map);
+      add_legend_to_right_menu(case_11_2_fig1_legend,"11-2","");
+
+    return
+    }
+    //hide
+    data_loader.cases['11-2'].hide = async function(a){
+      map.removeLayer(case_11_2_fig1_layer);
+      map.removeControl(case_11_2_fig1_legend);
+    return
     }
 
      ///////13-1/////////
