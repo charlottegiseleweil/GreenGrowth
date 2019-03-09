@@ -566,7 +566,7 @@ async function construct_cases(){
     }
     //show
     data_loader.cases['9-2'].show = async function(a){
-        
+
         imageBounds = [[-0.176425,37.328452], [-1.03,36.532694]];
         data_loader.cases['9-2'].layers["image"] = L.imageOverlay("./data/9-2.png", imageBounds).addTo(map);
         return;
@@ -643,7 +643,7 @@ async function construct_cases(){
     ///////14-1/////////
     //show
     data_loader.cases['14-1'].show = async function(a){
-        show_image('./static/figure_and_images/14_1-1.png', 
+        show_image('./static/figure_and_images/14_1-1.png',
         'Belize scenarios');
     //console.log("13-1")
         return;
@@ -651,24 +651,26 @@ async function construct_cases(){
     //hide
     data_loader.cases['14-1'].hide = async function(a){
         document.getElementById("static-overlay").innerHTML = "";
+        $('#static-overlay').css('z-index',-1)
     }
 
             //show
     data_loader.cases['14-2'].show = async function(a){
-        show_image('./static/figure_and_images/14_2-1.png', 
+        show_image('./static/figure_and_images/14_2-1.png',
         'Belize scenarios');
-        
+
     //console.log("13-1")
         return;
     }
     //hide
     data_loader.cases['14-2'].hide = async function(a){
         document.getElementById("static-overlay").innerHTML = "";
+        $('#static-overlay').css('z-index',-1)
     }
 
     //show
     data_loader.cases['16-1'].show = async function(a){
-        show_image('./static/figure_and_images/16_1-1.png', 
+        show_image('./static/figure_and_images/16_1-1.png',
         'Belize scenarios');
     //console.log("13-1")
         return;
@@ -676,6 +678,7 @@ async function construct_cases(){
     //hide
     data_loader.cases['16-1'].hide = async function(a){
         document.getElementById("static-overlay").innerHTML = "";
+        $('#static-overlay').css('z-index',-1)
     }
 
     //data_loader.preloadDynamicFigures();
@@ -715,7 +718,8 @@ async function add_shape_file(id,files,colors,additional_layer){
 }
 
 function show_image(src,alt) {
-    var background_overlay = document.createElement('div');  
+
+    var background_overlay = document.createElement('div');
     var divBox = document.getElementById("static-overlay");
     var img = document.createElement("img");
     img.left= "0px"; /* Stay in place */
@@ -725,4 +729,6 @@ function show_image(src,alt) {
     img.alt = alt;
     img.style.zIndex = 1000000;
     divBox.appendChild(img);
+    $('#static-overlay').css('z-index',1000)
+
 }

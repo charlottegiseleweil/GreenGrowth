@@ -666,7 +666,7 @@ p {
     left: 9vw;
     right: 0;
     bottom: 0;
-    z-index: 1000;
+    z-index: -1;
     cursor: pointer;
   }
   .overlay-content {
