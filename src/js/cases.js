@@ -632,16 +632,29 @@ async function construct_cases(){
     //create
     data_loader.cases['13-1'].create_data = async function(a){
         //"NCED_Polygons_08152017"
-        colors=['#11ddbb'];
-        let files=["guanacaste"];
+        colors=['rgb(0,204,0)','rgb(61,144,201)'];
+        let files=["guanacaste","agropaisaje"];
         add_shape_file(this.id,files,colors);
+        this.layers['legend'] = L.control({position: 'bottomleft'});
+        this.layers['legend'].onAdd = function (map){
+            var div = L.DomUtil.create('div', 'info legend');
+            categories = ['Guanacaste','Agropaisaje'];
+            lgnd = [];
+            for (var i = 0; i < categories.length; i++) {
+                div.innerHTML +=  lgnd.push('<i style="background:' + colors[i] + '"></i> ' + (categories[i]));
+            }
+            div.innerHTML = lgnd.join('<br>');
+            return div;
+        }
     return;
     }
     //show
     data_loader.cases['13-1'].show = async function(a){
-        for (var layer in this.layers){
-            map.addLayer(this.layers[layer]);
-        }
+        this.layers['legend'].addTo(map);//add legend   
+        add_legend_to_right_menu(this.layers["legend"],"13-1","Guanacaste Conservation Area");
+        
+        map.addLayer(this.layers[1],true);        
+        map.addLayer(this.layers[0]);        
     //console.log("13-1")
         return;
     }
