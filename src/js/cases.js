@@ -676,8 +676,7 @@ async function construct_cases(){
     }
     //hide
     data_loader.cases['14-1'].hide = async function(a){
-        document.getElementById("static-overlay").innerHTML = "";
-        $('#static-overlay').css('z-index',-1)
+        remove_image();
     }
 
             //show
@@ -690,8 +689,7 @@ async function construct_cases(){
     }
     //hide
     data_loader.cases['14-2'].hide = async function(a){
-        document.getElementById("static-overlay").innerHTML = "";
-        $('#static-overlay').css('z-index',-1)
+        remove_image();
     }
 
     //show
@@ -703,8 +701,7 @@ async function construct_cases(){
     }
     //hide
     data_loader.cases['16-1'].hide = async function(a){
-        document.getElementById("static-overlay").innerHTML = "";
-        $('#static-overlay').css('z-index',-1)
+        remove_image();
     }
 
     //data_loader.preloadDynamicFigures();
@@ -747,6 +744,8 @@ function show_image(src,alt) {
 
     var background_overlay = document.createElement('div');
     var divBox = document.getElementById("static-overlay");
+    var div_dark = document.getElementById("static-background-overlay");
+    div_dark.style.display = "initial";
     var img = document.createElement("img");
     img.left= "0px"; /* Stay in place */
     img.src = src;
@@ -758,4 +757,9 @@ function show_image(src,alt) {
     divBox.appendChild(img);
     $('#static-overlay').css('z-index',1000)
 
+}
+function remove_image(){
+    document.getElementById("static-overlay").innerHTML = "";
+    document.getElementById("static-background-overlay").style.display = "none";        
+    $('#static-overlay').css('z-index',-1)
 }
