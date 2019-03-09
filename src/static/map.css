@@ -662,8 +662,8 @@ p {
     position: fixed;
     width: min-content;
     height: min-content;
-    top: 17vh;
-    left: 7vw;
+    top: 0vh;
+    left: 0vw;
     right: 0;
     bottom: 0;
     z-index: -1;

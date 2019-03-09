@@ -559,7 +559,7 @@ async function construct_cases(){
         return;
     }
 
-     ///////13-1/////////
+     ///////9-2/////////
     //create
     data_loader.cases['9-2'].create_data = async function(a){
       //legend
@@ -650,11 +650,11 @@ async function construct_cases(){
     }
     //show
     data_loader.cases['13-1'].show = async function(a){
-        this.layers['legend'].addTo(map);//add legend   
+        this.layers['legend'].addTo(map);//add legend
         add_legend_to_right_menu(this.layers["legend"],"13-1","Guanacaste Conservation Area");
-        
-        map.addLayer(this.layers[1],true);        
-        map.addLayer(this.layers[0]);        
+
+        map.addLayer(this.layers[1],true);
+        map.addLayer(this.layers[0]);
     //console.log("13-1")
         return;
     }
@@ -669,7 +669,7 @@ async function construct_cases(){
     ///////14-1/////////
     //show
     data_loader.cases['14-1'].show = async function(a){
-        show_image('./static/figure_and_images/14_1-1.png',
+        show_image('14-1','./static/figure_and_images/14_1-1.png',
         'Belize scenarios');
     //console.log("13-1")
         return;
@@ -682,7 +682,7 @@ async function construct_cases(){
 
             //show
     data_loader.cases['14-2'].show = async function(a){
-        show_image('./static/figure_and_images/14_2-1.png',
+        show_image('14-2','./static/figure_and_images/14_2-1.png',
         'Belize scenarios');
 
     //console.log("13-1")
@@ -696,8 +696,8 @@ async function construct_cases(){
 
     //show
     data_loader.cases['16-1'].show = async function(a){
-        show_image('./static/figure_and_images/16_1-1.png',
-        'Belize scenarios');
+        show_image('16-1','./static/figure_and_images/16_1-1.png',
+        'Belize scenarios','80vh','auto');
     //console.log("13-1")
         return;
     }
@@ -743,7 +743,7 @@ async function add_shape_file(id,files,colors,additional_layer){
 //create layer control by adding layer groups
 }
 
-function show_image(src,alt) {
+function show_image(id, src,alt) {
 
     var background_overlay = document.createElement('div');
     var divBox = document.getElementById("static-overlay");
@@ -751,11 +751,23 @@ function show_image(src,alt) {
     img.left= "0px"; /* Stay in place */
     img.src = src;
 
-    img.style.height = '65vh';
+    if(id=='14-1' || id =='14-2'){
+      img.style.height = 'auto';
+      img.style.width = '52vw';
+      $('#static-overlay').css({'top': '20vh', 'left': '7vw'})
+    }
+    else if(id=='16-1'){
+      img.style.height = '78vh';
+      img.style.width = 'auto';
+      $('#static-overlay').css({'top': '10vh', 'left': '12vw'})
+    }
+
 
     img.alt = alt;
     img.style.zIndex = 1000000;
     divBox.appendChild(img);
+
+
     $('#static-overlay').css('z-index',1000)
 
 }
