@@ -721,12 +721,24 @@ async function construct_cases(){
         show_image('14-2','./static/figure_and_images/14_2-1.png',
         'Belize scenarios');
 
-    //console.log("13-1")
         return;
     }
     //hide
     data_loader.cases['14-2'].hide = async function(a){
         remove_image();
+    }
+
+    //show
+    data_loader.cases['14-3'].show = async function(a){
+    show_image('14-3','./static/figure_and_images/14_3-1.png',
+    'Belize scenarios');
+
+
+    return;
+    }
+    //hide
+    data_loader.cases['14-3'].hide = async function(a){
+    remove_image();
     }
 
     //show
@@ -791,6 +803,11 @@ function show_image(id, src,alt) {
       img.style.height = 'auto';
       img.style.width = '52vw';
       $('#static-overlay').css({'top': '20vh', 'left': '8.5vw'})
+    }
+    else if (id=='14-3'){
+      img.style.height = 'auto';
+      img.style.width = '52vw';
+      $('#static-overlay').css({'top': '15vh', 'left': '8.5vw'})
     }
     else if(id=='16-1'){
       img.style.height = '78vh';
