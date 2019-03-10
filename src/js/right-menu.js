@@ -28,9 +28,11 @@ function buildRightMenu(){
         if (case_.num_images){ //
             $('#right-case-'+case_.id).append("<p id="+case_.id+'-summary class=text-body> <div class ="gallery'+case_.id+'" onclick="disableKeyboard();"></div>'+case_.summary+'<p>');
             $('#right-case-'+case_.id).append("<div id="+case_.id+'-legend-holder></div>');
-            //special case for external link
+            //special case for external links
             if(case_.id=='9-2')
               $('#right-case-'+case_.id).append('<br><u><b><center><a href="https://charlottegiseleweil.github.io/webviz_natcap/intro.html" target="_blank" style="font-size:1.1vmax;"> --> More about The Upper Tana Nairobi Water Fund <-- </a></center></b></u><br>')
+            else  if(case_.id=='16-3')
+              $('#right-case-'+case_.id).append('<br><u><b><center><a href="http://www.myanmarnaturalcapital.org/en" target="_blank" style="font-size:1.1vmax;"> --> Explore Myanmar\'s Natural Capital <-- </a></center></b></u><br>')
 
 
             //$('#right-case-'+case_.id +' .gallery'+case_.id).append('<a class="pin" href="#"><span class="far fa-images"></span></a>');
@@ -44,9 +46,12 @@ function buildRightMenu(){
         else {
             $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary class=text-body>"+case_.summary+ "</p>")
             $('#right-case-'+case_.id).append("<div id="+case_.id+'-legend-holder></div>')
-            //special case for external link
-            if(case_.id=='16-3')
+            //special case for external links
+            if(case_.id=='9-2')
+              $('#right-case-'+case_.id).append('<br><u><b><center><a href="https://charlottegiseleweil.github.io/webviz_natcap/intro.html" target="_blank" style="font-size:1.1vmax;"> --> More about The Upper Tana Nairobi Water Fund <-- </a></center></b></u><br>')
+            else  if(case_.id=='16-3')
               $('#right-case-'+case_.id).append('<br><u><b><center><a href="http://www.myanmarnaturalcapital.org/en" target="_blank" style="font-size:1.1vmax;"> --> Explore Myanmar\'s Natural Capital <-- </a></center></b></u><br>')
+
 
         }
         //add second summary to overview page
