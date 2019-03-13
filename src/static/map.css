@@ -485,6 +485,12 @@ span {
     color: aqua;
   }
 
+  .img-mechanism-active {
+    border-style: solid;
+    border-color: hsl(4, 72%, 55%, 0.81);
+    border-width: 0.5vh;
+  }
+
   .img-mechanism {
     width: 17vw;
     height: auto;
@@ -677,7 +683,7 @@ p {
     right: 0;
     bottom: 0;
     z-index: 10;
-    background-color: rgba(0,0,0, 0.7);    
+    background-color: rgba(0,0,0, 0.7);
     cursor: pointer;
   }
   .overlay-content {
