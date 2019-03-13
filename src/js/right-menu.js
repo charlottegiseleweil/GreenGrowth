@@ -34,6 +34,7 @@ function buildRightMenu(){
             else  if(case_.id=='16-3')
               $('#right-case-'+case_.id).append('<br><u><b><center><a href="http://www.myanmarnaturalcapital.org/en" target="_blank" style="font-size:1.1vmax;"> --> Explore Myanmar\'s Natural Capital <-- </a></center></b></u><br>')
 
+            //add figure credits
             if (case_.img_credit=="None"){
               $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img></a>');
             }
@@ -82,10 +83,6 @@ function add_right_menu_figure(case_){
 
     $('#right-case-'+case_.id).append('<div class ="static-gallery'+case_.id+'" onclick="disableKeyboard();"></div>');
 
-    if(case_.static_fig_credit!='None'){
-      $('#right-case-'+case_.id).append('<div class="static-fig-credit">Credits:'+case_.static_fig_credit+'</div>')
-    }
-
     if(case_.id=='9-2'){
       $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank"> <img class="img-center" src="' + fig_file + '"></a>');
     }
@@ -95,7 +92,10 @@ function add_right_menu_figure(case_){
     }
     //add figure title
     $('#right-case-'+case_.id).append('<p class="figure-text">' + case_.static_fig_title+ '</p>');
-
+    //add figure credits
+    if(case_.static_fig_credit!='None'){
+      $('#right-case-'+case_.id).append('<div class="static-fig-credit">Credits:'+case_.static_fig_credit+'</div>')
+    }
 
   }
 
