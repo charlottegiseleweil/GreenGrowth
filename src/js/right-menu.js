@@ -91,6 +91,10 @@ function add_right_menu_figure(case_){
     }
     else{
       $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'"><img class="img-center" src="' + fig_file + '"></a>');
+      if(case_.id=='17-2'){
+        fig_file_2 = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-2.png';
+        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '"></a>');  
+      }
       startGallery('static-gallery'+case_.id);
     }
     //add figure title
