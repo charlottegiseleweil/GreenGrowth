@@ -675,6 +675,7 @@ async function construct_cases(){
         this.layers['legend'] = L.control({position: 'bottomleft'});
         this.layers['legend'].onAdd = function (map){
             var div = L.DomUtil.create('div', 'info legend');
+            colors=['rgb(0,204,0)','rgb(61,144,201)'];
             categories = ['Guanacaste','Agropaisaje'];
             lgnd = [];
             for (var i = 0; i < categories.length; i++) {
@@ -707,7 +708,7 @@ async function construct_cases(){
     //show
     data_loader.cases['14-1'].show = async function(a){
         show_image('14-1','./static/figure_and_images/14_1-1.png',
-        'Belize scenarios');
+        'US coastal hazard');
     //console.log("13-1")
         return;
     }
@@ -716,10 +717,12 @@ async function construct_cases(){
         remove_image();
     }
 
-            //show
+
+    ///////14-2/////////
+    //show
     data_loader.cases['14-2'].show = async function(a){
         show_image('14-2','./static/figure_and_images/14_2-1.png',
-        'Belize scenarios');
+        'Huricane population hit');
 
         return;
     }
@@ -728,11 +731,12 @@ async function construct_cases(){
         remove_image();
     }
 
+    ///////14-3/////////
+/*
     //show
     data_loader.cases['14-3'].show = async function(a){
     show_image('14-3','./static/figure_and_images/14_3-1.png',
     'Belize scenarios');
-
 
     return;
     }
@@ -740,11 +744,11 @@ async function construct_cases(){
     data_loader.cases['14-3'].hide = async function(a){
     remove_image();
     }
-
+*/
     //show
     data_loader.cases['16-1'].show = async function(a){
         show_image('16-1','./static/figure_and_images/16_1-1.png',
-        'Belize scenarios','80vh','auto');
+        'Belize scenarios');
     //console.log("13-1")
         return;
     }
@@ -819,6 +823,7 @@ function show_image(id, src,alt) {
     img.alt = alt;
     img.style.zIndex = 1000000;
     divBox.appendChild(img);
+
 
 
     $('#static-overlay').css('z-index',1000)

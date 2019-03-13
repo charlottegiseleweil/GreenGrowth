@@ -485,6 +485,7 @@ span {
     color: aqua;
   }
 
+
   .img-mechanism-active {
     border-style: solid;
     border-color: hsl(4, 72%, 55%, 0.81);
@@ -606,6 +607,20 @@ p {
   -webkit-filter: brightness(100%);
   width: 14vw;
 }
+
+
+.img-credit{
+  text-align: center;
+  font-size: 0.8vw;
+  font-style: italic;
+}
+
+.static-fig-credit{
+  text-align: center;
+  font-size: 0.8vw;
+  font-style: italic;
+}
+
 
 .case-img:hover{
   -webkit-filter: brightness(70%);
