@@ -35,16 +35,19 @@ function buildRightMenu(){
               $('#right-case-'+case_.id).append('<br><u><b><center><a href="http://www.myanmarnaturalcapital.org/en" target="_blank" style="font-size:1.1vmax;"> --> Explore Myanmar\'s Natural Capital <-- </a></center></b></u><br>')
 
             //add figure credits
+            let credit='';
             if (case_.img_credit=="None"){
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img></a>');
+              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" ><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg"  alt="case-image"></a>');
             }
             else{
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
+              let credit=case_.img_credit;
+              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg"  alt="case-image"><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
+            
             }
 
 
             for (var j=2;j<=parseInt(case_.num_images);j++){
-                $('#right-case-'+case_.id+' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id +'/'+ j +'.jpg" class="case-img-hidden><img class="case-img-hidden" src="./static/figure_and_images/'+ case_.id + '/'+j+'.jpg" alt="case-image"></a>');
+                $('#right-case-'+case_.id+' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id +'/'+ j +'.jpg" class="case-img-hidden credit="'+credit+'"><img class="case-img-hidden" src="./static/figure_and_images/'+ case_.id + '/'+j+'.jpg" title="title" alt="case-image"></a>');
 
             }
         }
@@ -82,15 +85,23 @@ function add_right_menu_figure(case_){
     fig_file = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-1.png';
 
     $('#right-case-'+case_.id).append('<div class ="static-gallery'+case_.id+'" onclick="disableKeyboard();"></div>');
-
-    if(case_.id=='9-2'){
-      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank"> <img class="img-center" src="' + fig_file + '"></a>');
+    let credit=case_.static_fig_credit;
+    if(case_.static_fig_credit!='None'){
+      $('#right-case-'+case_.id).append('<div class="static-fig-credit">Credits:'+case_.static_fig_credit+'</div>')
     }
     else{
-      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'"><img class="img-center" src="' + fig_file + '"></a>');
+      credit='';
+    }
+
+    if(case_.id=='9-2'){
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank" credit="'+credit+'" title="'+case_.static_fig_title+'"> <img class="img-center" src="' + fig_file + '" title="title" alt="static-image"></a>');
+    }
+    else{
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center" src="' + fig_file + '" title="title" alt="static-image"></a>');
+      console.log(case_.static_fig_title);
       if(case_.id=='17-2'){
         fig_file_2 = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-2.png';
-        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '"></a>');
+        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '" title="title" alt="static-image"></a>');  
       }
       startGallery('static-gallery'+case_.id);
     }
@@ -105,19 +116,19 @@ function add_right_menu_figure(case_){
 
   //add dynamic figure (special case, case 6-1)
   else if (case_.id == '6-1'){
+    //div for figure (chart-container)
 
     //add the two buttons of the figure
     $('#right-case-'+case_.id).append('<div id="button-div"></div><br><br>');
     $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="data_loader.cases['+"'6-1'"+'].show(1);">Enrollment per county</button>');
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="data_loader.cases['+"'6-1'"+'].show(2);" style="float:right;">Soil rental rate per county</button><br>');
-
-    //div for figure (chart-container)
-    $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
-    $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 0.85vw;">CRP Enrollments and Payments </p>');
-
-    //fill chart-container
-    case_6_1_fig1();
-  }
+      //div for figure (chart-container)
+      $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
+      $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 0.85vw;">CRP Enrollments and Payments </p>');
+  
+      //fill chart-container
+      case_6_1_fig1();
+    }
 
 }
 
@@ -126,9 +137,9 @@ function case_6_1_fig1() {
     //set options of line plot
     var options={
         animationEnabled: true,
-        //title:{
-        //    text: "CRP Enrollments and Payment"
-        //},
+//        title:{
+//            text: "CRP Enrollments and Payment"
+//        },
         toolTip: {
             shared: true
         },
@@ -187,13 +198,27 @@ function startGallery(id){
         delegate: 'a', // child items selector, by clicking on it popup will open
         type: 'image',
         gallery:{
-            enabled:true
+            enabled:true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
           },
-          callbacks: {
+        callbacks: {
             close: function(){
-               startKeyListener();
-            }}
-
+            startKeyListener();
+        }},
+        image: {
+              titleSrc: function(item) {
+                if (item.el.attr('title')&&item.el.attr('credit'))
+                  return item.el.attr('title')+ '<small>'+item.el.attr('credit')+'</small>';
+                else if(item.el.attr('title')){
+                  return item.el.attr('title');
+                }
+                else if(item.el.attr('credit')){
+                  return item.el.attr('credit')
+                }
+                // + '<small>by Marsel Van Oosten</small> ->to add credit returm this
+              } 
+              // this tells the script which attribute has your caption
+          }
         // other options
       });
 }
