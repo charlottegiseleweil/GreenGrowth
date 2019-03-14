@@ -161,7 +161,14 @@ html, body {
     border-radius: 10px;
     margin-top: 1vh;
   }
-
+  .img-center:hover{
+    -webkit-filter: brightness(70%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+  }
 
 
 
@@ -601,7 +608,6 @@ p {
   float: right;
   top: 1vh;
   margin-left:1vw;
-  margin-top:1vh;
   border-radius: 10px;
   -webkit-filter: brightness(100%);
   width: 14vw;
@@ -755,3 +761,23 @@ p {
   ul ul li{
     color: white;
   }
+
+  .container {
+    position: relative;
+    width: fit-content;
+    float: right;
+  }
+  
+  .container img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .container .svg-inline--fa{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+
+  }  
