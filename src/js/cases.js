@@ -830,7 +830,9 @@ function show_image(id, src,alt,title_text,credit_text) {
       img.style.width = 'auto';
       $('#static-overlay').css({'top': '10vh', 'left': '12vw'})
     }
-
+    title.innerHTML = title_text
+    credit.innerHTML = credit_text
+    
 
     img.alt = alt;
     img.style.zIndex = 1000000;

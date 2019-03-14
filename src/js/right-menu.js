@@ -1,4 +1,3 @@
-
 //build  right menu containing content of each case
 function buildRightMenu(){
   //set the chaptertitle
@@ -36,18 +35,18 @@ function buildRightMenu(){
 
             //add figure credits
             let credit='';
+            
             if (case_.img_credit=="None"){
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" ><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg"  alt="case-image"></a>');
+              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img></a>');
             }
             else{
               let credit=case_.img_credit;
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg"  alt="case-image"><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
-            
+              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
             }
 
 
             for (var j=2;j<=parseInt(case_.num_images);j++){
-                $('#right-case-'+case_.id+' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id +'/'+ j +'.jpg" class="case-img-hidden credit="'+credit+'"><img class="case-img-hidden" src="./static/figure_and_images/'+ case_.id + '/'+j+'.jpg" title="title" alt="case-image"></a>');
+                $('#right-case-'+case_.id+' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id +'/'+ j +'.jpg" class="case-img-hidden credit="'+credit+'"><img class="case-img-hidden" src="./static/figure_and_images/'+ case_.id + '/'+j+'.jpg" alt="case-image"></a>');
 
             }
         }
@@ -80,34 +79,34 @@ function buildRightMenu(){
 // add figures on right menu
 function add_right_menu_figure(case_){
   //add static figure
+
   if (case_.has_static_fig){
+    let credit='';
+    
+    if (case_.static_fig_credit!='None'){
+      credit=case_.static_fig_credit;
+    }
+    
     //load the figure
     fig_file = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-1.png';
 
     $('#right-case-'+case_.id).append('<div class ="static-gallery'+case_.id+'" onclick="disableKeyboard();"></div>');
-    let credit=case_.static_fig_credit;
-    if(case_.static_fig_credit!='None'){
-      $('#right-case-'+case_.id).append('<div class="static-fig-credit">Credits:'+case_.static_fig_credit+'</div>')
-    }
-    else{
-      credit='';
-    }
 
     if(case_.id=='9-2'){
-      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank" credit="'+credit+'" title="'+case_.static_fig_title+'"> <img class="img-center" src="' + fig_file + '" title="title" alt="static-image"></a>');
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank" > <img class="img-center" src="' + fig_file + '"></a>');
     }
     else{
-      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center" src="' + fig_file + '" title="title" alt="static-image"></a>');
-      console.log(case_.static_fig_title);
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center" src="' + fig_file + '"></a>');
       if(case_.id=='17-2'){
         fig_file_2 = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-2.png';
-        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '" title="title" alt="static-image"></a>');  
+        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '"></a>');
       }
       startGallery('static-gallery'+case_.id);
     }
     //add figure title
     $('#right-case-'+case_.id).append('<p class="figure-text">' + case_.static_fig_title+ '</p>');
     //add figure credits
+    
     if(case_.static_fig_credit!='None'){
       $('#right-case-'+case_.id).append('<div class="static-fig-credit">Credits:'+case_.static_fig_credit+'</div>')
     }
@@ -116,19 +115,19 @@ function add_right_menu_figure(case_){
 
   //add dynamic figure (special case, case 6-1)
   else if (case_.id == '6-1'){
-    //div for figure (chart-container)
 
     //add the two buttons of the figure
     $('#right-case-'+case_.id).append('<div id="button-div"></div><br><br>');
     $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="data_loader.cases['+"'6-1'"+'].show(1);">Enrollment per county</button>');
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="data_loader.cases['+"'6-1'"+'].show(2);" style="float:right;">Soil rental rate per county</button><br>');
-      //div for figure (chart-container)
-      $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
-      $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 0.85vw;">CRP Enrollments and Payments </p>');
-  
-      //fill chart-container
-      case_6_1_fig1();
-    }
+
+    //div for figure (chart-container)
+    $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
+    $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 0.85vw;">CRP Enrollments and Payments </p>');
+
+    //fill chart-container
+    case_6_1_fig1();
+  }
 
 }
 
@@ -137,9 +136,9 @@ function case_6_1_fig1() {
     //set options of line plot
     var options={
         animationEnabled: true,
-//        title:{
-//            text: "CRP Enrollments and Payment"
-//        },
+        //title:{
+        //    text: "CRP Enrollments and Payment"
+        //},
         toolTip: {
             shared: true
         },
@@ -192,33 +191,32 @@ function disableKeyboard(image_class){
     });
 }
 
-
 function startGallery(id){
-    $('.'+id).magnificPopup({
-        delegate: 'a', // child items selector, by clicking on it popup will open
-        type: 'image',
-        gallery:{
-            enabled:true,
-            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-          },
-        callbacks: {
-            close: function(){
-            startKeyListener();
-        }},
-        image: {
-              titleSrc: function(item) {
-                if (item.el.attr('title')&&item.el.attr('credit'))
-                  return item.el.attr('title')+ '<small>'+item.el.attr('credit')+'</small>';
-                else if(item.el.attr('title')){
-                  return item.el.attr('title');
-                }
-                else if(item.el.attr('credit')){
-                  return item.el.attr('credit')
-                }
-                // + '<small>by Marsel Van Oosten</small> ->to add credit returm this
-              } 
-              // this tells the script which attribute has your caption
-          }
-        // other options
-      });
+  $('.'+id).magnificPopup({
+      delegate: 'a', // child items selector, by clicking on it popup will open
+      type: 'image',
+      gallery:{
+          enabled:true,
+          preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+        },
+      callbacks: {
+          close: function(){
+          startKeyListener();
+      }},
+      image: {
+            titleSrc: function(item) {
+              if (item.el.attr('title')&&item.el.attr('credit'))
+                return item.el.attr('title')+ '<small>'+item.el.attr('credit')+'</small>';
+              else if(item.el.attr('title')){
+                return item.el.attr('title');
+              }
+              else if(item.el.attr('credit')){
+                return item.el.attr('credit')
+              }
+              // + '<small>by Marsel Van Oosten</small> ->to add credit returm this
+            } 
+            // this tells the script which attribute has your caption
+        }
+      // other options
+    });
 }
