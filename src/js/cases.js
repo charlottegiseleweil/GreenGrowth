@@ -24,15 +24,15 @@ async function construct_cases(){
             clean_layers();
             //console.log(button_id,"button",choropleth_map_objs,'legend-'+button_id);
             description=["Land enrolled in CRP (%)","Soil rental rate (USD/ha)"];
-            $("#button-"+button_id).css('background-color','#39ac73');
+            $("#button-"+button_id).css('background-color','#00cc66');
             choropleth_map_objs['2016geo-'+button_id].addTo(map)//add choropleth layer
             choropleth_map_objs['legend-'+button_id].addTo(map);//add legend
             add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[button_id-1]);
         }
         //hide
         data_loader.cases['6-1'].hide = function(){
-            $('#button-1').css('background-color', 'rgba(255, 255, 255, 0.8)');
-            $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
+            $('#button-1').css('background-color', 'rgb(220, 220, 220)');
+            $('#button-2').css('background-color', 'rgb(220, 220, 220)');
             map.removeControl(choropleth_map_objs['legend-1']);
             map.removeControl(choropleth_map_objs['legend-2']);
             //map.removeControl(choropleth_map_objs['slider']);

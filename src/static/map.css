@@ -579,9 +579,11 @@ p {
 }
 
 .case-6-1-button{
-  width: 15vw;
-  background-color:rgba(156, 156, 156, 0.753);
+  width: 14vw;
+  background-color:rgb(220, 220, 220);
   cursor: pointer;
+  font-size: 0.9vw;
+  border: 2px solid black;
   border-radius: 2vh 2vh 2vh 2vh;
 }
 /*.case-6-1-button:hover {background-color: #00b300;}*/
