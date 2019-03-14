@@ -215,7 +215,7 @@ function startGallery(id){
                 return '<br><div style="font-size:1.5vw">'+item.el.attr('title')+'</div><br>';
               }
               else if(item.el.attr('credit')){
-                return '<div style="font-size:1.1vw"> Credits: '+item.el.attr('credit')+'</div>'
+                return '<div style="font-size:0.8vw"> Credits: '+item.el.attr('credit')+'</div>'
               }
             }
             // this tells the script which attribute has your caption

@@ -23,8 +23,8 @@ ch_no,case_no,fig_no from google doc,fig_no,name,description,dynamic,static
 14,14.1,14.1,1,US Coastal hazard map,,,
 14,14.2,14.2,2,US coastal hazard bar chart,,,
 16,16.1,16.1,1,Belize scenarios,,,
-17,17.2,17.1,2,PLACEHOLDER,,,TRUE
-17,17.2,17.2,1,PLACEHOLDER,,,TRUE
+17,17.2,17.1,2,Key Ecosystem Services in Brodeaux Metropolitan area,,,TRUE
+17,17.2,17.2,1,Key Ecosystem Services in Brodeaux Metropolitan area,,,TRUE
 17,17.1,17.1,1,Hamel: Yarra Ranges Council loc,,,
 17,17.2,17.3,1,Hamel: Nantes+Bdx location,,,
 17,17.3,17.3,1,Hamel: Nantes+Bdx location,,,
