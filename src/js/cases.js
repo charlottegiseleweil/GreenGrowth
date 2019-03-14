@@ -708,7 +708,7 @@ async function construct_cases(){
     //show
     data_loader.cases['14-1'].show = async function(a){
         show_image('14-1','./static/figure_and_images/14_1-1.png',
-        'US coastal hazard');
+        'US coastal hazard','Image Title','credit title');
     //console.log("13-1")
         return;
     }
@@ -722,7 +722,7 @@ async function construct_cases(){
     //show
     data_loader.cases['14-2'].show = async function(a){
         show_image('14-2','./static/figure_and_images/14_2-1.png',
-        'Huricane population hit');
+        'Huricane population hit','Image Title','credit title');
 
         return;
     }
@@ -748,7 +748,7 @@ async function construct_cases(){
     //show
     data_loader.cases['16-1'].show = async function(a){
         show_image('16-1','./static/figure_and_images/16_1-1.png',
-        'Belize scenarios');
+        'Belize scenarios','Image Title','credit title');
     //console.log("13-1")
         return;
     }
@@ -793,8 +793,8 @@ async function add_shape_file(id,files,colors,additional_layer){
 //create layer control by adding layer groups
 }
 
-function show_image(id, src,alt) {
-
+function show_image(id, src,alt,title_text,credit_text) {
+    
     var background_overlay = document.createElement('div');
     var divBox = document.getElementById("static-overlay");
     var div_dark = document.getElementById("static-background-overlay");
@@ -802,7 +802,19 @@ function show_image(id, src,alt) {
     var img = document.createElement("img");
     img.left= "0px"; /* Stay in place */
     img.src = src;
-
+    var title = document.createElement("p");
+    var credit = document.createElement("p");
+    
+    title.style.zIndex = 2000;
+    credit.style.zIndex = 2000;
+    title.style.color = 'white';
+    credit.style.color = '#f1efefb0';
+    title.style.textAlign = 'center';
+    credit.style.textAlign = 'center';
+    title.style.fontSize = '1.3vmax';
+    credit.style.fontSize = '0.8vmax';
+    credit.style.fontFamily= 'Maven Pro'
+    title.style.fontFamily= 'Maven Pro'
     if(id=='14-1' || id =='14-2'){
       img.style.height = 'auto';
       img.style.width = '52vw';
@@ -822,8 +834,9 @@ function show_image(id, src,alt) {
 
     img.alt = alt;
     img.style.zIndex = 1000000;
+    divBox.appendChild(title);
     divBox.appendChild(img);
-
+    divBox.appendChild(credit);
 
 
     $('#static-overlay').css('z-index',1000)
