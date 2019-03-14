@@ -41,7 +41,7 @@ function buildRightMenu(){
             }
             else{
               let credit=case_.img_credit;
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><i class="far fa-images fa-2x" style="color:white"></i><span class="img-credit">Credits:'+case_.img_credit+'</span></a></div>');
+              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><i class="far fa-images fa-2x" style="color:white"></i></div><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
             }
 
 
