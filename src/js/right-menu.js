@@ -26,7 +26,7 @@ function buildRightMenu(){
         //case summary and (ambiance) images if available
 
         if (case_.num_images){ //
-            $('#right-case-'+case_.id).append("<p id="+case_.id+'-summary class=text-body> <div class ="gallery'+case_.id+'" onclick="disableKeyboard();"></div>'+case_.summary+'<p>');
+            $('#right-case-'+case_.id).append("<div id="+case_.id+'-summary class=text-body> <div class ="gallery'+case_.id+'" onclick="disableKeyboard();"></div>'+case_.summary+'<div>');
             $('#right-case-'+case_.id).append("<div id="+case_.id+'-legend-holder></div>');
             //special case for external links
             if(case_.id=='9-2')
@@ -88,6 +88,10 @@ function add_right_menu_figure(case_){
     }
     else{
       $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file+'"><img class="img-center" src="' + fig_file + '"></a>');
+      if(case_.id=='17-2'){
+        fig_file_2 = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-2.png';
+        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '"></a>');
+      }
       startGallery('static-gallery'+case_.id);
     }
     //add figure title
@@ -101,16 +105,18 @@ function add_right_menu_figure(case_){
 
   //add dynamic figure (special case, case 6-1)
   else if (case_.id == '6-1'){
-    //div for figure (chart-container)
-    $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
-    $('#right-case-'+case_.id).append('<p class="figure-text">Figure: CRP Enrollments and Payments </p>');
 
-    //fill chart-container
-    case_6_1_fig1();
     //add the two buttons of the figure
     $('#right-case-'+case_.id).append('<div id="button-div"></div><br><br>');
     $('#button-div').append('<br><button type="button" class="btn btn-light case-6-1-button" id="button-1" onclick="data_loader.cases['+"'6-1'"+'].show(1);">Enrollment per county</button>');
     $('#button-div').append('<button type="button" class="btn btn-light case-6-1-button" id="button-2" onclick="data_loader.cases['+"'6-1'"+'].show(2);" style="float:right;">Soil rental rate per county</button><br>');
+
+    //div for figure (chart-container)
+    $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
+    $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 0.85vw;">CRP Enrollments and Payments </p>');
+
+    //fill chart-container
+    case_6_1_fig1();
   }
 
 }
@@ -120,9 +126,9 @@ function case_6_1_fig1() {
     //set options of line plot
     var options={
         animationEnabled: true,
-        title:{
-            text: "CRP Enrollments and Payment"
-        },
+        //title:{
+        //    text: "CRP Enrollments and Payment"
+        //},
         toolTip: {
             shared: true
         },
