@@ -464,7 +464,7 @@ async function construct_cases(){
         //  description=["blabla(%)"];
           this.layers['8-2'].addTo(map)//add choropleth layer
           this.layers['8-2-legend'].addTo(map);//add legend
-          add_legend_to_right_menu(this.layers["8-2-legend"],"8-2","PLACEHOLDER(%)");
+          add_legend_to_right_menu(this.layers["8-2-legend"],"8-2","Conservation easements extend in the US(%)");
 
             console.log("8-2")
             return;
