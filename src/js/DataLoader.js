@@ -42,6 +42,7 @@ class DataLoader {
         await data_loader.cases['9-2'].create_data();
         this.progress_bar._progress += 10;
         await data_loader.cases['10-3'].create_data();
+        await data_loader.cases['11-2'].create_data();
         this.progress_bar._progress += 10;
         await data_loader.cases['13-1'].create_data();
         this.progress_bar._progress += 10;
@@ -190,6 +191,8 @@ var case_8_1_fig1_layer2;
 var case_8_1_fig1_layer3;
 var case_8_2_fig1_data;
 var case_8_2_fig1_data_percent = [];
+var case_11_2_fig1_layer;
+var case_11_2_fig1_legend;
 var choropleth_map_objs_8_2;
 var data_points_acres= [];
 var data_points_money=[];

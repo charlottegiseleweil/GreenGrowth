@@ -24,15 +24,15 @@ async function construct_cases(){
             clean_layers();
             //console.log(button_id,"button",choropleth_map_objs,'legend-'+button_id);
             description=["Land enrolled in CRP (%)","Soil rental rate (USD/ha)"];
-            $("#button-"+button_id).css('background-color','#39ac73');
+            $("#button-"+button_id).css('background-color','#00cc66');
             choropleth_map_objs['2016geo-'+button_id].addTo(map)//add choropleth layer
             choropleth_map_objs['legend-'+button_id].addTo(map);//add legend
             add_legend_to_right_menu(choropleth_map_objs['legend-'+button_id],"6-1",description[button_id-1]);
         }
         //hide
         data_loader.cases['6-1'].hide = function(){
-            $('#button-1').css('background-color', 'rgba(255, 255, 255, 0.8)');
-            $('#button-2').css('background-color', 'rgba(255, 255, 255, 0.8)');
+            $('#button-1').css('background-color', 'rgb(220, 220, 220)');
+            $('#button-2').css('background-color', 'rgb(220, 220, 220)');
             map.removeControl(choropleth_map_objs['legend-1']);
             map.removeControl(choropleth_map_objs['legend-2']);
             //map.removeControl(choropleth_map_objs['slider']);
@@ -421,6 +421,7 @@ async function construct_cases(){
             return div;
         };
 
+
         case_8_1_fig1_legend.addTo(map);
         add_legend_to_right_menu(case_8_1_fig1_legend,"8-1","Amazon Region Protected Area (ARPA) System");
         return;
@@ -559,7 +560,7 @@ async function construct_cases(){
         return;
     }
 
-     ///////13-1/////////
+     ///////9-2/////////
     //create
     data_loader.cases['9-2'].create_data = async function(a){
       //legend
@@ -628,6 +629,42 @@ async function construct_cases(){
         return;
     }
 
+    ///////11-2/////////
+    //create
+    data_loader.cases['11-2'].create_data = async function(a){
+      data = await $.getJSON('data/brazil/amapoly_ivb.json');
+      case_11_2_fig1_layer = L.geoJson(data, {style: {"color": "#665BCE", "opacity": 0.5}});
+
+    return
+    }
+    //show
+    data_loader.cases['11-2'].show = async function(a){
+      case_11_2_fig1_layer.addTo(map);
+
+      case_11_2_fig1_legend = L.control({position: 'bottomleft'});
+
+      //create legend
+      case_11_2_fig1_legend.onAdd = function (map) {
+          var div = L.DomUtil.create('div', 'info legend');
+          lgnd = [];
+
+          div.innerHTML +=  lgnd.push('<i style="background:' + "rgb(102, 91, 206)" + '"></i> ' + ('Amazon Basin'));
+
+          div.innerHTML = lgnd.join('<br>');
+          return div;
+      };
+      case_11_2_fig1_legend.addTo(map);
+      add_legend_to_right_menu(case_11_2_fig1_legend,"11-2","");
+
+    return
+    }
+    //hide
+    data_loader.cases['11-2'].hide = async function(a){
+      map.removeLayer(case_11_2_fig1_layer);
+      map.removeControl(case_11_2_fig1_legend);
+    return
+    }
+
      ///////13-1/////////
     //create
     data_loader.cases['13-1'].create_data = async function(a){
@@ -638,6 +675,7 @@ async function construct_cases(){
         this.layers['legend'] = L.control({position: 'bottomleft'});
         this.layers['legend'].onAdd = function (map){
             var div = L.DomUtil.create('div', 'info legend');
+            colors=['rgb(0,204,0)','rgb(61,144,201)'];
             categories = ['Guanacaste','Agropaisaje'];
             lgnd = [];
             for (var i = 0; i < categories.length; i++) {
@@ -650,11 +688,11 @@ async function construct_cases(){
     }
     //show
     data_loader.cases['13-1'].show = async function(a){
-        this.layers['legend'].addTo(map);//add legend   
+        this.layers['legend'].addTo(map);//add legend
         add_legend_to_right_menu(this.layers["legend"],"13-1","Guanacaste Conservation Area");
-        
-        map.addLayer(this.layers[1],true);        
-        map.addLayer(this.layers[0]);        
+
+        map.addLayer(this.layers[1],true);
+        map.addLayer(this.layers[0]);
     //console.log("13-1")
         return;
     }
@@ -669,8 +707,8 @@ async function construct_cases(){
     ///////14-1/////////
     //show
     data_loader.cases['14-1'].show = async function(a){
-        show_image('./static/figure_and_images/14_1-1.png',
-        'Belize scenarios');
+        show_image('14-1','./static/figure_and_images/14_1-1.png',
+        'US coastal hazard');
     //console.log("13-1")
         return;
     }
@@ -679,12 +717,13 @@ async function construct_cases(){
         remove_image();
     }
 
-            //show
-    data_loader.cases['14-2'].show = async function(a){
-        show_image('./static/figure_and_images/14_2-1.png',
-        'Belize scenarios');
 
-    //console.log("13-1")
+    ///////14-2/////////
+    //show
+    data_loader.cases['14-2'].show = async function(a){
+        show_image('14-2','./static/figure_and_images/14_2-1.png',
+        'Huricane population hit');
+
         return;
     }
     //hide
@@ -692,9 +731,23 @@ async function construct_cases(){
         remove_image();
     }
 
+    ///////14-3/////////
+/*
+    //show
+    data_loader.cases['14-3'].show = async function(a){
+    show_image('14-3','./static/figure_and_images/14_3-1.png',
+    'Belize scenarios');
+
+    return;
+    }
+    //hide
+    data_loader.cases['14-3'].hide = async function(a){
+    remove_image();
+    }
+*/
     //show
     data_loader.cases['16-1'].show = async function(a){
-        show_image('./static/figure_and_images/16_1-1.png',
+        show_image('16-1','./static/figure_and_images/16_1-1.png',
         'Belize scenarios');
     //console.log("13-1")
         return;
@@ -740,7 +793,7 @@ async function add_shape_file(id,files,colors,additional_layer){
 //create layer control by adding layer groups
 }
 
-function show_image(src,alt) {
+function show_image(id, src,alt) {
 
     var background_overlay = document.createElement('div');
     var divBox = document.getElementById("static-overlay");
@@ -750,16 +803,34 @@ function show_image(src,alt) {
     img.left= "0px"; /* Stay in place */
     img.src = src;
 
-    img.style.height = '65vh';
+    if(id=='14-1' || id =='14-2'){
+      img.style.height = 'auto';
+      img.style.width = '52vw';
+      $('#static-overlay').css({'top': '20vh', 'left': '8.5vw'})
+    }
+    else if (id=='14-3'){
+      img.style.height = 'auto';
+      img.style.width = '52vw';
+      $('#static-overlay').css({'top': '15vh', 'left': '8.5vw'})
+    }
+    else if(id=='16-1'){
+      img.style.height = '78vh';
+      img.style.width = 'auto';
+      $('#static-overlay').css({'top': '10vh', 'left': '12vw'})
+    }
+
 
     img.alt = alt;
     img.style.zIndex = 1000000;
     divBox.appendChild(img);
+
+
+
     $('#static-overlay').css('z-index',1000)
 
 }
 function remove_image(){
     document.getElementById("static-overlay").innerHTML = "";
-    document.getElementById("static-background-overlay").style.display = "none";        
+    document.getElementById("static-background-overlay").style.display = "none";
     $('#static-overlay').css('z-index',-1)
 }

@@ -14,6 +14,8 @@ class Case{
         this.has_dynamic_fig = case_['dynamic'];
         this.has_static_fig = false;
         this.static_fig_title = "none";
+        this.img_credit=case_['img_credits'];
+        this.static_fig_credit=case_['static_fig_credits'];
         this.figures = [];
         this.files = [];
         this.layers = {};

@@ -38,8 +38,12 @@ class Mechanism{
 
     }
 
-function listChapters(e) {
+function listChapters(e, img_id) {
   //set first mechanism title display back to normal
   $('#first-mech').css('color','');
   data_loader.mechanisms[e.name].list_chapters_on_overlay();
+  for (i=1;i<=6;i++){
+      $('#img-mech-'+i).removeClass('img-mechanism-active')
+  }
+  $('#'+img_id).addClass('img-mechanism-active')
 }

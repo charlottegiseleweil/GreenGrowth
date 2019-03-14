@@ -63,6 +63,8 @@ function caseClick(chapter_id,case_id){
   $('.left-case').css('background-color', 'black')
   $('#left-case-'+case_id).css('background-color', 'hsl(129, 67%, 64%)')
 
+  $('#right-menu').scrollTop(0)
+
 }
 
 async function home_menu(){
