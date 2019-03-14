@@ -210,7 +210,7 @@ function startGallery(id){
       image: {
             titleSrc: function(item) {
               if (item.el.attr('title')&&item.el.attr('credit'))
-                return '<br><div style="font-size:1.5vw">'+item.el.attr('title')+'</div><br>'+ '<div style="font-size:1.1vw"> Credits: '+item.el.attr('credit')+'</div>';
+                return '<br><div style="font-size:1.5vw">'+item.el.attr('title')+'</div><br>'+ '<div style="font-size:0.8vw"> Credits: '+item.el.attr('credit')+'</div>';
               else if(item.el.attr('title')){
                 return '<br><div style="font-size:1.5vw">'+item.el.attr('title')+'</div><br>';
               }
