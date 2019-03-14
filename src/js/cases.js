@@ -461,10 +461,10 @@ async function construct_cases(){
         }
         //show
         data_loader.cases['8-2'].show = async function(a){
-          description=["blabla(%)"];
+        //  description=["blabla(%)"];
           this.layers['8-2'].addTo(map)//add choropleth layer
           this.layers['8-2-legend'].addTo(map);//add legend
-          add_legend_to_right_menu(this.layers["8-2-legend"],"8-2","Something");
+          add_legend_to_right_menu(this.layers["8-2-legend"],"8-2","PLACEHOLDER(%)");
 
             console.log("8-2")
             return;
@@ -708,7 +708,7 @@ async function construct_cases(){
     //show
     data_loader.cases['14-1'].show = async function(a){
         show_image('14-1','./static/figure_and_images/14_1-1.png',
-        'US coastal hazard','Image Title','credit title');
+        'US coastal hazard','US coastal hazard','Katie Arkema (Natural Capital Project)');
     //console.log("13-1")
         return;
     }
@@ -722,7 +722,7 @@ async function construct_cases(){
     //show
     data_loader.cases['14-2'].show = async function(a){
         show_image('14-2','./static/figure_and_images/14_2-1.png',
-        'Huricane population hit','Image Title','credit title');
+        'Huricane population hit','Huricane population hit','Katie Arkema (Natural Capital Project)');
 
         return;
     }
@@ -748,7 +748,7 @@ async function construct_cases(){
     //show
     data_loader.cases['16-1'].show = async function(a){
         show_image('16-1','./static/figure_and_images/16_1-1.png',
-        'Belize scenarios','Image Title','credit title');
+        'Belize scenarios','Belize scenarios','Katie Arkema (Natural Capital Project)');
     //console.log("13-1")
         return;
     }
@@ -794,7 +794,7 @@ async function add_shape_file(id,files,colors,additional_layer){
 }
 
 function show_image(id, src,alt,title_text,credit_text) {
-    
+
     var background_overlay = document.createElement('div');
     var divBox = document.getElementById("static-overlay");
     var div_dark = document.getElementById("static-background-overlay");
@@ -804,15 +804,15 @@ function show_image(id, src,alt,title_text,credit_text) {
     img.src = src;
     var title = document.createElement("p");
     var credit = document.createElement("p");
-    
+
     title.style.zIndex = 2000;
     credit.style.zIndex = 2000;
     title.style.color = 'white';
     credit.style.color = '#f1efefb0';
     title.style.textAlign = 'center';
     credit.style.textAlign = 'center';
-    title.style.fontSize = '1.3vmax';
-    credit.style.fontSize = '0.8vmax';
+    title.style.fontSize = '1.4vw';
+    credit.style.fontSize = '1.1vw';
     credit.style.fontFamily= 'Maven Pro'
     title.style.fontFamily= 'Maven Pro'
     if(id=='14-1' || id =='14-2'){
@@ -831,8 +831,8 @@ function show_image(id, src,alt,title_text,credit_text) {
       $('#static-overlay').css({'top': '10vh', 'left': '12vw'})
     }
     title.innerHTML = title_text
-    credit.innerHTML = credit_text
-    
+    credit.innerHTML = 'Credits: '+ credit_text
+
 
     img.alt = alt;
     img.style.zIndex = 1000000;

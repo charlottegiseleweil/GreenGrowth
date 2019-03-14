@@ -162,10 +162,7 @@ html, body {
     margin-top: 1vh;
   }
 
-  .figure-text {
-    text-align: center;
-    font-weight: bold;
-}
+
 
 
 #map {
@@ -618,9 +615,20 @@ p {
 }
 
 .static-fig-credit{
+  margin-top: -4px;
   text-align: center;
   font-size: 0.8vw;
   font-style: italic;
+
+
+}
+
+.figure-text {
+
+  font-size: 1vw;
+  text-align: center;
+  font-weight: bold;
+
 }
 
 

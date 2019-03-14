@@ -35,7 +35,7 @@ function buildRightMenu(){
 
             //add figure credits
             let credit='';
-            
+
             if (case_.img_credit=="None"){
               $('#right-case-'+case_.id +' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img></a>');
             }
@@ -66,6 +66,11 @@ function buildRightMenu(){
           $("#right-case-"+case_.id).append("<h5 id="+case_.id+"-title class=text-body><b>"+case_.titleSecond+"</b></h5>")
           $('#right-case-'+case_.id).append("<p id="+case_.id+"-summary class=text-body>"+case_.summarySecond+ "</p>")
         }
+        //special case for waterfunds
+        if(case_.id=='9-1'){
+          $('#right-case-'+case_.id).append('<div class="static-fig-credit">Infos from Emily Simmons, The Nature Conservancy, Map of WF as of March 2018</div>')
+        }
+
         //adds figures of right menu (static and dynamic)
         add_right_menu_figure(case_);
         startGallery('gallery'+case_.id);
@@ -82,11 +87,11 @@ function add_right_menu_figure(case_){
 
   if (case_.has_static_fig){
     let credit='';
-    
+
     if (case_.static_fig_credit!='None'){
       credit=case_.static_fig_credit;
     }
-    
+
     //load the figure
     fig_file = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-1.png';
 
@@ -104,9 +109,8 @@ function add_right_menu_figure(case_){
       startGallery('static-gallery'+case_.id);
     }
     //add figure title
-    $('#right-case-'+case_.id).append('<p class="figure-text">' + case_.static_fig_title+ '</p>');
+    $('#right-case-'+case_.id).append('<div class="figure-text">' + case_.static_fig_title+ '</div>');
     //add figure credits
-    
     if(case_.static_fig_credit!='None'){
       $('#right-case-'+case_.id).append('<div class="static-fig-credit">Credits:'+case_.static_fig_credit+'</div>')
     }
@@ -123,7 +127,7 @@ function add_right_menu_figure(case_){
 
     //div for figure (chart-container)
     $('#right-case-'+case_.id).append('<div id="chart-container" style="height: 300px;"></div>');
-    $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 0.85vw;">CRP Enrollments and Payments </p>');
+    $('#right-case-'+case_.id).append('<p class="figure-text" style="font-size: 1vw;">CRP Enrollments and Payments </p>');
 
     //fill chart-container
     case_6_1_fig1();
@@ -206,15 +210,14 @@ function startGallery(id){
       image: {
             titleSrc: function(item) {
               if (item.el.attr('title')&&item.el.attr('credit'))
-                return item.el.attr('title')+ '<small>'+item.el.attr('credit')+'</small>';
+                return '<br><div style="font-size:1.5vw">'+item.el.attr('title')+'</div><br>'+ '<div style="font-size:1.1vw"> Credits: '+item.el.attr('credit')+'</div>';
               else if(item.el.attr('title')){
-                return item.el.attr('title');
+                return '<br><div style="font-size:1.5vw">'+item.el.attr('title')+'</div><br>';
               }
               else if(item.el.attr('credit')){
-                return item.el.attr('credit')
+                return '<div style="font-size:1.1vw"> Credits: '+item.el.attr('credit')+'</div>'
               }
-              // + '<small>by Marsel Van Oosten</small> ->to add credit returm this
-            } 
+            }
             // this tells the script which attribute has your caption
         }
       // other options
