@@ -8,7 +8,7 @@ ch_no,case_no,fig_no from google doc,fig_no,name,description,dynamic,static
 7,7,7.1,1,Mechanism: regulatory driven mitigation,,,
 7,7.1,7.2,1,DC river system,,,TRUE
 7,7.2,7.3,1,Wetland mitigation banks in US,More than 1300 wetland mitigation banks throughout the United States have been approved to sell.,TRUE,
-7,7.3,7.4,1,CA conservation banks,,,TRUE
+7,7.3,7.4,1,CA conservation banks,,,
 7,7.4,7.5,1,Forest offsets under CA AB 32,Forest Offsets projects under CA AB 32. Close to 800.000 hectares within 59 forest management,TRUE,
 8,8,8.1,1,Mechanism: voluntary conservation,,,
 8,8.1,8.2,1,ARPA,The Amazon Region Protected Area (ARPA) system included as of 2015 115 protected areas in Brazil covering 59.2 million ha.,TRUE,
