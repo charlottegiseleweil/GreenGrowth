@@ -35,15 +35,24 @@ function buildRightMenu(){
 
             //add figure credits
             let credit='';
-
-            if (case_.img_credit=="None"){
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><i class="far fa-images fa-2x" style="color:white"></i></a></div>');
+            if (case_.num_images>1){
+              if (case_.img_credit=="None"){
+                $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><i class="far fa-images fa-2x" style="color:white"></i></a></div>');
+              }
+              else{
+                let credit=case_.img_credit;
+                $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><i class="far fa-images fa-2x" style="color:white"></i></div><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
+              }
             }
             else{
-              let credit=case_.img_credit;
-              $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img><i class="far fa-images fa-2x" style="color:white"></i></div><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
+              if (case_.img_credit=="None"){
+                $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img></a></div>');
+              }
+              else{
+                let credit=case_.img_credit;
+                $('#right-case-'+case_.id +' .gallery'+case_.id).append('<div class="container"><a href ="./static/figure_and_images/'+ case_.id + '/1.jpg" class="case-img" credit="'+credit+'"><img class="case-img"'+case_.id+' src="./static/figure_and_images/'+ case_.id + '/1.jpg" alt="case-image"></img></div><span class="img-credit">Credits:'+case_.img_credit+'</span></a>');
+              }
             }
-
 
             for (var j=2;j<=parseInt(case_.num_images);j++){
                 $('#right-case-'+case_.id+' .gallery'+case_.id).append('<a href ="./static/figure_and_images/'+ case_.id +'/'+ j +'.jpg" class="case-img-hidden credit="'+credit+'"><img class="case-img-hidden" src="./static/figure_and_images/'+ case_.id + '/'+j+'.jpg" alt="case-image"></a>');
@@ -101,10 +110,13 @@ function add_right_menu_figure(case_){
       $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href="https://charlottegiseleweil.github.io/webviz_natcap/index.html" target="_blank" > <img class="img-center" src="' + fig_file + '"></a></i>');
     }
     else{
-      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<div class="container"><a href ="'+fig_file+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center" src="' + fig_file + '"></a><i class="far fa-images fa-2x" style="color:white"></i></div>');
       if(case_.id=='17-2'){
+        $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<div class="container"><a href ="'+fig_file+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center" src="' + fig_file + '"></a><i class="far fa-images fa-2x" style="color:white"></i></div>');      
         fig_file_2 = './static/figure_and_images/'+case_.id.toString().replace('-','_')+'-2.png';
         $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<a href ="'+fig_file_2+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center case-img-hidden" src="' + fig_file_2 + '"></a>');
+      }
+      else{
+      $('#right-case-'+case_.id + ' .static-gallery'+case_.id).append('<div class="container"><a href ="'+fig_file+'" credit="'+credit+'" title="'+case_.static_fig_title+'"><img class="img-center" src="' + fig_file + '"></a></div>');      
       }
       startGallery('static-gallery'+case_.id);
     }
