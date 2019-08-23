@@ -55,22 +55,31 @@ function open_page() {
       intro.setOptions({
           steps: [
           {
-              intro: "This help menu will guide you through the steps necessary to use the app properly."
+              intro: "Welcome to the Green Growth Explorer! This app provides an overview  of the book, and a deep dive in some cases' data."
           },
           {
               element: '#left-menu',
-              intro: 'Here you can: <br> -Refresh the visualization <br> -Start the tutorial <br> -Read about us and the book <br>-See the chapters, and click them',
+              intro: 'Here, select cases to explore by chapter. The cases with a red border allow for interactive exploration of the data.',
               position: 'right'
           },
           {
               element: '#right-menu',
-              intro: 'You can use the left and right arrow keys to navigate between cases. When visualizing a case that contains a dynamic figure, you can use the buttons, sliders and checkboxes available.',
+              intro: 'Details about the selected case will appear here. Click on buttons and images to discover more!',
               position: 'left'
           },
+
           {
-              element: '#bottom-menu',
-              intro: 'You can select to explore cases by Chapter, Mechanism or Country. <br> When browsing by country it is possible to simply select them on the map. <br> Enjoy exploring!',              position: 'left'
+              element: '#by-type-button',
+              intro: 'To navigate between cases, you can use left and right arrows on your keyboard, or select directly a case of interest, by book chapter, by geography (clicking on country), or by mechanism type (here)',
+              position: 'left'
+          },
+
+          {
+              element: '#buythebook',
+              intro: 'Learn more in the full book. <br> <br> Happy exploration!',
+              position: 'left'
           }
+
           ],
           showStepNumbers:false
     });
