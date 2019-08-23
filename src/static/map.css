@@ -290,7 +290,7 @@ html, body {
 #right-title{
   color:hsl(100, 84%, 24%, 1);
   font-weight: bold;
-  font-size: 2vmax;
+  /*font-size: 2vmax;*/
 }
 #right-title-sub{
   color:black;
@@ -311,10 +311,18 @@ html, body {
   right:1vw;
 }
 
-.google-font {
+.my-font {
+    /*font-family: 'Helvetica Neue', sans-serif;*/
+    font-family: 'Akzidenz Grotesk', sans-serif;
+    text-align : center;
+}
+
+.other-font {
+    /*font-family: 'Helvetica Neue', sans-serif;*/
     font-family: 'Julius Sans One', sans-serif;
     text-align : center;
 }
+
 
 #left-menu-panel{
   position:absolute;
@@ -341,6 +349,17 @@ html, body {
     z-index: 100;
     text-align:center;
     background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0 2vh 0 0;
+    font-family: 'Righteous', cursive;
+}
+
+#buythebook {
+    position: absolute;
+    bottom: 3vh;
+    width: 15vh;
+    left: 6vh;
+    z-index: 100;
+    text-align: center;
     border-radius: 0 2vh 0 0;
     font-family: 'Righteous', cursive;
 }
