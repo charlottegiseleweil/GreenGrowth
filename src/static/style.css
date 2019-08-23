@@ -8,3 +8,20 @@ a.inline-icon{
 	font-size: inherit;
 	vertical-align: text-bottom;
 }
+
+
+.padded {
+	padding: 3vh 3vh 3vh 3vh;
+}
+.about{
+	color:#e0e0e0;
+}
+.about h3 {
+	color:#cae35d;
+}
+.about a,h4,h2 {
+	color:#0e90ce;
+}
+.about em {
+	color:#cf5757;
+}
