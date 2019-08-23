@@ -8,31 +8,122 @@
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 
-<body>
-	<div class="row">
-	    <div class="col-5" style="padding-left: 5vw; padding-top: 5vh;">
-	        <div class="alert alert-dark">
-	            <p>The Green Growth Explorer illustrates case studies described in the book <strong><a href="BUYTHEBOOKLINK" target="_blank">Green Growth That Works: <em>Mainstreaming natural capital into policy and finance</em></strong></a></p>
-	        </div>
-	       	<a target="_blank" href="https://github.com/charlottegiseleweil/GreenGrowth/issues/new">Application under development. Please report bugs here</a>
+	<style>
+		.padded {
+			padding: 3vh 3vh 3vh 3vh;
+		}
+
+		.about{
+			color:#e0e0e0;
+		}
+		.about h3 {
+			color:#cae35d;
+		}
+
+		.about a,h4,h2 {
+			color:#0e90ce;
+		}
+
+		.about em {
+			color:#cf5757;
+		}
+
+		#cae35d
+	</style>
+
+<body class='about w3-text-white' >
+	<!-- Top row -->
+	<div class="w3-row padded about">
+
+		<!-- Cover -->
+		<div class="w3-quarter padded w3-center">
+                <a href='https://islandpress.org/books/green-growth-works' target='_blank'> 
+                    <img src='static/cover.jpg' style="width: 100%; border-radius: 6px;">
+                    <h2>Buy the Book</h2>
+                </a>
+          </div>
+
+	    <!-- Intro text -->
+	    <div class="w3-quarter padded">
+	    	<h3><i class="material-icons icon">menu_book</i> 
+	    	About the Book </h3>
+	        
+	        <p><a href='https://islandpress.org/books/green-growth-works' target='_blank'>Green Growth That Works</a> is the first practical guide to bring together pragmatic finance and policy tools that can make investment in natural capital both attractive and commonplace. Here, you can explore the real-world case studies featured in the book. These examples show how governments, businesses, NGOs and other groups are channeling economic resources towards conservation and restoration, for the benefit of people and nature. Click the question mark button on the right get a quick tutorial on navigating this site.</p><p>To learn more about the featured case studies, you can purchase Green Growth That Works from <a href='https://islandpress.org/books/green-growth-works' target='_blank'>Island Press</a> (and use discount code GROWTH for 20% off), <a href='https://www.amazon.com/Green-Growth-That-Works-Mechanisms/dp/1642830038/' target='_blank'>Amazon</a>, or your favorite bookstore.</p>
 	    </div>
-	      <!-- Logos -->
 
-	    <div class="col s5" style="padding:.75rem 1.25rem; margin:1rem"> <a target="_blank" href="http://www.naturalcapitalproject.org/"><img class="logo responsive-img" src="static/logos/natcap.jpg" height="110px" style="padding:.75rem 1.25rem; margin:1rem"></a>
-	    	<a target="_blank" href="https://islandpress.org/"><img class="logo responsive-img" src="static/logos/ip.jpg" height="100px" style="padding:.75rem 1.25rem; margin:1rem"></a></div>
-	        <!--<div class="col s2"> <a target="_blank" href="https://www.epfl.ch/"><img class="logo responsive-img" src="static/logos/epfl.jpg" width="130px"> </a></div>
-	        <div class="col s2"> <a target="_blank" href="https://www.stanford.edu/"><img class="logo responsive-img" src="static/logos/stanford.png" width="130px"></a></div>
-	        <div class="col s2"> <a target="_blank" href="https://woods.stanford.edu/"><img class="logo responsive-img" src="static/logos/woods.jpg" width="130px"></a></div>
-	        <div class="col s2"> <img class="logo responsive-img" src="images/WWF.jpg"></div>
-	        <div class="col s2"> <img class="logo responsive-img" src="images/tnc.jpg"></div>-->
-	</div> <!-- close top row -->
+	    <!-- How to use -->
+	    <div class="w3-quarter w3-container padded">
+			<h3><i class="material-icons icon">live_help</i>
+			How to use the Green Growth Explorer?</h3>
+			
+			<p>This application gives a brief overview of the cases studied in Green Growth That Works. </p>
+			<p>Explore cases either by using the left and right arrows, or by selecting them in the left-hand menu.</p>
+			<p>The right-hand side panel displays content specific to the case being viewed. It offers a brief summary of the case. </p>
+			<p>The left-hand side menu is for navigation. It contains buttons to (1) go back to Home view, (2) start the tutorial, (3) Learn about the authors, (4) Select and track the chapters. Each chapter contains one or more case studies. These will be displayed in a sub-menu once the chapter is selected. <em>The cases with a red border contain a dynamic figure. </em> It is also possible to click on a country to explore only the cases present in that country.</p>
+		</div>
 
-	<div class="row">
+	    <!-- Logos -->
+	    <div class="w3-quarter w3-center padded">
+	        <a target="_blank" href="http://www.naturalcapitalproject.org/"><img src="static/logos/natcap.jpg" style="border: 1px solid white;border-radius: 10px;width:70%;"></a>
+	        <br><br>
+	    	<a target="_blank" href="https://islandpress.org/"><img src="static/logos/ip.jpg" style="border-radius: 10px; width:70%; opacity: 0.8;"></a>
+	    </div>
+
+	</div> 
+	<!-- close Top row -->
+
+	<!-- Team Container -->
+	<div class="w3-container w3-padding-64 w3-center w3-text-light-grey " id="team">
+	
+	<!-- Book team-->
 	    <div class="col-12" style="padding-left: 5vw; padding-top: 1vh;">
 
-	        <!-- Team Container -->
-			<div class="w3-container w3-padding-64 w3-center w3-text-light-grey" id="team">
-				<h2>GREEN GROWTH EXPLORER </h2>
+				<h2 style='color:#cae35d;'>GREEN GROWTH BOOK</h2>
+				<h4>Case studies Editors</h4>
+
+			<div class="w3-row"><br>
+
+				<div class="w3-quarter">
+				  <img src="static/logos/lm.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
+				  <h3>Lisa Mandle</h3>
+				  <div class="center w3-text-grey">
+				  	<i>Lisa Mandle is a Lead Scientist at the Natural Capital Project at Stanford University.</i>
+				  </div>
+				</div>
+
+				
+				<div class="w3-quarter">
+				  <img src="static/logos/oz.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
+				  <h3>Ouyang Zhiyun</h3>
+				  <div class="center w3-text-grey">
+				  	<i>Zhiyun Ouyang is professor and director of Research Center for Eco-Environmental Sciences, Chinese Academy of Sciences.</i>
+				  </div>
+				</div>
+
+				<div class="w3-quarter">
+				  <img src="static/logos/js.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
+				  <h3>James Salzman</h3>
+				  <div class="center w3-text-grey">
+				  	<i>James Salzman is the Donald Bren Distinguished Professor of Environmental Law with joint appointments at UCLA Law School and the UC Santa Barbara, School of Environment.</i>
+				  </div>
+				</div>
+
+				<div class="w3-quarter">
+				  	<img src="static/logos/gd.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
+				  	<h3>Gretchen Daily</h3>
+				  <div class="center w3-text-grey">
+				  	<i>Gretchen Daily is Bing Professor of Environmental Science at Stanford University, where she also serves as Senior Fellow in the Stanford Woods Institute for the Environment; Director of the Center for Conservation Biology; and cofounder and faculty director of the Natural Capital Project.</i>
+				  </div>
+				</div>
+
+			</div>
+		</div>
+		<!-- close Book team-->
+<br><br>
+		<!-- Viz team-->
+	    <div class="col-12" style="padding-left: 5vw; padding-top: 1vh;">
+				
+				<h2 style='color:#cae35d;'>GREEN GROWTH EXPLORER </h2>
 				<h4>Visualization contributors</h4>
 
 				<div class="w3-row"><br>
@@ -111,58 +202,17 @@
 					</h3>
 				</div>
 
-		</div>
-
-	<div class="w3-row" style="height:50px"><br></div>
-
-				<h2>GREEN GROWTH BOOK</h2>
-				<h4>Case studies Editors</h4>
-
-				<div class="w3-row"><br>
-
-				<div class="w3-quarter">
-					<a href="https://woods.stanford.edu/people/lisa-mandle" target="_blank">
-				  <img src="static/logos/lm.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
-				  <h3>Lisa Mandle</h3>
-				</a>
-				  <div class="center w3-text-grey">
-				  	<i>Lead Editor, Natural Capital Project</i></div>
-
 				</div>
 
-				<div class="w3-quarter">
-				  <a href="https://ccb.stanford.edu/gretchen-daily" target="_blank">
-				  	<img src="static/logos/gd.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
-				  <h3>Gretchen Daily</h3>
-				  </a>
-				  <div class="center w3-text-grey">
-				  	<i>Editor, Stanford University</i></div>
-				</div>
-
-				<div class="w3-quarter">
-				  <img src="static/logos/js.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
-				  <h3>James Salzman</h3>
-				  <div class="center w3-text-grey">
-				  	<i>Editor, UCLA UCSB</i></div>
-				</div>
-
-				<div class="w3-quarter">
-				  <img src="static/logos/oz.jpg" alt="Pic" style="width:45%" class="w3-circle w3-hover-opacity">
-				  <h3>Ouyang Zhiyun</h3>
-				  <div class="center w3-text-grey">
-				  	<i>Editor, Chinese Academy of Sciences</i></div>
-				</div>
-
-				</div>
+			</div>
+			<!-- close Viz team-->
 
 
-				</div>
-		</div>
-	</div> <!-- close bottom row -->
+	</div> <!-- close Team -->
 
 
 	    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-	</i></p></div></div></div>
+	</strong></p></div></div></div>
 </body>
 </html>
