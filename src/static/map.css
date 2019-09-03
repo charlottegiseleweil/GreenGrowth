@@ -11,7 +11,6 @@ p {
     text-align: justify;
 }
 
-
 .my-label {
   position: absolute;
   font-size:13px;
@@ -209,11 +208,10 @@ p {
 
 #title-panel {
     position:absolute;
-    top:3vh;
+    top:4vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 16vh;
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
     padding: 0px;
@@ -224,7 +222,7 @@ p {
 #subtitle-panel {
 
     position:absolute;
-    top:26vh;
+    top:18vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
@@ -239,7 +237,7 @@ p {
 #right-menu {
     border-radius: 20px;
     position:absolute;
-    top:30vh;
+    top:22vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
@@ -296,7 +294,7 @@ p {
 }
 
 #right-title{
-  color:hsl(100, 84%, 24%, 1);
+  color:hsl(100, 84%, 24%, 1); 
   font-weight: bold;
   /*font-size: 2vmax;*/
 }
@@ -366,7 +364,7 @@ p {
     bottom: 3vh;
     width: 15vh;
     left: 6vh;
-    z-index: 100;
+    z-index: 10;
     text-align: center;
     border-radius: 0 2vh 0 0;
     font-family: 'Righteous', cursive;
