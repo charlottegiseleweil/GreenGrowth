@@ -55,7 +55,7 @@ function open_page() {
       intro.setOptions({
           steps: [
           {
-              intro: "Welcome to the Green Growth Explorer! This app provides an overview  of the book, and a deep dive in some cases' data."
+              intro: "Welcome to the Green Growth Explorer! This app will allow you to explore the case studies of Green Growth That Works by chapter and mechanism. In some cases, take a deep dive into the data behind the success story."
           },
           {
               element: '#left-menu',
@@ -70,13 +70,13 @@ function open_page() {
 
           {
               element: '#by-type-button',
-              intro: 'To navigate between cases, you can use left and right arrows on your keyboard, or select directly a case of interest, by book chapter, by geography (clicking on country), or by mechanism type (here)',
+              intro: 'To navigate between cases, use the left and right arrows on your keyboard or click on a case of interest by book chapter, by country, or by mechanism type (here)',
               position: 'left'
           },
 
           {
               element: '#buythebook',
-              intro: 'Learn more in the full book. <br> <br> Happy exploration!',
+              intro: 'Click below to buy the book. <br> <br> Happy exploring!',
               position: 'left'
           }
 
