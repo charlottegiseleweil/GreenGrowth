@@ -25,7 +25,14 @@ function buildLeftMenu(){
 function caseClick(chapter_id,case_id){
 
   //if chapter is clicked, go to first case, except for intro
-  if(case_id==0) case_id = data_loader.chapters[chapter_id].cases[0].id;
+  if(case_id==0){
+    for (var j=0;j< data_loader.chapters[chapter_id].cases.length;j++){
+      if(data_loader.selected_case_ids.includes(data_loader.chapters[chapter_id].cases[j].id)){
+         case_id = data_loader.chapters[chapter_id].cases[j].id;
+         break;
+      }
+    }
+  }
 
   data_loader.active_case = data_loader.cases[case_id];
 
