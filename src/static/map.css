@@ -222,7 +222,7 @@ p {
 #subtitle-panel {
 
     position:absolute;
-    top:18vh;
+    top:22vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
@@ -237,7 +237,7 @@ p {
 #right-menu {
     border-radius: 20px;
     position:absolute;
-    top:22vh;
+    top:26vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
