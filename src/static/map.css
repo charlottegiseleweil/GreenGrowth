@@ -4,6 +4,13 @@ html, body {
     margin: 0;
 }
 
+a {
+  color:#0e90ce !important;
+}
+p {
+    /*text-align: justify;*/
+}
+
 .my-label {
   position: absolute;
   font-size:13px;
@@ -201,11 +208,10 @@ html, body {
 
 #title-panel {
     position:absolute;
-    top:3vh;
+    top:4vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
-    height: 16vh;
     overflow: auto;
     font-family: 'Maven Pro', sans-serif;
     padding: 0px;
@@ -216,7 +222,7 @@ html, body {
 #subtitle-panel {
 
     position:absolute;
-    top:24vh;
+    top:22vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
@@ -231,7 +237,7 @@ html, body {
 #right-menu {
     border-radius: 20px;
     position:absolute;
-    top:30vh;
+    top:26vh;
     right:1vw;
     z-index: 100;
     width: 33vw;
@@ -288,9 +294,9 @@ html, body {
 }
 
 #right-title{
-  color:hsl(100, 84%, 24%, 1);
+  color:hsl(100, 84%, 24%, 1); 
   font-weight: bold;
-  font-size: 2vmax;
+  /*font-size: 2vmax;*/
 }
 #right-title-sub{
   color:black;
@@ -311,10 +317,18 @@ html, body {
   right:1vw;
 }
 
-.google-font {
+.my-font {
+    /*font-family: 'Helvetica Neue', sans-serif;*/
+    font-family: 'Akzidenz Grotesk', sans-serif;
+    text-align : center;
+}
+
+.other-font {
+    /*font-family: 'Helvetica Neue', sans-serif;*/
     font-family: 'Julius Sans One', sans-serif;
     text-align : center;
 }
+
 
 #left-menu-panel{
   position:absolute;
@@ -341,6 +355,17 @@ html, body {
     z-index: 100;
     text-align:center;
     background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0 2vh 0 0;
+    font-family: 'Righteous', cursive;
+}
+
+#buythebook {
+    position: absolute;
+    bottom: 3vh;
+    width: 15vh;
+    left: 6vh;
+    z-index: 10;
+    text-align: center;
     border-radius: 0 2vh 0 0;
     font-family: 'Righteous', cursive;
 }
@@ -407,10 +432,10 @@ html, body {
 }
 
 #mech-title{
-  width: 17vw;
+  /*width: 17vw;
   font-size: 4vh;
   background-color:#999999;
-  border-width: 2px;
+  border-width: 2px;*/
 }
 
 
@@ -541,10 +566,6 @@ span {
   line-height: 2.4vh;
 }
 
-
-p {
-    text-align: justify;
-}
 
 
 .left-menu-name {
