@@ -12,7 +12,9 @@
     'Mongolia',
     'Indonesia',
     'Australia',
-    'Costa Rica'
+    'Costa Rica',
+    'Belize',
+    'Bahamas'
  ]
 
 
